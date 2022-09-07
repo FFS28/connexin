@@ -324,37 +324,52 @@ export const fnGetSelectedQuestionSection = async (data : any) => {
 }
 
 export const fnGetReport = async (req: any) => {
-    let resData = null
-    try{
-        const { data } = await faunaClient.query(
-            Map(
-                Paginate(Documents(Collection('PreOpQuestionNiares')), {
-                }),
-                Lambda(
-                    'X',
-                    {
-                        selProcedure: Select(['data', 'selProcedure'], Get(Var('X'))),
-                        service: Select(['data', 'service'], Get(Var('X'))),
-                        sentDate: Select(['data', 'sentDate'], Get(Var('X'))),
-                        sentBy: Select(['data', 'sentBy'], Get(Var('X'))),
-                        dueDate: Select(['data', 'returnBy'], Get(Var('X'))),
-                        completedDate: Select(['data', 'completedDate'], Get(Var('X'))),
-                        overdue: Select(['data', 'overdue'], Get(Var('X'))),
-                    }
-                )
-            )
-        )
-        resData = data;
-    }
-    catch {
-        console.log('err')
-    }
+    // let resData = null
+    // try{
+    //     const { data } = await faunaClient.query(
+    //         Map(
+    //             Paginate(Documents(Collection('PreOpQuestionNiares')), {
+    //             }),
+    //             Lambda(
+    //                 'X',
+    //                 {
+    //                     selProcedure: Select(['data', 'selProcedure'], Get(Var('X'))),
+    //                     service: Select(['data', 'service'], Get(Var('X'))),
+    //                     sentDate: Select(['data', 'sentDate'], Get(Var('X'))),
+    //                     sentBy: Select(['data', 'sentBy'], Get(Var('X'))),
+    //                     dueDate: Select(['data', 'returnBy'], Get(Var('X'))),
+    //                     completedDate: Select(['data', 'completedDate'], Get(Var('X'))),
+    //                     overdue: Select(['data', 'overdue'], Get(Var('X'))),
+    //                 }
+    //             )
+    //         )
+    //     )
+    //     resData = data;
+    // }
+    // catch {
+    //     console.log('err')
+    // }
 
-    // [req.name, req.selProcedure, req.service, req.sentDate, req.sentBy, req.dueDate, req.completedDate, req.overdue]
-    if(resData == null)
-        return "error";
-    let returnData = resData.filter((item: any, index: number) => {
-        return item.selProcedure == req.selProcedure && item.service == req.service && item.sentDate == req.sentDate && item.sentBy == req.sentBy && item.dueDate == req.dueDate && item.completedDate == req.completedDate && item.overvue == parseInt(req.overvue);
+    const {data} = await faunaClient.query(
+        Map(
+            Paginate(
+                Match(
+                    Index("ReportsBy"),
+                    [req.selProcedure, req.service, req.sentDate, req.sentBy, req.dueDate, req.completedDate, req.overdue]
+                )
+            ),
+            Lambda('x', Get(Var('x')))
+        )
+    )
+    let returnData = data.map((item: any) => {
+        item.data.ref = item.ref.id
+        return item.data
     })
+    // // [req.name, req.selProcedure, req.service, req.sentDate, req.sentBy, req.dueDate, req.completedDate, req.overdue]
+    // if(resData == null)
+    //     return "error";
+    // let returnData = resData.filter((item: any, index: number) => {
+    //     return item.selProcedure == req.selProcedure && item.service == req.service && item.sentDate == req.sentDate && item.sentBy == req.sentBy && item.dueDate == req.dueDate && item.completedDate == req.completedDate && item.overvue == parseInt(req.overvue);
+    // })
     return returnData;
 }

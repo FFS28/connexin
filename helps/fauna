@@ -1,0 +1,150 @@
+
+// how to implement condition select in FaunaDB
+
+Paginate(
+    Match(
+        Index("MyAdminByEmailAndLevel"),
+        ["value1", "value2"]
+    )
+)
+
+// Create DB data
+CreateCollection({name: "Admins"})
+
+CreateIndex({
+    name: "MyAdminByEmail",
+    source: Collection("Admins"),
+    terms: [
+        { field: ["data", "email"] }
+    ],
+})
+
+CreateIndex({
+    name: "MyAdminByHospital",
+    source: Collection("Admins"),
+    terms: [
+        { field: ["data", "hospital"] }
+    ],
+})
+
+CreateIndex({
+    name: "QuestionNiareByUser",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "email"] }
+    ],
+})
+
+CreateIndex({
+    name: "ReportsBy",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "selProcedure"] },
+        { field: ["data", "service"] },
+        { field: ["data", "sentDate"] },
+        { field: ["data", "sentBy"] },
+        { field: ["data", "returnBy"] },
+        { field: ["data", "completedDate"] },
+        { field: ["data", "overdue"] },
+    ],
+})
+
+CreateIndex({
+    name: "MyUserByEmailAndLevel",
+    source: Collection("Users"),
+    terms: [
+        { field: ["data", "email"] },
+        { field: ["data", "level"] }
+    ],
+})
+CreateIndex({
+    name: "MyUserByLevelAndHospital",
+    source: Collection("Users"),
+    terms: [
+        { field: ["data", "level"] },
+        { field: ["data", "hospital"] }
+    ],
+})
+
+CreateIndex({
+    name: "ReportsBy",
+    source: Collection("PreOpQiestionNiares"),
+    terms: [
+        { field: ["data", "selProcedure"] },
+        { field: ["data", "service"] },
+        { field: ["data", "sentDate"] },
+        { field: ["data", "sentBy"] },
+        { field: ["data", "dueDate"] },
+        { field: ["data", "overdue"] }
+    ],
+})
+
+CreateIndex({
+    name: "ServiceConsultant",
+    source: Collection("Consultant"),
+    terms: [
+        { field: ["data", "serviceSpecial"] }
+    ],
+})
+
+CreateIndex({
+    name: "ServiceProcedure",
+    source: Collection("Procedure"),
+    terms: [
+        { field: ["data", "serviceSpecialty"] }
+    ],
+})
+
+CreateCollection({name: "Users"})
+CreateCollection({name: "QuestionNiares"})
+CreateCollection({name: "Questions"})
+CreateCollection({name: "SubQuestions"})
+CreateCollection({name: "QNHistories"})
+CreateCollection({name: "ContestDatas"})
+CreateCollection({name: "Procedure"})
+CreateCollection({name: "Roles"})
+CreateCollection({name: "Access"})
+CreateCollection({ name: "Consultant" })
+CreateCollection({ name: "PreOpQuestionNiares" })
+CreateCollection({name: "Service"})
+CreateCollection({name: "TempRegister"})   //resetPassword table data
+CreateIndex({
+    name: "AllConsultant",
+    source: Collection("Consultant"),
+    terms: [
+        { field: ["data", "title"] },
+        { field: ["data", "serviceSpecial"] }
+    ]
+})
+
+CreateIndex({
+    name: "AllService",
+    source: Collection("Service"),
+    terms: [
+        { field: ["data", "serviceSpecial"] },
+        { field: ["data", "subServiceSpecial"] },
+        { field: ["ref"] }
+    ]
+})
+CreateIndex({
+    name: "resetPassword",
+    source: Collection("TempRegister"),
+    terms: [
+        { field: ["data", "name"] },
+        { field: ["data", "email"] },
+        { field: ["data", "sendlink"] }
+    ],
+})
+
+Create(
+    Collection("Admins"),
+    {
+        data: {
+            name: "matt",
+            email: "matt@connexin.com",
+            password: "4f4bb0754ef9cc8ef817dac7692a6650",
+            level: 3,
+            active: true
+        }
+    }
+)

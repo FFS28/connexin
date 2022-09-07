@@ -139,7 +139,7 @@ export default function SendPreOpQuestionNiare({editData}: {editData: any}){
         setAppState({...appState, editState : false});
         setNhsNumber("")
         setDob("")
-        setService("")
+        setService(appState.users.admin.service == 0 ? "" : appState.users.admin.service)
         setQuestionOrSection([])
         setAddmission("")
         setReturnto("")
@@ -187,14 +187,14 @@ export default function SendPreOpQuestionNiare({editData}: {editData: any}){
             <Stack spacing={10} direction={"row"} >
                 <Stack component={"form"} noValidate spacing={2} sx={{ width: "50%"}} >
                     <TextField type={"text"} label={"NHS Number"} value={nhsNumber} variant={"standard"} onChange={ event => setNhsNumber(event.target.value) } />
-                    <FormControl variant={"standard"}>
+                    {appState.users.admin.service == 0 ? <FormControl variant={"standard"}>
                         <InputLabel>Select Service</InputLabel>
                         <Select value={service} onChange={(event) => setService(event.target.value)} sx={{textAlign: "left"}} >
                             {serviceList.map((item: any, index: number) => {
                                 return <MenuItem key={index} value={item.ref}>{item.serviceSpecial}</MenuItem>
                             })}
                         </Select>
-                    </FormControl>
+                    </FormControl> : null}
                     <Autocomplete multiple id="tags-standard" options={questionniaresList} defaultValue={["This is First Questionaire"]} getOptionLabel={(option: any) => option.title} onChange={(event: any, value: any) => setQuestionOrSection(value)} renderInput={(params: any) => (
                         <TextField {...params} variant="standard" label="Select Question/Sections" placeholder="Select Question" />
                         )} />

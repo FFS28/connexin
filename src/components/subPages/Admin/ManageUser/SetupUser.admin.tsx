@@ -2,7 +2,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import React, { useContext, useEffect, useState } from "react";
-import { Button, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Stack, Switch, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Stack, Switch, TextField, Typography } from "@mui/material";
 
 import { AppContext } from "../../../../provider/index.provider";
 import { makeJSON } from "../../../../other/functions.globals";
@@ -22,7 +22,21 @@ export default function SetupUser({editData}: {editData : any}){
     const [roleList, setRoleList] = useState([])
     const [serviceList, setServiceList] = useState([])
     const {appState, setAppState} = useContext(AppContext)
+    const [open, setOpen] = useState(false);
     
+    
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const SendMail = () => {
+        
+    }
+
     const saveUser = ()=>{
         if(!appState.editState){
             if(!validationCheckText(name))
@@ -162,14 +176,14 @@ export default function SetupUser({editData}: {editData : any}){
                             <MenuItem value={"3"}>Level 3</MenuItem>
                         </Select>
                     </FormControl>   
-                    <FormControl variant={"standard"}>
+                    {appState.users.admin.service == 0 ? <FormControl variant={"standard"}>
                         <InputLabel>Restrict to service</InputLabel>
                         <Select value={service} onChange={ event => setService(event.target.value) } sx={{textAlign: "left"}} >
                             {serviceList.map((item: any, index: number)=>{
                                 return <MenuItem key={index} value={item.ref}>{item.servicetitle}</MenuItem>
                             })}
                         </Select>
-                    </FormControl>
+                    </FormControl> : null}
                 </Stack>
                 <Stack spacing={2} width={"50%"}>
                     <FormControl variant={"standard"}>
@@ -182,13 +196,25 @@ export default function SetupUser({editData}: {editData : any}){
                     </FormControl>
                     <TextField type={"text"} value={authBy} label={"Authorised By"} variant={"standard"} onChange={ event => setAuthBy(event.target.value) } disabled={appState.editState} />
                     <TextField type={"text"} value={sendLink} label={"Send link to register and setup password"} variant={"standard"} onChange={ event => setSendLink(event.target.value) } disabled={appState.editState} />
-                    { appState.editState && <FormControlLabel onChange={event => setActive(!active)} control={<Switch checked = {active} />} label="Active" /> }
+                    <Box>
+                        { appState.editState && <><FormControlLabel onChange={event => setActive(!active)} control={<Switch checked = {active} />} label="Active" /><Button variant={"outlined"} color={"error"} onClick={handleOpen} startIcon={<AddTaskIcon />} >Reset Password</Button></> }
+                    </Box>
                 </Stack>
             </Stack>
             <Stack component={"form"} noValidate spacing={4} direction="row" justifyContent={"right"} sx={{mt: 4}} >
                 <Button variant={"outlined"} color={"primary"} onClick={saveUser} startIcon={<AddTaskIcon />} >Save</Button>
                 <Button variant={"outlined"} color={"error"} onClick={resetField} startIcon={<DeleteIcon />} >Cancel</Button>
             </Stack>
+            
+            <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby={"alert-dialog-title"} aria-describedby={"alert-dialog-description"} maxWidth={false} >
+                <DialogContent>
+                    <Typography variant='h6' component={'h6'} ></Typography>
+                    <Box>
+                        <Button variant={"outlined"} color={"primary"} onClick={SendMail} startIcon={<AddTaskIcon />} >Yes</Button>
+                        <Button variant={"outlined"} color={"error"} onClick={handleClose} startIcon={<DeleteIcon />} >No</Button>
+                    </Box>
+                </DialogContent>
+            </Dialog>
         </>
     )
 }
