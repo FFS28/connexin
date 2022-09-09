@@ -34,7 +34,7 @@ export default function SetupUser({editData}: {editData : any}){
     }
 
     const SendMail = () => {
-        
+        console.log("This is Sending Email Part")
     }
 
     const saveUser = ()=>{

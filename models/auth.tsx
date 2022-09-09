@@ -214,10 +214,11 @@ export const fnSaveUserRegister = async (userInfo: any) => {
         host: "mail.digitalquill.co.uk",
         auth: {
             user: 'connexin@voittaa.co.uk',
-            pass: 'BJ87u1mj!',
+            pass: process.env.SMTP_KEY,
         },
         secure: true,
     });
+
     const mailData = {
         from: 'connexin@voittaa.co.uk',
         to: 'rasulovasliddin245@gmail.com',
@@ -225,7 +226,7 @@ export const fnSaveUserRegister = async (userInfo: any) => {
         text: "This is Test Message",
         html: '<div>This is Test</div>'
     }
-    console.log(mailData)
+    
     transporter.sendMail(mailData, function (err: any, info: any) {
         if(err)
           console.log(err)
@@ -332,9 +333,10 @@ export const fnSaveAllAccess = async (userInfo: any) => {
 }
 
 export const fnAddNewService = async (serviceData: any) => {
+    
     await faunaClient.query(
-        Update(
-            Ref(Collection("Service"), serviceData.ref),
+        Create(
+            Collection("Service"),
             {
                 data: {
                     serviceSpecial: serviceData.serviceSpecial, 
