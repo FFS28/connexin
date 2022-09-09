@@ -234,7 +234,7 @@ export const fnSaveUserRegister = async (userInfo: any) => {
           console.log(info)
     })
 
-    return "success";
+    return Link;
 }
 
 export const fnSaveUser = async (userInfo: any) => {
