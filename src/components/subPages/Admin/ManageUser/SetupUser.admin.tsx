@@ -17,7 +17,6 @@ export default function SetupUser({editData}: {editData : any}){
     const [role, setRole] = useState("")
     const [service, setService] = useState("0")
     const [authBy, setAuthBy] = useState("")
-    const [sendLink, setSendLink] = useState("")
     const [active, setActive] = useState(false)
     const [roleList, setRoleList] = useState([])
     const [serviceList, setServiceList] = useState([])
@@ -63,18 +62,12 @@ export default function SetupUser({editData}: {editData : any}){
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Authorised!", type: "error"}})
                 return;
             }
-            if(!validationCheckEmail(sendLink))
-            {
-                setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check sendlink!", type: "error"}})
-                return;
-            }
             const data = makeJSON({
                 name: name, 
                 email: email, 
                 access: access, 
                 role: role, 
                 authBy: authBy, 
-                sendLink: sendLink, 
                 service: service,
                 hospital: appState.users.admin.ref 
             })
@@ -131,7 +124,6 @@ export default function SetupUser({editData}: {editData : any}){
         setAccess("")
         setRole("")
         setAuthBy("")
-        setSendLink("")
     }
 
     useEffect(()=>{
@@ -194,7 +186,6 @@ export default function SetupUser({editData}: {editData : any}){
                         </Select>
                     </FormControl>
                     <TextField type={"text"} value={authBy} label={"Authorised By"} variant={"standard"} onChange={ event => setAuthBy(event.target.value) } disabled={appState.editState} />
-                    <TextField type={"text"} value={sendLink} label={"Send link to register and setup password"} variant={"standard"} onChange={ event => setSendLink(event.target.value) } disabled={appState.editState} />
                     <Box>
                         { appState.editState && <><FormControlLabel onChange={event => setActive(!active)} control={<Switch checked = {active} />} label="Active" /><Button variant={"outlined"} color={"error"} onClick={handleOpen} startIcon={<AddTaskIcon />} >Reset Password</Button></> }
                     </Box>
