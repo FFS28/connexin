@@ -24,7 +24,6 @@ export default function SetupUser({editData}: {editData : any}){
     const {appState, setAppState} = useContext(AppContext)
     const [open, setOpen] = useState(false);
     
-    
     const handleClose = () => {
         setOpen(false)
     }
@@ -82,7 +81,7 @@ export default function SetupUser({editData}: {editData : any}){
 
             saveUserRegister(data).then((res: any) => { 
                 res.json().then((data: string)=>{
-                    console.log(data)
+                    resetField()
                     setAppState({...appState, alert: {...appState.alert, open: true, message: data, type: "success"}})
                 }).catch((rej: any) => {
                     setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
