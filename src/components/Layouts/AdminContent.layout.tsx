@@ -57,14 +57,14 @@ const AdminTitle = [
         {title : "Service Email Management", icons : "users"}
     ],
     [
-        {title : "Setup User", icons : <PeopleAltIcon fontSize='large' /> },
+        {title : "Add User", icons : <PeopleAltIcon fontSize='large' /> },
         {title : "Add Role", icons : <SettingsSuggestIcon fontSize='large' /> },
         {title : "Access Right", icons : <StackedBarChartIcon fontSize='large' /> },
         {title : "Service Directory", icons : <WifiTetheringIcon fontSize='large' /> },
         {title : "Setup Consultant", icons : <StreamIcon fontSize='large' /> },
         {title : "Set up Procedure", icons : <AccountTreeIcon fontSize='large' /> },
         {title : "Send Pre-Op Questionnaire", icons : <SendIcon fontSize='large' /> },
-        {title : "Setup Text Reminder", icons : <MessageIcon fontSize='large' /> },
+        {title : "Set Up Text Reminder", icons : <MessageIcon fontSize='large' /> },
         {title : "Add, Amend Questions", icons : <DynamicFormIcon fontSize='large' /> },
         {title : "Report", icons : <DescriptionIcon fontSize='large' />}
     ]

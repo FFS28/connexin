@@ -123,7 +123,7 @@ export default function SetupUser({editData}: {editData : any}){
         setEmail("")
         setAccess("")
         setRole("")
-        setAuthBy("")
+        setAuthBy(appState.users.admin.email)
     }
 
     useEffect(()=>{
@@ -142,6 +142,7 @@ export default function SetupUser({editData}: {editData : any}){
                 setServiceList(temp)   
             }).catch((rej: any) => {console.log(rej)})
         })
+        setAuthBy(appState.users.admin.email)
     }, [])
 
     useEffect( () => {
@@ -185,6 +186,7 @@ export default function SetupUser({editData}: {editData : any}){
                             })}
                         </Select>
                     </FormControl>
+                    
                     <TextField type={"text"} value={authBy} label={"Authorised By"} variant={"standard"} onChange={ event => setAuthBy(event.target.value) } disabled={appState.editState} />
                     <Box>
                         { appState.editState && <><FormControlLabel onChange={event => setActive(!active)} control={<Switch checked = {active} />} label="Active" /><Button variant={"outlined"} color={"error"} onClick={handleOpen} startIcon={<AddTaskIcon />} >Reset Password</Button></> }
@@ -196,12 +198,12 @@ export default function SetupUser({editData}: {editData : any}){
                 <Button variant={"outlined"} color={"error"} onClick={resetField} startIcon={<DeleteIcon />} >Cancel</Button>
             </Stack>
             
-            <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby={"alert-dialog-title"} aria-describedby={"alert-dialog-description"} maxWidth={false} >
+            <Dialog open={open} onClose={handleClose} aria-labelledby={"alert-dialog-title"} aria-describedby={"alert-dialog-description"} maxWidth={false} >
                 <DialogContent>
-                    <Typography variant='h6' component={'h6'} ></Typography>
+                    <Typography variant='h6' component={'h6'} sx={{marginBottom: '10px'}}>Do you wish to send a password reset link to {name} email address?</Typography>
                     <Box>
-                        <Button variant={"outlined"} color={"primary"} onClick={SendMail} startIcon={<AddTaskIcon />} >Yes</Button>
-                        <Button variant={"outlined"} color={"error"} onClick={handleClose} startIcon={<DeleteIcon />} >No</Button>
+                        <Button variant={"outlined"} color={"error"} onClick={handleClose} startIcon={<DeleteIcon />} sx={{float: 'right'}}>No</Button>
+                        <Button variant={"outlined"} color={"primary"} onClick={SendMail} startIcon={<AddTaskIcon />}  sx={{float: 'right', marginRight: '10px'}}>Yes</Button>
                     </Box>
                 </DialogContent>
             </Dialog>

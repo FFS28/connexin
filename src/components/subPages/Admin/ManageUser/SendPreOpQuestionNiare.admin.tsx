@@ -217,7 +217,7 @@ export default function SendPreOpQuestionNiare({editData}: {editData: any}){
                     </FormControl>
                     <TextField type={"text"} label={"Email"} value={email} variant={"standard"} onChange={ event => setEmail(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Email"} value={ccemail} variant={"standard"} onChange={ event => setCcemail(event.target.value) } />
-                    <TextField type={"text"} label={"Personal Admissions Date"} value={personalAddmissionDate} variant={"standard"} onChange={ event => setPersonalAddmissionDate(event.target.value) } />
+                    <TextField type={"date"} label={"Admissions Date"} value={personalAddmissionDate} variant={"standard"} onChange={ event => setPersonalAddmissionDate(event.target.value) } InputLabelProps={{ shrink: true,}} />
                     <TextField type={"text"} label={"Pre-Admissions Advice"} value={preAddmissionAdvice} variant={"standard"} onChange={ event => setPreAddmissionAdvice(event.target.value) } />
                 </Stack>
                 <Stack spacing={2} sx={{width: "50%"}} >
@@ -232,7 +232,7 @@ export default function SendPreOpQuestionNiare({editData}: {editData: any}){
                     </FormControl>
                     <TextField type={"text"} label={"Expected LOS"} value={expectedLos} variant={"standard"} onChange={ event => setExpectedLos(event.target.value) } />
                     <TextField type={"text"} label={"Sent By"} value={sentBy} variant={"standard"} onChange={ event => setSentBy(event.target.value) } />
-                    <TextField type={"text"} label={"Return By"} value={returnBy} variant={"standard"} onChange={ event => setReturnBy(event.target.value) } />
+                    <TextField type={"date"} label={"Return By"} value={returnBy} variant={"standard"} onChange={ event => setReturnBy(event.target.value) } InputLabelProps={{ shrink: true,}} />
                     <TextField type={"text"} label={"Mobile Number"} value={mobileNumber} variant={"standard"} onChange={ event => setMobileNumber(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Mobile Number"} value={ccmobileNumber} variant={"standard"} onChange={ event => setCcmobileNumber(event.target.value) } />
                     <FormControl variant={"standard"}>

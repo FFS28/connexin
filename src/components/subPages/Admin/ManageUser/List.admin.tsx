@@ -69,7 +69,7 @@ const AdminListArray = [
     ],
     [
         {
-            Label : "Setup User",
+            Label : "Add User",
             Icon : <PeopleAltIcon fontSize='small' />,
         },
         {
@@ -97,7 +97,7 @@ const AdminListArray = [
             Icon : <SendIcon fontSize='small' />,
         },
         {
-            Label : "Setup Text Reminder",
+            Label : "Set Up Text Reminder",
             Icon : <MessageIcon fontSize='small' />,
         },
         {

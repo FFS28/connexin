@@ -53,17 +53,15 @@ export default function SendTextReminder({editData}: {editData: any}){
         setMobileNumber("")
         setEmail("")
         setReminder("")
-
     }
 
     useEffect(()=>{
         if(appState.editState && editData){
-            console.log("This is", editData )
+            console.log(editData.nhsNumber)
             setNhsNumber(editData.nhsNumber);
             setMobileNumber(editData.mobile)
             setEmail(editData.email)
             setReminder(editData.reminderText)
-    
         }
     }, [appState.editState])
 
