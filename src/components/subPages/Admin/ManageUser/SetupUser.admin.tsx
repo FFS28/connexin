@@ -152,7 +152,7 @@ export default function SetupUser({editData}: {editData : any}){
             setRole(editData.role)
             setActive(editData.active)
         }
-    }, [appState.editState, editData.ref] )
+    }, [appState.editState] )
 
     return (
         <>       
