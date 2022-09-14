@@ -167,7 +167,9 @@ export const fnUpdateUser = async (userInfo: any) => {
                         name: userInfo.name, 
                         access: userInfo.access, 
                         role: userInfo.role, 
-                        active : userInfo.active
+                        active : userInfo.active,
+                        service: userInfo.service,
+                        level: userInfo.access
                     }
                 }
             )

@@ -95,6 +95,14 @@ CreateIndex({
     ],
 })
 
+CreateIndex({
+    name: "ServiceQuestionnaire",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "service"] }
+    ],
+})
+
 CreateCollection({name: "Users"})
 CreateCollection({name: "QuestionNiares"})
 CreateCollection({name: "Questions"})

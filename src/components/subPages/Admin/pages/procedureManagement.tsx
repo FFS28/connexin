@@ -96,18 +96,19 @@ export default function ProcedureManagement(){
         
     }, [])
     useEffect( () => {
-        getAllProcedures().then((res: any) => {
-            res.json().then((data: any)=>{
-                const temp: {id: number, procedure: string, service: string, timetoken: string, benifits: string, risk: string, potentialComplications: string}[] = []
-                const ref_temp: {ref: string}[] = []
-                data.map((item: any, index: number) => {
-                    ref_temp.push({ref : item.ref})
-                    temp.push(createData(index, item.procedure, item.service, item.timeToken, item.benifits, item.risk, item.potentialComplications))  
-                })
-                setRows(temp)
-                setRefs(ref_temp)    
-            }).catch((rej: any) => {console.log(rej)})
-        })
+        if(appState.users.admin.service == "0")
+            getAllProcedures().then((res: any) => {
+                res.json().then((data: any)=>{
+                    const temp: {id: number, procedure: string, service: string, timetoken: string, benifits: string, risk: string, potentialComplications: string}[] = []
+                    const ref_temp: {ref: string}[] = []
+                    data.map((item: any, index: number) => {
+                        ref_temp.push({ref : item.ref})
+                        temp.push(createData(index, item.procedure, item.service, item.timeToken, item.benifits, item.risk, item.potentialComplications))  
+                    })
+                    setRows(temp)
+                    setRefs(ref_temp)    
+                }).catch((rej: any) => {console.log(rej)})
+            })
     }, [appState.changeState, appState.editState])
 
     return (

@@ -7,7 +7,7 @@ import { addNewPreOpQuestionNiares, updatePreOpQuestionNiares, getAllConsultantL
 import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
 
-export default function SendPreOpQuestionNiare({editData}: {editData: any}){
+export default function SendPreOpQuestionNiare({editData, handle}: {editData: any, handle: any}){
     
     const {appState, setAppState} = useContext(AppContext)
     const [nhsNumber, setNhsNumber] = useState("")
@@ -75,7 +75,7 @@ export default function SendPreOpQuestionNiare({editData}: {editData: any}){
                 setProcedureList(ref_temp)    
             }).catch((rej: any) => {console.log(rej)})
         })
-
+        handle(appState.users.admin.service)
     }, [])
 
     const addNew = () => {

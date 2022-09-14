@@ -7,6 +7,7 @@ import {
     fnGetQuestionNiareByUser,
     fnSelectedPreOpQuestionNiares,
     fnGetAllQuestionSections,
+    fnGetServiceQuestionnaire,
     fnGetSelectedQuestionSection,
     fnUpdatePreOpQuestionNiares,
     fnGetReport
@@ -43,6 +44,10 @@ export default async function handler(req : any, res: any) {
             
         case "getSelectedPreOpQuestionNiares":
             temp = await fnSelectedPreOpQuestionNiares(req.body)
+            res.end(JSON.stringify(temp))
+            return res;
+        case "getServiceQuestionnaire":
+            temp = await fnGetServiceQuestionnaire(req.body)
             res.end(JSON.stringify(temp))
             return res;
         case "getQuestionNiare": //users 

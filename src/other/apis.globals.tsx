@@ -160,6 +160,12 @@ export const getSelectedPreOpQuestionNiares = (data: any) => {
     })
 }
 
+export const getServiceQuestionnaire = (data: any) => {
+    return new Promise((res, rej) => {
+        fetch('/api/admins/question/getServiceQuestionnaire', data).then(res).catch(rej)
+    })
+}
+
 
 export const getAllQuestionNiareList = () => {
     return new Promise((res, rej) => {

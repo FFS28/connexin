@@ -1,3 +1,5 @@
+import {fnGetSelectedService} from './auth';
+
 const faunadb = require("faunadb")
 const {Base64} = require('js-base64');
 
@@ -238,6 +240,35 @@ export const fnSelectedPreOpQuestionNiares = async (data: any) => {
     )
     res.data.ref = res.ref.id
     return res.data;
+}
+
+export const fnGetServiceQuestionnaire = async (questionnaire: any) => {
+    
+    let data = [];
+    if(questionnaire.service.toString() == "0")
+        data = await fnGetAllPreOpQuestionNiares()
+    else {
+        const res = await faunaClient.query(
+            Map(
+                Paginate(
+                    Match(
+                        Index("ServiceQuestionnaire"),
+                        [ questionnaire.service.toString() ]
+                    )
+                ),
+                Lambda('x', Get(Var('x')))
+            )
+        )
+        
+        for (let i = 0; i< res.data.length; i++) {
+            let item = res.data[i];
+            item.data.ref = item.ref.id
+            let service = await fnGetSelectedService({ref: item.data.service});
+            item.data.service =  service.serviceSpecial;
+            data.push(item.data);
+        }
+    }
+    return data;
 }
 
 export const fnUpdatePreOpQuestionNiares = async (data : any ) => {

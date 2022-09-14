@@ -69,7 +69,8 @@ export default function SetupUser({editData}: {editData : any}){
                 role: role, 
                 authBy: authBy, 
                 service: service,
-                hospital: appState.users.admin.ref 
+                hospital: appState.users.admin.ref, 
+                level: appState.users.admin.level
             })
 
             saveUserRegister(data).then((res: any) => { 
@@ -103,7 +104,8 @@ export default function SetupUser({editData}: {editData : any}){
                 role: role, 
                 active : active,
                 service : service,
-                ref : editData == null ? "" : editData.ref
+                ref : editData == null ? "" : editData.ref,
+                level: appState.users.admin.level
             })
 
             updateUserInfo(data).then((res: any) => { 

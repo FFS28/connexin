@@ -27,6 +27,7 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
         }).catch((rej: any) => {
             console.log(rej)
         })
+        handle(appState.users.admin.service)
     }, [])
 
     const addNew = () => {
