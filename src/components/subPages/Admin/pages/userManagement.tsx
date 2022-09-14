@@ -49,6 +49,7 @@ export default function UserManagement(){
     const {appState, setAppState} = useContext(AppContext)
 
     const ChangeHandle = ( item: number ) => {
+        setAppState({...appState, editState : false}) 
         getSelectedUserInfo(makeJSON({
             ref: refs[item].ref,
             level: appState.users.admin.level-1
