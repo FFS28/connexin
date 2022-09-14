@@ -7,6 +7,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } f
 import { addNewProcedure, getAllServices, udpateProcedure } from "../../../../other/apis.globals";
 import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
+import { validationCheckText } from '../../../../other/validation.globals';
 
 export default function SetupProcedureTreatment({editData, handle}: {editData: any, handle: any}){
     
@@ -31,6 +32,33 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
     }, [])
 
     const addNew = () => {
+        if(!validationCheckText(procedure))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Procedure!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(serviceSpecialty))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Service Specialty!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(benifits))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Benifits!", type: "error"}})
+            return;
+        }if(!validationCheckText(timeToken))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Time Token!", type: "error"}})
+            return;
+        }if(!validationCheckText(risk))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Risk!", type: "error"}})
+            return;
+        }if(!validationCheckText(potentialComplications))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Potential Complications!", type: "error"}})
+            return;
+        }
         if(!appState.editState){
             addNewProcedure(makeJSON({
                 procedure: procedure,

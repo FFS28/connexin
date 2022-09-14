@@ -5,6 +5,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } f
 import React, { useContext, useEffect, useState } from "react";
 import { addNewConsultant, getAllServices, updateConsultant } from "../../../../other/apis.globals";
 import { makeJSON } from "../../../../other/functions.globals";
+import { validationCheckText } from '../../../../other/validation.globals';
 import { AppContext } from "../../../../provider/index.provider";
 
 export default function SetupConsultant({editData, handle} : {editData: any, handle: any}){
@@ -15,6 +16,16 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
     const [serviceList, setServiceList] = useState<any[]>([])
 
     const addNew = () => {
+        if(!validationCheckText(consultantName))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Title!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(serviceSpecial))
+        {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Service Specialty!", type: "error"}})
+            return;
+        }
         if(!appState.editState){
             addNewConsultant(makeJSON({
                 title: consultantName, 

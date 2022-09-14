@@ -6,6 +6,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import { sendTextRemainder, updateTextRemainder } from "../../../../other/apis.globals";
 import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
+import { validationCheckEmail, validationCheckText } from '../../../../other/validation.globals';
 
 export default function SendTextReminder({editData}: {editData: any}){
     
@@ -16,6 +17,22 @@ export default function SendTextReminder({editData}: {editData: any}){
     const [reminder, setReminder] = useState("")
 
     const addNew = () => {
+        if(!validationCheckText(nhsNumber)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input NHS number!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(mobileNumber)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Mobile Number!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(reminder)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Reminder Text!", type: "error"}})
+            return;
+        }
+        if(!validationCheckEmail(email)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input correct Email!", type: "error"}})
+            return;
+        }
         if(!appState.editState){
             sendTextRemainder(makeJSON({
                 nhsNumber : nhsNumber,

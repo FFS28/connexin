@@ -6,6 +6,7 @@ import { Autocomplete, Button, FormControl, InputLabel, MenuItem, Select, Stack,
 import { addNewPreOpQuestionNiares, updatePreOpQuestionNiares, getAllConsultantList, getAllProcedures, getAllQuestionNiareList, getAllServices } from "../../../../other/apis.globals";
 import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
+import { validationCheckEmail, validationCheckText } from '../../../../other/validation.globals';
 
 export default function SendPreOpQuestionNiare({editData, handle}: {editData: any, handle: any}){
     
@@ -79,6 +80,66 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
     }, [])
 
     const addNew = () => {
+        if(!validationCheckText(nhsNumber)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input NHS number!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(service)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Service!", type: "error"}})
+            return;
+        }
+        if(questionOrSection.length == 0) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Questions!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(addmission)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Addmission!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(personalAddmissionDate)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Personal Addmission Date!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(preAddmissionAdvice)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Pre-Addmission Advice!", type: "error"}})
+            return;
+        }
+        if(!validationCheckEmail(email)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input correct Email!", type: "error"}})
+            return;
+        }
+        if(!validationCheckEmail(returnto)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Return To field!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(selConsultant)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Consultant!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(expectedLos)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Expected Los!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(sentBy)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Sent By field!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(returnBy)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Return By!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(mobileNumber)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Mobile Number!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(ccmobileNumber)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input CCMobile Number!", type: "error"}})
+            return;
+        }
+        if(!validationCheckText(selConsultant)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Procedure!", type: "error"}})
+            return;
+        }
         if(!appState.editState){
             addNewPreOpQuestionNiares(makeJSON({
                 nhsNumber : nhsNumber,
