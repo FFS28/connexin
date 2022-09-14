@@ -202,27 +202,19 @@ export const fnSaveUserRegister = async (userInfo: any) => {
     data.data.ref = data.ref.id
     // This is sendlink part
     const Link = process.env.DOMAIN + "resetpassword/" + Base64.encode(JSON.stringify(data.data))
-    // const msg = {
-    //     to: data.data.sendLink,
-    //     from: 'Connexin Admin',
-    //     subject: 'Welcome to get invitation from Connexin!',
-    //     text: 'Please click Link and then set Password!',
-    //     html: `<a href=${Link}>Here</a>`,
-    //   };
-    // sgMail.send(msg);
     
     const transporter = nodemailer.createTransport({
         port: 465,
         host: "mail.digitalquill.co.uk",
         auth: {
-            user: 'connexin@voittaa.co.uk',
-            pass: process.env.SMTP_KEY,
+            user: 'preop@voittaa.co.uk',
+            pass: 'BJh3J8ke55!',
         },
         secure: true,
     });
 
     const mailData = {
-        from: 'connexin@voittaa.co.uk',
+        from: 'preop@voittaa.co.uk',
         to: 'rasulovasliddin245@gmail.com',
         subject: `Message From Yeti`,
         text: "This is Test Message",

@@ -51,8 +51,12 @@ export default function AddRole({editData}: {editData : any}){
     const resetField = () => {
         setAppState({...appState, editState : false});
         setRole("")
-        setAuthBy("")
+        setAuthBy(appState.users.admin.email)
     }
+
+    useEffect(() => {
+        setAuthBy(appState.users.admin.email)
+    })
 
     useEffect( () => {
         if(appState.editState && editData){

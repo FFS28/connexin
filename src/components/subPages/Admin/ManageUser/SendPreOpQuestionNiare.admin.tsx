@@ -137,7 +137,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             return;
         }
         if(!validationCheckText(selConsultant)) {
-            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Procedure!", type: "error"}})
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Consultant!", type: "error"}})
             return;
         }
         if(!appState.editState){
