@@ -90,7 +90,7 @@ export default async function handler(req : any, res: any) {
                 html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href=${data}>Sign In</div></div>`
             }, function (err: any, info: any) {
                 if(err){
-                    return res.end(JSON.stringify(err))
+                    return res.end("errors")
                 }else{
                     return res.end("success")
                 }
