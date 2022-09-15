@@ -96,7 +96,7 @@ export default async function handler(req : any, res: any) {
                     res.end(JSON.stringify(err))
                 }
             })
-            // return res; 
+            return res; 
         case "saveUser":
             req.body.password = md5(req.body.password)
             await fnSaveUser(req.body)
