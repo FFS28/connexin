@@ -1,6 +1,5 @@
 const faunadb = require("faunadb")
 const {Base64} = require('js-base64');
-const nodemailer = require('nodemailer')
 // const sgMail = require('@sendgrid/mail');
 
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -202,33 +201,7 @@ export const fnSaveUserRegister = async (userInfo: any) => {
     data.data.ref = data.ref.id
     // This is sendlink part
     const Link = process.env.DOMAIN + "resetpassword/" + Base64.encode(JSON.stringify(data.data))
-    
-    const transporter = nodemailer.createTransport({
-        port: 465,
-        host: "mail.digitalquill.co.uk",
-        auth: {
-            user: 'preop@voittaa.co.uk',
-            pass: 'BJh3J8ke55!',
-        },
-        secure: true,
-    });
-
-    const mailData = {
-        from: 'preop@voittaa.co.uk',
-        to: 'rasulovasliddin245@gmail.com',
-        subject: `Message From Yeti`,
-        text: "This is Test Message",
-        html: '<div>This is Test</div>'
-    }
-    transporter.sendMail(mailData, function (err: any, info: any) {
-        if(err){
-          console.log(err)
-        }else{
-          console.log(info)
-        }
-    })
-
-    return "";
+    return Link;
 }
 
 export const fnSaveUser = async (userInfo: any) => {

@@ -52,13 +52,6 @@ export default async function handler(req : any, res: any) {
         secure: true,
     });
 
-    const mailData = {
-        from: 'preop@voittaa.co.uk',
-        to: 'rasulovasliddin245@gmail.com',
-        subject: `Message From Yeti`,
-        text: "This is Test Message",
-        html: '<div>This is Test</div>'
-    }
     switch(methods){
         case "signin":
             data = await fnSignIn(req.body)
@@ -87,14 +80,19 @@ export default async function handler(req : any, res: any) {
             res.end(JSON.stringify({ notification : {type: "success", message: "Successful!"}}))
             return res;
         case "saveUserRegister":
-            // data = await fnSaveUserRegister(req.body)
-            // res.end(JSON.stringify(data))
+            data = await fnSaveUserRegister(req.body)
             
-            transporter.sendMail(mailData, function (err: any, info: any) {
+            transporter.sendMail({
+                from: 'preop@voittaa.co.uk',
+                to: req.body.email,
+                subject: `Welcome to Connexin`,
+                text: "This is Test Message",
+                html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href=${data}>Sign In</div></div>`
+            }, function (err: any, info: any) {
                 if(err){
                     return res.end(JSON.stringify(err))
                 }else{
-                    return res.end(JSON.stringify(err))
+                    return res.end("success")
                 }
             })
             break;
