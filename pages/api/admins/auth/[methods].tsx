@@ -36,6 +36,7 @@ import {
 } from "../../../../models/auth";
 
 const md5 = require('md5');
+const nodemailer = require('nodemailer');
 
 export default async function handler(req : any, res: any) {
     const url = req.url.split("/")
@@ -69,9 +70,33 @@ export default async function handler(req : any, res: any) {
             res.end(JSON.stringify({ notification : {type: "success", message: "Successful!"}}))
             return res;
         case "saveUserRegister":
-            data = await fnSaveUserRegister(req.body)
-            res.end(JSON.stringify(data))
-            return res; 
+            // data = await fnSaveUserRegister(req.body)
+            // res.end(JSON.stringify(data))
+            const transporter = nodemailer.createTransport({
+                port: 465,
+                host: "mail.digitalquill.co.uk",
+                auth: {
+                    user: 'preop@voittaa.co.uk',
+                    pass: 'BJh3J8ke55!',
+                },
+                secure: true,
+            });
+        
+            const mailData = {
+                from: 'preop@voittaa.co.uk',
+                to: 'rasulovasliddin245@gmail.com',
+                subject: `Message From Yeti`,
+                text: "This is Test Message",
+                html: '<div>This is Test</div>'
+            }
+            transporter.sendMail(mailData, function (err: any, info: any) {
+                if(err){
+                    res.end(JSON.stringify(err))
+                }else{
+                    res.end(JSON.stringify(err))
+                }
+            })
+            // return res; 
         case "saveUser":
             req.body.password = md5(req.body.password)
             await fnSaveUser(req.body)
