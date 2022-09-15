@@ -75,12 +75,10 @@ export default function SetupUser({editData}: {editData : any}){
             })
 
             saveUserRegister(data).then((res: any) => { 
-                res.json().then((data: string)=>{
-                    resetField()
-                    setAppState({...appState, alert: {...appState.alert, open: true, message: data, type: "success"}})
-                }).catch((rej: any) => {
-                    setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
-                })
+                resetField()
+                setAppState({...appState, alert: {...appState.alert, open: true, message: res, type: "success"}})
+            }).catch((rej: any) => {
+                setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
             })
         }else {
             if(!validationCheckText(name))
