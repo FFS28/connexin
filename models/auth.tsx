@@ -204,6 +204,23 @@ export const fnSaveUserRegister = async (userInfo: any) => {
     return Link;
 }
 
+export const fnReSetPassword = async (userInfo: any) => {
+    const res = await faunaClient.query(
+        Update(
+            Ref(Collection("Admins"), userInfo.ref),
+            {
+                data: {
+                    active : false
+                }
+            }
+        )
+    )
+    res.data.ref = res.ref.id;
+    // This is sendlink part
+    const Link = process.env.DOMAIN + "setpassword/" + Base64.encode(JSON.stringify(res.data))
+    return Link;
+}
+
 export const fnSaveUser = async (userInfo: any) => {
     const data = await faunaClient.query(
         Create(
@@ -214,6 +231,21 @@ export const fnSaveUser = async (userInfo: any) => {
         )
     )
     return ;   
+}
+
+export const fnSaveUserPass = async (userInfo: any) => {
+    await faunaClient.query(
+        Update(
+            Ref(Collection("Admins"), userInfo.ref),
+            {
+                data: {
+                    password : userInfo.password,
+                    active: true
+                }
+            }
+        )
+    )
+    return;
 }
 
 export const fnAddRole = async (roleInfo: any) => {

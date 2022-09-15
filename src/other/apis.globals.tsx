@@ -5,10 +5,24 @@ export const saveUserRegister = (userData: any) => {
     })
 }
 
+export const setPassword = (userData: any) => {
+    // validationcheck
+    return new Promise((res, rej) => {
+        fetch('/api/admins/auth/setPassword', userData).then(res).catch(rej)
+    })
+}
+
 export const saveUserData = (userData: any) => {
     // validationcheck
     return new Promise((res, rej) => {
         fetch('/api/admins/auth/saveUser', userData).then(res).catch(rej)
+    })
+}
+
+export const saveUserPassData = (userData: any) => {
+    // validationcheck
+    return new Promise((res, rej) => {
+        fetch('/api/admins/auth/saveUserPassData', userData).then(res).catch(rej)
     })
 }
 

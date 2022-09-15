@@ -32,7 +32,9 @@ import {
     fnGetSelectedUser,
     fnUpdateRole,
     fnUdpateProcedure,
-    fnUpdateTextRemainder
+    fnUpdateTextRemainder,
+    fnReSetPassword,
+    fnSaveUserPass
 } from "../../../../models/auth";
 
 const md5 = require('md5');
@@ -86,8 +88,25 @@ export default async function handler(req : any, res: any) {
                 from: 'preop@voittaa.co.uk',
                 to: req.body.email,
                 subject: `Welcome to Connexin`,
-                text: "This is Test Message",
-                html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href=${data}>Sign In</div></div>`
+                text: "",
+                html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href=${data}>Sign In</a></div>`
+            }, function (err: any, info: any) {
+                if(err){
+                    return res.end("errors")
+                }else{
+                    return res.end("success")
+                }
+            })
+            break;
+        case "setPassword": 
+            data = await fnReSetPassword(req.body)
+                
+            transporter.sendMail({
+                from: 'preop@voittaa.co.uk',
+                to: req.body.email,
+                subject: `From Connexin`,
+                text: "This is Reset Password Link",
+                html: `<a href=${data}>Reset Password</a>`
             }, function (err: any, info: any) {
                 if(err){
                     return res.end("errors")
@@ -99,6 +118,11 @@ export default async function handler(req : any, res: any) {
         case "saveUser":
             req.body.password = md5(req.body.password)
             await fnSaveUser(req.body)
+            res.end(JSON.stringify("success"))
+            return res;
+        case "saveUserPassData":
+            req.body.password = md5(req.body.password)
+            await fnSaveUserPass(req.body)
             res.end(JSON.stringify("success"))
             return res;
         case "addRole":

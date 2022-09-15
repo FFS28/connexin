@@ -6,7 +6,7 @@ import { Box, Button, Dialog, DialogContent, FormControl, FormControlLabel, Inpu
 
 import { AppContext } from "../../../../provider/index.provider";
 import { makeJSON } from "../../../../other/functions.globals";
-import { getAllRoles, saveUserRegister, updateUserInfo, getAllServices } from "../../../../other/apis.globals";
+import { getAllRoles, saveUserRegister, updateUserInfo, getAllServices, setPassword } from "../../../../other/apis.globals";
 import { validationCheckEmail, validationCheckText, validationConnexinEmail } from "../../../../other/validation.globals";
 
 export default function SetupUser({editData}: {editData : any}){
@@ -32,6 +32,13 @@ export default function SetupUser({editData}: {editData : any}){
     }
 
     const SendMail = () => {
+        const data = makeJSON({
+            ref : editData.ref
+        })
+        setPassword(data).then((res: any) => { 
+            resetField()
+            setAppState({...appState, alert: {...appState.alert, open: true, message: res, type: "success"}})
+        })
         console.log("This is Sending Email Part")
     }
 
