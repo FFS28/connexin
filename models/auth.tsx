@@ -220,15 +220,18 @@ export const fnSaveUserRegister = async (userInfo: any) => {
         text: "This is Test Message",
         html: '<div>This is Test</div>'
     }
-    
-    return transporter.sendMail(mailData, function (err: any, info: any) {
-        if(err)
+    var asd = "";
+    transporter.sendMail(mailData, function (err: any, info: any) {
+        if(err){
           console.log(err)
-        else
+          asd = "error";
+        }else{
           console.log(info)
+          asd = "success";
+        }
     })
 
-    return Link;
+    return asd;
 }
 
 export const fnSaveUser = async (userInfo: any) => {
