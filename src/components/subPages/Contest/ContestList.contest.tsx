@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import {Typography, TextField, ButtonGroup, Button, Stack } from "@mui/material"
 import { Box } from "@mui/system";
-
+import { jsPDF } from "jspdf";
 import ConnnexinBtn from "../../elements/ConnexinBtn";
 import { AppContext } from "../../../provider/index.provider";
 import YesNo from "../../elements/Questions/YesNo";
@@ -16,6 +16,32 @@ export default function ContestList() {
     const [drawType, setDrawType] = useState("draw")
     const [drawData, setDrawData] = useState<any>(null)
     const change_page = (index: any) => {
+        if(index == "complete") {
+            console.log(appState.useData.questionNiares)
+            const doc = new jsPDF('landscape');
+            let nI = 0;
+            appState.useData.questionNiares.map((questionnaire: any) => {
+                nI += 10;
+                doc.text(questionnaire.title, 10, nI);
+                questionnaire.questions.map((question: any) => {
+                    nI += 10;
+                    doc.text(question.title, 20, nI);
+                    nI += 10;
+                    doc.text(question.result == false ? "NO" : "YES", 20, nI);
+                    nI += 10;
+                    question.subQuestions.map((subquestion: any) => {
+                        nI += 10;
+                        doc.text(subquestion.title, 30, nI);
+                        // doc.text(subquestion.result.toString(), 10, 10);
+                    })
+                    
+                })            
+            })
+            doc.text("Hello world!", 10, nI + 10);
+            doc.save("a4.pdf");
+            setAppState({...appState, pageState: { ...appState.pageState, curLayout : "MainLayout", curPage : "Question"}})
+            return;
+        }
         if(index == "home"){
             setAppState({...appState, pageState: { ...appState.pageState, curLayout : "MainLayout", curPage : "Question"}})
             return;
@@ -215,7 +241,7 @@ export default function ContestList() {
                             </Box>
                         </Box>
                         <Box sx={{minHeight: "20vh"}}>
-                            <ConnnexinBtn type="contained" value= "Accept and Sign In" moveto={change_page} m_page={"home"} />
+                            <ConnnexinBtn type="contained" value= "Accept and Sign In" moveto={change_page} m_page={"complete"} />
                         </Box>
                     </Box>
                 </>) : null}
