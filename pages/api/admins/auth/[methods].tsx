@@ -83,7 +83,7 @@ export default async function handler(req : any, res: any) {
             return res;
         case "saveUserRegister":
             data = await fnSaveUserRegister(req.body)
-            
+            console.log(data)
             transporter.sendMail({
                 from: 'preop@voittaa.co.uk',
                 to: req.body.email,
@@ -92,11 +92,12 @@ export default async function handler(req : any, res: any) {
                 html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href=${data}>Sign In</a></div>`
             }, function (err: any, info: any) {
                 if(err){
-                    return res.end("errors")
+                    // return res.end("errors")
                 }else{
-                    return res.end("success")
+                    // return res.end("success")
                 }
             })
+            return res.end("success")
             break;
         case "setPassword": 
             data = await fnReSetPassword(req.body)
