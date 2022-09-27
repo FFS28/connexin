@@ -406,5 +406,89 @@ export const fnGetReport = async (req: any) => {
 }
 
 export const fnGetFilterResult = async (req: any) => {
-    return {sent: 0, await: 0, overdue: 0, completed: 0};
+    const temp = {sent: 0, await: 0, overdue: 0, completed: 0}
+    const {data} = await faunaClient.query(
+        Map(
+            Paginate(Documents(Collection("PreOpQuestionNiares"))),
+            Lambda("x", Get(Var("x")))
+        )
+    )
+    
+    switch(req.filterOption) {
+        case 0:
+            data.map((questionnaire: any) => {
+                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 28){
+                    temp.sent ++;
+                    if(questionnaire.data.completedDate == ""){
+                        temp.await ++;
+                    }else {
+                        temp.completed ++;
+                    }
+                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                        temp.overdue ++;
+                    }  
+                }
+            })
+            break;
+        case 1:
+            data.map((questionnaire: any) => {
+                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 1){
+                    temp.sent ++;
+                    if(questionnaire.data.completedDate == ""){
+                        temp.await ++;
+                    }else {
+                        temp.completed ++;
+                    }
+                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                        temp.overdue ++;
+                    }  
+                }
+            })
+            break;
+        case 2:
+            data.map((questionnaire: any) => {
+                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 7){
+                    temp.sent ++;
+                    if(questionnaire.data.completedDate == ""){
+                        temp.await ++;
+                    }else {
+                        temp.completed ++;
+                    }
+                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                        temp.overdue ++;
+                    }  
+                }
+            })
+            break;
+        case 3:
+            data.map((questionnaire: any) => {
+                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 90){
+                    temp.sent ++;
+                    if(questionnaire.data.completedDate == ""){
+                        temp.await ++;
+                    }else {
+                        temp.completed ++;
+                    }
+                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                        temp.overdue ++;
+                    }  
+                }
+            })
+            break;
+        case 4:
+            data.map((questionnaire: any) => {
+                temp.sent ++;
+                if(questionnaire.data.completedDate == ""){
+                    temp.await ++;
+                }else {
+                    temp.completed ++;
+                }
+                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    temp.overdue ++;
+                }  
+            })
+            break;    
+    }
+
+    return temp;
 }

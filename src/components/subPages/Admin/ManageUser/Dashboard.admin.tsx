@@ -31,7 +31,12 @@ function Dashboard() {
             filterOption: filter
         })
         getFilterResult(data).then((res: any) => { 
-            console.log(res);
+            res.json().then((data: any) => {
+                setSentCount(data.sent);
+                setAwaitCount(data.await);
+                setOverdueCount(data.overdue);
+                setCompletedCount(data.completed);
+            })
             return "";
         });
     }, [filter])
