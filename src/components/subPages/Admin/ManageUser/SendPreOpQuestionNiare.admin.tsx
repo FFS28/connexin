@@ -92,7 +92,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Questions!", type: "error"}})
             return;
         }
-        if(!validationCheckText(addmission)) {
+        if(!validationCheckText(addmission.toString())) {
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Addmission!", type: "error"}})
             return;
         }
