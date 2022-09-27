@@ -49,7 +49,7 @@ export default async function handler(req : any, res: any) {
                 to: req.body.email,
                 subject: `Welcome to Connexin`,
                 text: "",
-                html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href="https://asd-amber-six.vercel.app/">Visit</a></div>`
+                html: `<div> Please click the link below to complete and return the questionnaire to us <br> <a href="${process.env.DOMAIN}">${process.env.DOMAIN}</a></div>`
             }, function (err: any, info: any) {
                 if(err){
                     return res.end(JSON.stringify("errors"))
