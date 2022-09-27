@@ -82,11 +82,12 @@ export default function SetupUser({editData}: {editData : any}){
             })
 
             saveUserRegister(data).then((res: any) => { 
-                setAppState({...appState, alert: {...appState.alert, open: true, message: res, type: "success"}})
+                setAppState({...appState, editState : false, alert: {...appState.alert, open: true, message: res, type: "success"}})
+                resetField()
             }).catch((rej: any) => {
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
             })
-            resetField()
+            
         }else {
             if(!validationCheckText(name))
             {
@@ -126,7 +127,6 @@ export default function SetupUser({editData}: {editData : any}){
     }
 
     const resetField = () => {
-        setAppState({...appState, editState : false});
         setName("")
         setEmail("")
         setAccess("")
