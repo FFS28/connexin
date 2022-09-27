@@ -49,8 +49,8 @@ export default function SetupUser({editData}: {editData : any}){
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check Name!", type: "error"}})
                 return;
             }
-            if(!validationConnexinEmail(email))
-            // if(!validationCheckEmail(email))
+            // if(!validationConnexinEmail(email))
+            if(!validationCheckEmail(email))
             {
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check Email! it must be chs.net or chs.uk mail", type: "error"}})
                 return;
