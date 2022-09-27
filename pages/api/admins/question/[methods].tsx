@@ -52,9 +52,9 @@ export default async function handler(req : any, res: any) {
                 html: `<div> Welcome to Connexin <br> ENJOY WITH US >>> click <a href="https://asd-amber-six.vercel.app/">Visit</a></div>`
             }, function (err: any, info: any) {
                 if(err){
-                    return res.end("errors")
+                    return res.end(JSON.stringify("errors"))
                 }else{
-                    return res.end("success")
+                    return res.end(JSON.stringify("success"))
                 }
             })
             break;

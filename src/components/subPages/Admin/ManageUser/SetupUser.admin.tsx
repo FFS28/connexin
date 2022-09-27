@@ -85,6 +85,7 @@ export default function SetupUser({editData}: {editData : any}){
                 setAppState({...appState, editState : false, alert: {...appState.alert, open: true, message: res, type: "success"}})
                 resetField()
             }).catch((rej: any) => {
+                console.log(rej)
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
             })
             
