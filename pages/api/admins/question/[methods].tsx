@@ -43,13 +43,14 @@ export default async function handler(req : any, res: any) {
             res.end(JSON.stringify(temp))
             return res;
         case "addNewPreOpQuestionNiares":
-            await fnAddNewPreOpQuestionNiares(req.body)
+            temp = await fnAddNewPreOpQuestionNiares(req.body);
             transporter.sendMail({
                 from: 'preop@voittaa.co.uk',
                 to: req.body.email,
                 subject: `Welcome to Connexin`,
                 text: "",
-                html: `<div> Please click the link below to complete and return the questionnaire to us <br> <a href="${process.env.DOMAIN}">${process.env.DOMAIN}</a></div>`
+                html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
+                <a href="${temp}">${temp}</a></div>`
             }, function (err: any, info: any) {
                 if(err){
                     return res.end(JSON.stringify("errors"))

@@ -113,7 +113,7 @@ export const fnGetAllQuestionNiareList = async () => {
 }
 
 export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
-    await faunaClient.query(
+    const res = await faunaClient.query(
         Create(
             Collection("PreOpQuestionNiares"),
             {
@@ -121,7 +121,7 @@ export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
             }
         )
     )
-    return "success";
+    return process.env.DOMAIN + Base64.encode(JSON.stringify({qusnaire: res.ref.id}));
 }
 
 export const fnGetAllPreOpQuestionNiares = async () => {                     
