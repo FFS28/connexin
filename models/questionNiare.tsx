@@ -303,7 +303,6 @@ export const fnUpdatePreOpQuestionNiares = async (data : any ) => {
 }
 
 export const fnGetAllQuestionSections = async () => {
-    console.log(Base64.encode(JSON.stringify("General")));
     const {data} = await faunaClient.query(
         Map(
             Paginate(Documents(Collection("Sections"))),
