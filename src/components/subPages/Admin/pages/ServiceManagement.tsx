@@ -21,13 +21,13 @@ export default function ServiceManagement(){
             id: 'ServiceSpecial',
             numeric: true,
             disablePadding: true,
-            label: 'Service Special'
+            label: 'Service Specialty'
         },
         {
             id: 'SubServiceSpecial',
             numeric: true,
             disablePadding: true,
-            label: 'Sub Service Special'
+            label: 'Sub Service Specialty'
         },
         {
             id: 'where',

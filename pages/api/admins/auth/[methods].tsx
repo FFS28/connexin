@@ -88,7 +88,7 @@ export default async function handler(req : any, res: any) {
                 to: req.body.email,
                 subject: `Welcome to Connexin`,
                 text: "",
-                html: `<div> Please click the link below to complete and return the questionnaire to us <br> <a href=${data}>Sign In</a></div>`
+                html: `<div> Welcome to Connexin Health Pre-Op System <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
             }, function (err: any, info: any) {
                 if(err){
                     return res.end(JSON.stringify("errors"))
