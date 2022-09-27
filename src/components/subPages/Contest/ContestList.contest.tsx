@@ -16,22 +16,25 @@ export default function ContestList() {
     const [drawType, setDrawType] = useState("draw")
     const [drawData, setDrawData] = useState<any>(null)
     const change_page = (index: any) => {
+        const padding = 7;
         if(index == "complete") {
             console.log(appState.useData.questionNiares)
-            const doc = new jsPDF('landscape');
+            const doc = new jsPDF();
+            doc.setFont("normal");
+            doc.setFontSize(11);
+            
             let nI = 0;
             appState.useData.questionNiares.map((questionnaire: any) => {
-                nI += 10;
-                doc.text(questionnaire.title, 10, nI);
+                doc.text(questionnaire.title, padding, nI);
+                nI += padding;
                 questionnaire.questions.map((question: any) => {
-                    nI += 10;
-                    doc.text(question.title, 20, nI);
-                    nI += 10;
-                    doc.text(question.result == false ? "NO" : "YES", 20, nI);
-                    nI += 10;
+                    doc.text(question.title, padding * 2, nI);
+                    nI += padding;
+                    doc.text(question.result == false ? "NO" : "YES", padding * 2, nI);
+                    nI += padding;
                     question.subQuestions.map((subquestion: any) => {
-                        nI += 10;
-                        doc.text(subquestion.title, 30, nI);
+                        doc.text(subquestion.title, padding * 3, nI);
+                        nI += padding;
                         // doc.text(subquestion.result.toString(), 10, 10);
                     })
                     
