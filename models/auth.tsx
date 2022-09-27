@@ -488,13 +488,14 @@ export const fnGetServiceConsultant = async (consultant :any) => {
 }
 
 export const fnUpdateConsultant = async (consultant :any) => {
+    console.log(consultant);
     const res = await faunaClient.query(
         Update(
             Ref(Collection("Consultant"), consultant.ref),
             {
                 data: {
                     title: consultant.title, 
-                    serviceSpecial: consultant.serviceSpecial, 
+                    serviceSpecial: consultant.serviceSpecial.toString(), 
                 }
             }
         )

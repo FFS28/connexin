@@ -29,14 +29,15 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
         if(!appState.editState){
             addNewConsultant(makeJSON({
                 title: consultantName, 
-                serviceSpecial: parseInt(serviceSpecial)
+                serviceSpecial: serviceSpecial
             })).then((res: any) => {
                 setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
             })
         }else {
+            console.log(serviceSpecial)
             updateConsultant(makeJSON({
                 title: consultantName, 
-                serviceSpecial: parseInt(serviceSpecial),
+                serviceSpecial: serviceSpecial,
                 ref : editData.ref
             })).then((res: any) => {
                 setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
