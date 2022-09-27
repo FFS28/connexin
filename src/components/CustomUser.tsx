@@ -11,7 +11,7 @@ export default function CustomUser({ qusnaire }: { qusnaire: string }){
 
     return (
         <div>
-            {qusnaire != "" ? <User /> : null}
+            {appState.users.user.ref != "" ? <User /> : null}
         </div>
     )
 }
