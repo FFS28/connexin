@@ -235,7 +235,7 @@ export const fnGetQuestionNiareByUser = async (userInfo: any) => {
 }
 
 export const fnSelectedPreOpQuestionNiares = async (data: any) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Get( Ref(Collection("PreOpQuestionNiares"), data.ref))
     )
     res.data.ref = res.ref.id
@@ -261,9 +261,9 @@ export const fnGetServiceQuestionnaire = async (questionnaire: any) => {
         )
         
         for (let i = 0; i< res.data.length; i++) {
-            let item = res.data[i];
+            const item = res.data[i];
             item.data.ref = item.ref.id
-            let service = await fnGetSelectedService({ref: item.data.service});
+            const service = await fnGetSelectedService({ref: item.data.service});
             item.data.service =  service.serviceSpecial;
             data.push(item.data);
         }
@@ -272,7 +272,7 @@ export const fnGetServiceQuestionnaire = async (questionnaire: any) => {
 }
 
 export const fnUpdatePreOpQuestionNiares = async (data : any ) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Update(
             Ref(Collection("PreOpQuestionNiares"), data.ref),
             {
@@ -322,11 +322,11 @@ export const fnGetAllQuestionSections = async () => {
 }
 
 export const fnGetSelectedQuestionSection = async (data : any) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Get( Ref(Collection("Sections"), data.ref))
     )
     res.data.ref = res.ref.id
-    let sections = res.data
+    const sections = res.data
     sections.title = JSON.parse(Base64.decode(sections.title))
     sections.info = JSON.parse(Base64.decode(sections.info))
     sections.link = JSON.parse(Base64.decode(sections.link))
@@ -392,7 +392,7 @@ export const fnGetReport = async (req: any) => {
             Lambda('x', Get(Var('x')))
         )
     )
-    let returnData = data.map((item: any) => {
+    const returnData = data.map((item: any) => {
         item.data.ref = item.ref.id
         return item.data
     })
@@ -403,4 +403,8 @@ export const fnGetReport = async (req: any) => {
     //     return item.selProcedure == req.selProcedure && item.service == req.service && item.sentDate == req.sentDate && item.sentBy == req.sentBy && item.dueDate == req.dueDate && item.completedDate == req.completedDate && item.overvue == parseInt(req.overvue);
     // })
     return returnData;
+}
+
+export const fnGetFilterResult = async (req: any) => {
+    return {sent: 0, await: 0, overdue: 0, completed: 0};
 }

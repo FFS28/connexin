@@ -5,6 +5,13 @@ export const saveUserRegister = (userData: any) => {
     })
 }
 
+export const getFilterResult = (filterData: any) => {
+    // validationcheck
+    return new Promise((res, rej) => {
+        fetch('/api/admins/question/filter', filterData).then(res).catch(rej)
+    })
+}
+
 export const setPassword = (userData: any) => {
     // validationcheck
     return new Promise((res, rej) => {

@@ -45,11 +45,11 @@ export default async function handler(req : any, res: any) {
     const methods = url[url.length - 1]    
     let data;
     const transporter = nodemailer.createTransport({
-        port: 465,
-        host: "mail.digitalquill.co.uk",
+        port: process.env.SMTP_PORT,
+        host: process.env.SMTP_HOST,
         auth: {
-            user: 'preop@voittaa.co.uk',
-            pass: 'BJh3J8ke55!',
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_KEY,
         },
         secure: true,
     });

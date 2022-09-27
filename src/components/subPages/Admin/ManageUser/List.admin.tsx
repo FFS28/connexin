@@ -69,6 +69,10 @@ const AdminListArray = [
     ],
     [
         {
+            Label : "Dashboard",
+            Icon : <DvrIcon fontSize='small' />
+        },
+        {
             Label : "Add User",
             Icon : <PeopleAltIcon fontSize='small' />,
         },

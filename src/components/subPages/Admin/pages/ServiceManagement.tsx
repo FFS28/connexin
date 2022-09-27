@@ -5,8 +5,8 @@ import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
 import SetupServiceDirectory from "../ManageUser/SetupServiceDirectory.admin";
 
-function createData(id: number, ServiceSpecial: string, SubServiceSpecial: string) {
-    return { id, ServiceSpecial, SubServiceSpecial};
+function createData(id: number, ServiceSpecial: string, SubServiceSpecial: string, where: string, hospitalSite: string, address: string, postCode: string, addressForRedirection: string, serviceEmail: string) {
+    return { id, ServiceSpecial, SubServiceSpecial, where, hospitalSite, address, postCode, addressForRedirection, serviceEmail};
 }
 
 export default function ServiceManagement(){
@@ -26,8 +26,44 @@ export default function ServiceManagement(){
         {
             id: 'SubServiceSpecial',
             numeric: true,
-            disablePadding: false,
+            disablePadding: true,
             label: 'Sub Service Special'
+        },
+        {
+            id: 'where',
+            numeric: true,
+            disablePadding: false,
+            label: 'Where'
+        },
+        {
+            id: 'hospitalSite',
+            numeric: true,
+            disablePadding: false,
+            label: 'Hostpital Site'
+        },
+        {
+            id: 'address',
+            numeric: true,
+            disablePadding: false,
+            label: 'Address'
+        },
+        {
+            id: 'postCode',
+            numeric: true,
+            disablePadding: false,
+            label: 'Post Code'
+        },
+        {
+            id: 'addressForRedirection',
+            numeric: true,
+            disablePadding: false,
+            label: 'URL Address For Redirection'
+        },
+        {
+            id: 'serviceEmail',
+            numeric: true,
+            disablePadding: false,
+            label: 'Service Email'
         }
     ];
 
@@ -62,9 +98,10 @@ export default function ServiceManagement(){
                 const ref_temp: any = []
                 data.map((item: any, index: number) => {
                     ref_temp.push({ref : item.ref})
-                    temp.push(createData(index, item.serviceSpecial, item.subServiceSpecial))  
+                    temp.push(createData(index, item.serviceSpecial, item.subServiceSpecial, item.where, item.hospitalSite, item.address, item.postCode, item.addressForRedirection, item.serviceEmail))  
                 })
                 setRows(temp)
+                console.log(temp)
                 setRefs(ref_temp)    
             }).catch((rej: any) => {console.log(rej)})
         })
@@ -73,7 +110,10 @@ export default function ServiceManagement(){
     return (
         <>
             <SetupServiceDirectory editData={editData} />
-            <ContentTable rows={rows.filter((row) => { return row.ServiceSpecial.toLowerCase().includes(searchword.toLowerCase()) || row.SubServiceSpecial.toLowerCase().includes(searchword.toLowerCase())})} search={SearchHandle} headCells={headCells} childrenTag={"SetupService"} handle={ChangeHandle} /> 
+            <ContentTable rows={rows.filter((row) => { 
+                    return row.ServiceSpecial.toLowerCase().includes(searchword.toLowerCase()) || 
+                    row.SubServiceSpecial.toLowerCase().includes(searchword.toLowerCase())
+                })} search={SearchHandle} headCells={headCells} childrenTag={"SetupService"} handle={ChangeHandle} /> 
         </>
     )
 }

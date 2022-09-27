@@ -265,7 +265,7 @@ export const fnAddRole = async (roleInfo: any) => {
 
 export const fnGetSelectedRole = async (roleInfo: any) => {
     
-    var res = await faunaClient.query(
+    const res = await faunaClient.query(
         Get( Ref(Collection("Roles"), roleInfo.ref))
     )
     res.data.ref = res.ref.id
@@ -278,7 +278,7 @@ export const fnUpdateRole = async (roleInfo: any) => {
             Ref(Collection("Roles"), roleInfo.ref),
             {
                 data: {
-                    role: roleInfo.name, 
+                    role: roleInfo.role, 
                     author: roleInfo.author, 
                 }
             }
@@ -340,6 +340,12 @@ export const fnAddNewService = async (serviceData: any) => {
                 data: {
                     serviceSpecial: serviceData.serviceSpecial, 
                     subServiceSpecial: serviceData.subServiceSpecial, 
+                    where: serviceData.where, 
+                    hospitalSite: serviceData.hospitalSite, 
+                    address: serviceData.address, 
+                    postCode: serviceData.postCode, 
+                    addressForRedirection: serviceData.addressForRedirection, 
+                    serviceEmail: serviceData.serviceEmail,
                 }
             }
         )
@@ -365,9 +371,15 @@ export const fnUpdateService = async (serviceData: any) => {
             Update( 
                 Ref(Collection("Service"), serviceData.ref), 
                 {
-                    data : {
-                        serviceSpecial : serviceData.serviceSpecial,
-                        subServiceSpecial : serviceData.subServiceSpecial
+                    data: {
+                        serviceSpecial: serviceData.serviceSpecial, 
+                        subServiceSpecial: serviceData.subServiceSpecial, 
+                        where: serviceData.where, 
+                        hospitalSite: serviceData.hospitalSite, 
+                        address: serviceData.address, 
+                        postCode: serviceData.postCode, 
+                        addressForRedirection: serviceData.addressForRedirection, 
+                        serviceEmail: serviceData.serviceEmail,
                     }
                 }
             )
@@ -440,7 +452,7 @@ export const fnGetAllConsultant = async () => {
 }
 
 export const fnGetSelectedConsultant = async (consultant :any) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Get( Ref(Collection("Consultant"), consultant.ref))
     )
 
@@ -465,9 +477,9 @@ export const fnGetServiceConsultant = async (consultant :any) => {
             )
         )
         for( let i = 0; i < res.data.length; i++){
-            let item = res.data[i];
+            const item = res.data[i];
             item.data.ref = item.ref.id
-            let service = await fnGetSelectedService({ref: item.data.serviceSpecial});
+            const service = await fnGetSelectedService({ref: item.data.serviceSpecial});
             item.data.service = service.serviceSpecial
             data.push(item.data);
         }
@@ -476,7 +488,7 @@ export const fnGetServiceConsultant = async (consultant :any) => {
 }
 
 export const fnUpdateConsultant = async (consultant :any) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Update(
             Ref(Collection("Consultant"), consultant.ref),
             {
@@ -540,7 +552,7 @@ export const fnGetAllProcedures = async () => {
 
 export const fnGetSelectedProcedure = async (procedure :any) => {
     try{
-        let res = await faunaClient.query(
+        const res = await faunaClient.query(
             Get( Ref(Collection("Procedure"), procedure.ref))
         )
         
@@ -570,9 +582,9 @@ export const fnGetServiceProcedure = async (procedure :any) => {
         )
         
         for (let i = 0; i< res.data.length; i++) {
-            let item = res.data[i];
+            const item = res.data[i];
             item.data.ref = item.ref.id
-            let service = await fnGetSelectedService({ref: item.data.serviceSpecialty});
+            const service = await fnGetSelectedService({ref: item.data.serviceSpecialty});
             item.data.service =  service.serviceSpecial;
             data.push(item.data);
         }
@@ -582,7 +594,7 @@ export const fnGetServiceProcedure = async (procedure :any) => {
 
 export const fnUdpateProcedure = async (procedure :any) => {
     try{
-        let res = await faunaClient.query(
+        const res = await faunaClient.query(
             Update(
                 Ref(Collection("Procedure"), procedure.ref),
                 {
@@ -660,7 +672,7 @@ export const fnAddTextRemainder = async function(textremainder: any){
 }
 
 export const fnGetSelectedTextRemainder = async (reminder: any) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Get( Ref(Collection("TextRemainder"), reminder.ref))
     )
     res.data.ref = res.ref.id
@@ -668,7 +680,7 @@ export const fnGetSelectedTextRemainder = async (reminder: any) => {
 }
 
 export const fnUpdateTextRemainder = async (reminder : any) => {
-    let res = await faunaClient.query(
+    const res = await faunaClient.query(
         Update(
             Ref(Collection("TextRemainder"), reminder.ref),
             {

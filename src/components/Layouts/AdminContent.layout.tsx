@@ -29,6 +29,7 @@ import QuestionSectionsManagement from '../subPages/Admin/pages/QuestionSections
 import ReportManagement from '../subPages/Admin/pages/ReportManagement';
 
 import { AppContext } from '../../provider/index.provider';
+import Dashboard from '../subPages/Admin/ManageUser/Dashboard.admin';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -57,6 +58,7 @@ const AdminTitle = [
         {title : "Service Email Management", icons : "users"}
     ],
     [
+        {title : "Dashboard", icons : <DvrIcon fontSize='large' /> },
         {title : "Add User", icons : <PeopleAltIcon fontSize='large' /> },
         {title : "Add Role", icons : <SettingsSuggestIcon fontSize='large' /> },
         {title : "Access Right", icons : <StackedBarChartIcon fontSize='large' /> },
@@ -82,16 +84,17 @@ const ShowContent = [
         <SetupEmailAddress key={7} />
     ],
     [
-        <UserManagement key={1} />, 
-        <RoleManagement key={2} />, 
-        <AccessRight key={3} />, 
-        <ServiceManagement key={4} />, 
-        <ConsultantManagement key={5} />, 
-        <ProcedureManagement key={6} />, 
-        <PreOpQusManagement key={7} />, 
-        <TextRemainderManagement key={8} />, 
-        <QuestionSectionsManagement key={9} />, 
-        <ReportManagement key={10} />
+        <Dashboard key={1} />,
+        <UserManagement key={2} />, 
+        <RoleManagement key={3} />, 
+        <AccessRight key={4} />, 
+        <ServiceManagement key={5} />, 
+        <ConsultantManagement key={6} />, 
+        <ProcedureManagement key={7} />, 
+        <PreOpQusManagement key={8} />, 
+        <TextRemainderManagement key={9} />, 
+        <QuestionSectionsManagement key={10} />, 
+        <ReportManagement key={11} />
     ]
 ]
 
