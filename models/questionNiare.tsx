@@ -172,23 +172,11 @@ export const fnGetAllPreOpQuestionNiares = async () => {
 }
 
 export const fnGetQuestionNiareByUser = async (userInfo: any) => {
-    
-    const {data} = await faunaClient.query(
-        Map(
-            Paginate(
-                Match(
-                    Index("QuestionNiareByUser"),
-                    [userInfo.email]
-                )
-            ),
-            Lambda('x', Get(Var('x')))
-        )
+    const res = await faunaClient.query(
+        Get( Ref(Collection("PreOpQuestionNiares"), userInfo.qusRef))
     )
     
-    const questions = [];
-    if(data.length == 0)
-        return [];
-    const temp = data[0].data.questionOrSection;
+    const temp = res.data.questionOrSection;
     for( let i = 0; i< temp.length; i++){
         const sections = await faunaClient.query(
             Let(

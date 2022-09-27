@@ -7,7 +7,6 @@ export default function CustomUser({ qusnaire }: { qusnaire: string }){
     const { appState, setAppState } = useContext(AppContext)
     useEffect(() => {
         setAppState({...appState, users: {...appState.users, user:{...appState.users.user, ref: qusnaire}}})
-        alert(qusnaire)
     }, [])
 
     return (
