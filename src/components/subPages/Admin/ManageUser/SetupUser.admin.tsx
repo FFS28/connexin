@@ -82,8 +82,11 @@ export default function SetupUser({editData}: {editData : any}){
             })
 
             saveUserRegister(data).then((res: any) => { 
-                setAppState({...appState, editState : false, alert: {...appState.alert, open: true, message: res, type: "success"}})
-                resetField()
+                res.json().then((data: any) => {
+                    setAppState({...appState, editState : false, alert: {...appState.alert, open: true, message: data, type: "success"}})
+                    resetField()
+                })
+                
             }).catch((rej: any) => {
                 console.log(rej)
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})

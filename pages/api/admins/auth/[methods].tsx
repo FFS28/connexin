@@ -96,7 +96,6 @@ export default async function handler(req : any, res: any) {
                     return res.end(JSON.stringify("success"))
                 }
             })
-            
             break;
         case "setPassword": 
             data = await fnReSetPassword(req.body)
