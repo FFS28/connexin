@@ -488,7 +488,6 @@ export const fnGetServiceConsultant = async (consultant :any) => {
 }
 
 export const fnUpdateConsultant = async (consultant :any) => {
-    console.log(consultant);
     const res = await faunaClient.query(
         Update(
             Ref(Collection("Consultant"), consultant.ref),
