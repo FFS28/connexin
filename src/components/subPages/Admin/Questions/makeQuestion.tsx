@@ -64,7 +64,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
         fetch('/api/admins/question/saveData', data).then(res => res.json()).then(res => {
             setAppState({...appState, editState: false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful Saved", type: "info"}, EditQus: {...appState.EditQus, ref: res}}
             )
-        }).catch((err: any) => setAppState({...appState, editState: false, alert: {...appState.alert, open: true, message: "Please check your Net!", type: "error"}}))
+        }).catch(() => setAppState({...appState, editState: false, alert: {...appState.alert, open: true, message: "Please check your Net!", type: "error"}}))
         close(true)
     }
 
@@ -126,7 +126,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                                     {appState.EditQus.questions.map((item : any, index: number)=>{
                                         return( 
                                             <Box key={index}>
-                                                <ListItemButton selected={index === showItem} onClick={(event) => setShowItem(index)} >
+                                                <ListItemButton selected={index === showItem} onClick={() => setShowItem(index)} >
                                                     <ListItemText primary={`Subject ${index + 1}`} />
                                                 </ListItemButton>
                                             </Box>

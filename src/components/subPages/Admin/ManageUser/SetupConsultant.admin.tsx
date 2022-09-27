@@ -53,7 +53,8 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
     }
 
     const changeService = (event: any) => {
-        handle(event.target.value)
+        if(!appState.editState)
+            handle(event.target.value)
         setServiceSpecial(event.target.value)
     }
 

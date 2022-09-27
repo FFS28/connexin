@@ -24,7 +24,7 @@ export default function ConsultantManagement(){
             label: 'Consultant Title'
         },
         {
-            id: 'ServiceSpecial',
+            id: 'Service/Specialty',
             numeric: true,
             disablePadding: false,
             label: 'ServiceSpecial Title'

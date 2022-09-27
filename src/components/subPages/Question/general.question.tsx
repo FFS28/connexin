@@ -1,6 +1,6 @@
 import PauseIcon from '@mui/icons-material/Pause';
 import React, { useContext } from "react";
-import { Box, Button, Divider, LinearProgress, Typography } from "@mui/material"
+import { Box, Button, LinearProgress, Typography } from "@mui/material"
 import { AppContext } from "../../../provider/index.provider";
 import ConnnexinBtn from "../../elements/ConnexinBtn";
 import YesNo from "../../elements/Questions/YesNo";

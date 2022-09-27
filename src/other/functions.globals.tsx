@@ -1,4 +1,4 @@
-import { encode, decode } from 'js-base64';
+import { decode } from 'js-base64';
 
 export const makeJSON = (data: any) => {
     return {

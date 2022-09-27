@@ -282,7 +282,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                     <TextField type={"text"} label={"Pre-Admissions Advice"} value={preAddmissionAdvice} variant={"standard"} onChange={ event => setPreAddmissionAdvice(event.target.value) } />
                 </Stack>
                 <Stack spacing={2} sx={{width: "50%"}} >
-                    <TextField type={"text"} label={"DOB"} value={dob} variant={"standard"} onChange={ event => setDob(event.target.value) } disabled />
+                    <TextField type={"date"} label={"DOB"} value={dob} variant={"standard"} onChange={ event => setDob(event.target.value) }  InputLabelProps={{ shrink: true }} />
                     <FormControl variant={"standard"}>
                         <InputLabel>Select Consultant</InputLabel>
                         <Select value={selConsultant} onChange={event => setSelConsultant(event.target.value)} sx={{textAlign: "left"}} >

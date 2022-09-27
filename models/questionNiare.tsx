@@ -8,11 +8,11 @@ const faunaClient = new faunadb.Client({
     domain: 'db.fauna.com'
 })
 
-const { Let, Map, Paginate, Documents, Collection, Lambda, Get, Var, Ref, Select, Match, Index, Create, Update, Delete } = faunadb.query 
+const { Let, Map, Paginate, Documents, Collection, Lambda, Get, Var, Ref, Select, Match, Index, Create, Update } = faunadb.query 
 
 export const fnSaveQuestionNiare = async (userInfo: any) => {
-    userInfo.questions.map(async (item: any, index: number) => {
-        item.subQuestions.map(async (subItem: any, subIndex: number) => {
+    userInfo.questions.map(async (item: any) => {
+        item.subQuestions.map(async (subItem: any) => {
             Object.keys(subItem).forEach((key: any) => {subItem[key] = Base64.encode(JSON.stringify(subItem[key]))} )
             const subItemData = await faunaClient.query(
                 Create(
@@ -57,8 +57,8 @@ export const fnSaveQuestionNiare = async (userInfo: any) => {
 }
 
 export const fnUpdateQuestionNiare = async (userInfo: any) => {
-    userInfo.questions.map(async (item: any, index: number) => {
-        item.subQuestions.map(async (subItem: any, subIndex: number) => {
+    userInfo.questions.map(async (item: any) => {
+        item.subQuestions.map(async (subItem: any) => {
             Object.keys(subItem).forEach((key: any) => {subItem[key] = Base64.encode(JSON.stringify(subItem[key]))} )
             const subItemData = await faunaClient.query(
                 Create(

@@ -51,7 +51,7 @@ export default async function handler(req : any, res: any) {
                 text: "",
                 html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
                 <a href="${temp}">${temp}</a></div>`
-            }, function (err: any, info: any) {
+            }, function (err: any) {
                 if(err){
                     return res.end(JSON.stringify("errors"))
                 }else{
