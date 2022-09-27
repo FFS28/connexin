@@ -5,6 +5,7 @@ import { AppContext } from "../../../provider/index.provider";
 import ConnnexinBtn from "../../elements/ConnexinBtn";
 import YesNo from "../../elements/Questions/YesNo";
 import SubQuestion from "../../elements/Questions/SubQuestion";
+import { makeJSON } from '../../../other/functions.globals';
 
 
 export default function GeneralQuestion({ pageHandle }: {pageHandle : (param: any)=>void}){
@@ -14,16 +15,17 @@ export default function GeneralQuestion({ pageHandle }: {pageHandle : (param: an
     const change_state= (value: boolean, index: number) => {
         const temp = appState.useData.questionNiares;
         temp[appState.pageState.curQuestionniare].questions[appState.pageState.curQuestion].result = value;
-        setAppState({...appState, useData : { ...appState.useData, questionNiares : temp}})
+        fetch('/api/admins/question/saveData', makeJSON(temp[appState.pageState.curQuestionniare]))
+        setAppState({...appState, useData : { ...appState.useData, questionNiares : temp}});
     }
     const change_data= (value: any) => {
-        const temp = appState.useData.questionNiares
+        const temp = appState.useData.questionNiares;
         temp[appState.pageState.curQuestionniare].questions[appState.pageState.curQuestion].subQuestions = value;
-        setAppState({...appState, useData: { ...appState.useData, questionNiares: temp }})
+        setAppState({...appState, useData: { ...appState.useData, questionNiares: temp }});
     }
 
     const gotoMainPage = () => {
-        setAppState({...appState, pageState: {...appState.pageState, curLayout: "MainLayout", curPage: "Home"}})
+        setAppState({...appState, pageState: {...appState.pageState, curLayout: "MainLayout", curPage: "Home"}});
     }
 
     return (

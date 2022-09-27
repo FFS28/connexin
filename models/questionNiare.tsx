@@ -35,7 +35,9 @@ export const fnSaveQuestionNiare = async (userInfo: any) => {
         )
         return itemData.data.ref
     })
-    Object.keys(userInfo).forEach((key: any) => { if(key != "ref") userInfo[key] = Base64.encode(JSON.stringify(userInfo[key]))} )
+    Object.keys(userInfo).forEach((key: any) => { 
+        if(key != "ref") 
+            userInfo[key] = Base64.encode(JSON.stringify(userInfo[key]))} )
     const userInfoData = await faunaClient.query(
         Create(
             Collection("Sections"),
@@ -53,6 +55,7 @@ export const fnSaveQuestionNiare = async (userInfo: any) => {
     )
     return userInfoData.ref.id
 }
+
 export const fnUpdateQuestionNiare = async (userInfo: any) => {
     userInfo.questions.map(async (item: any, index: number) => {
         item.subQuestions.map(async (subItem: any, subIndex: number) => {
@@ -261,7 +264,7 @@ export const fnGetServiceQuestionnaire = async (questionnaire: any) => {
 }
 
 export const fnUpdatePreOpQuestionNiares = async (data : any ) => {
-    const res = await faunaClient.query(
+    await faunaClient.query(
         Update(
             Ref(Collection("PreOpQuestionNiares"), data.ref),
             {
