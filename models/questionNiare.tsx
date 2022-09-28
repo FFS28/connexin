@@ -116,6 +116,24 @@ export const fnGetAllQuestionNiareList = async () => {
 }
 
 export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
+    console.log(serviceData.questionOrSection);
+    for(let i = 0; i < serviceData.questionOrSection.length; i++) {
+        const temp = await faunaClient.query(
+            Get( Ref(Collection("Sections"), serviceData.questionOrSection[i]))
+        )
+        const returnData = await faunaClient.query(
+            Create(
+                Collection("EditSections"),
+                {
+                    data: {
+                        content: JSON.stringify(temp.data),
+                    }
+                }
+            )
+        )
+        serviceData.questionOrSection[i] = returnData.ref.id.toString()
+    }
+    
     const res = await faunaClient.query(
         Create(
             Collection("PreOpQuestionNiares"),
@@ -181,28 +199,29 @@ export const fnGetQuestionNiareByUser = async (userInfo: any) => {
     
     const temp = res.data.questionOrSection;
     for( let i = 0; i< temp.length; i++){
-        const sections = await faunaClient.query(
+        const returnData = await faunaClient.query(
             Let(
                 {
-                    Section: Get(Ref(Collection('Sections'), temp[i])),
+                    Section: Get(Ref(Collection('EditSections'), temp[i])),
                 },
                 {
                     ref: Select(['ref', 'id'], Var('Section')),
-                    title: Select(['data', 'title'], Var('Section')),
-                    info: Select(['data', 'info'], Var('Section')),
-                    link: Select(['data', 'link'], Var('Section')),
-                    imgUrl: Select(['data', 'imgUrl'], Var('Section')),
-                    completed: Select(['data', 'completed'], Var('Section')),
-                    questions: Select(['data', 'questions'], Var('Section')),
+                    content: Select(['data', 'content'], Var('Section')),
                 }
             )
         )
-        sections.title = JSON.parse(Base64.decode(sections.title))
-        sections.info = JSON.parse(Base64.decode(sections.info))
-        sections.link = JSON.parse(Base64.decode(sections.link))
-        sections.imgUrl = JSON.parse(Base64.decode(sections.imgUrl))
-        sections.completed = JSON.parse(Base64.decode(sections.completed))
-        sections.questions = JSON.parse(Base64.decode(sections.questions))
+        returnData.content = JSON.parse(returnData.content);
+
+        const sections = {
+            ref: returnData.ref,
+            title: JSON.parse(Base64.decode(returnData.content.title)),
+            info: JSON.parse(Base64.decode(returnData.content.info)),
+            link: JSON.parse(Base64.decode(returnData.content.link)),
+            imgUrl: JSON.parse(Base64.decode(returnData.content.imgUrl)),
+            completed: JSON.parse(Base64.decode(returnData.content.completed)),
+            questions: JSON.parse(Base64.decode(returnData.content.questions))        ,
+        }
+        
         const question_temp = sections.questions;
         
         for(let j = 0; j< question_temp.length; j++){
