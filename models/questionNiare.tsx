@@ -116,7 +116,6 @@ export const fnGetAllQuestionNiareList = async () => {
 }
 
 export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
-    console.log(serviceData.questionOrSection);
     for(let i = 0; i < serviceData.questionOrSection.length; i++) {
         const temp = await faunaClient.query(
             Get( Ref(Collection("Sections"), serviceData.questionOrSection[i]))
