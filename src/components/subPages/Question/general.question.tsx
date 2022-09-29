@@ -15,7 +15,7 @@ export default function GeneralQuestion({ pageHandle }: {pageHandle : (param: an
     const change_state= (value: boolean, index: number) => {
         const temp = appState.useData.questionNiares;
         temp[appState.pageState.curQuestionniare].questions[appState.pageState.curQuestion].result = value;
-        fetch('/api/admins/question/saveData', makeJSON(temp[appState.pageState.curQuestionniare]))
+        fetch('/api/admins/question/saveEditData', makeJSON({ref: temp[appState.pageState.curQuestionniare].ref, content: temp[appState.pageState.curQuestionniare]}))
         setAppState({...appState, useData : { ...appState.useData, questionNiares : temp}});
     }
     const change_data= (value: any) => {

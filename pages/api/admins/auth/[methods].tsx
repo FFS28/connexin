@@ -40,17 +40,20 @@ import {
 
 const md5 = require('md5');
 const nodemailer = require('nodemailer');
+const { Base64 } = require('js-base64');
 
 export default async function handler(req : any, res: any) {
     const url = req.url.split("/")
     const methods = url[url.length - 1]    
+    const pwd = process.env.SMTP_KEY + "";
     let data;
+    
     const transporter = nodemailer.createTransport({
         port: process.env.SMTP_PORT,
         host: process.env.SMTP_HOST,
         auth: {
             user: process.env.SMTP_USER,
-            pass: process.env.SMTP_KEY,
+            pass: pwd.split('.')[0],
         },
         secure: true,
     });
@@ -233,8 +236,9 @@ export default async function handler(req : any, res: any) {
             return res;
         case "sendingPDF":
             data = await fnFindSender(req.body.ref);
+            console.log(data)
             transporter.sendMail({
-                from: data.patient,
+                from: process.env.SMTP_SENDER,
                 to: data.sender,
                 subject: `Connexin Questionnaire`,
                 text: "",

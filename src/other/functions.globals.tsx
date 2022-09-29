@@ -12,7 +12,6 @@ export const makeJSON = (data: any) => {
 
 export const checkDataType = (data: any) => {
     // validationcheck
-    console.log(data)
     return new Promise((res, rej) => {
         data = JSON.parse(decode(data))
         if(data)

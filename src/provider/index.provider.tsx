@@ -69,7 +69,8 @@ export const AppProvider = ({ children }: {children: any}) => {
                 email: "",
                 level : 0,
                 hospital: "",
-                ref: ""
+                ref: "",
+                signature: ""
             }
         },
         alert : {

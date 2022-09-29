@@ -34,7 +34,8 @@ export interface ProviderStore {
             email: string,
             level : 0,
             hospital: string,
-            ref : string
+            ref : string,
+            signature: string
         }
     },
     alert : {

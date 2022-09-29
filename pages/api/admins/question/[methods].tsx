@@ -11,7 +11,8 @@ import {
     fnGetSelectedQuestionSection,
     fnUpdatePreOpQuestionNiares,
     fnGetReport,
-    fnGetFilterResult
+    fnGetFilterResult,
+    fnSaveEditQuestionNiare
 } from "../../../../models/questionNiare";
 
 const nodemailer = require('nodemailer');
@@ -31,6 +32,12 @@ export default async function handler(req : any, res: any) {
     });
 
     switch(methods){
+        case "saveEditData":
+            console.log(req.body.content)
+            await fnSaveEditQuestionNiare(req.body)
+            res.end(JSON.stringify("success"))
+            return res;
+            break;
         case "saveData":
             if(req.body.ref == "")
                 temp = await fnSaveQuestionNiare(req.body)

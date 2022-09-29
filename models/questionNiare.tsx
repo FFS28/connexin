@@ -141,7 +141,7 @@ export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
             }
         )
     )
-    console.log(process.env.DOMAIN + Base64.encode(JSON.stringify({qusnaire: res.ref.id})))
+    
     return process.env.DOMAIN + Base64.encode(JSON.stringify({qusnaire: res.ref.id}));
 }
 
@@ -190,6 +190,30 @@ export const fnGetAllPreOpQuestionNiares = async () => {
         temp.push(data[i].data)
     }
     return temp
+}
+
+export const fnSaveEditQuestionNiare = async (qusInfo: any) => {
+    const questionnaire = qusInfo.content;
+    questionnaire.questions.map(async (item: any) => {
+        item.subQuestions.map(async (subItem: any) => {
+            Object.keys(subItem).forEach((key: any) => {subItem[key] = Base64.encode(JSON.stringify(subItem[key]))} )
+        })
+        Object.keys(item).forEach((key: any) => {item[key] = Base64.encode(JSON.stringify(item[key]))} )
+    })
+    Object.keys(questionnaire).forEach((key: any) => { 
+        if(key != "ref") 
+            questionnaire[key] = Base64.encode(JSON.stringify(questionnaire[key]))} )
+    await faunaClient.query(
+        Update(
+            Ref(Collection("EditSections"), qusInfo.ref),
+            {
+                data: {
+                    content: JSON.stringify(questionnaire)
+                }
+            }
+        )
+    )
+    return ;
 }
 
 export const fnGetQuestionNiareByUser = async (userInfo: any) => {

@@ -25,27 +25,30 @@ export default function ContestList() {
             doc.setFontSize(11);
             
             let nI = 0;
+            let cN = 1;
             appState.useData.questionNiares.map((questionnaire: any) => {
+                cN = 1;
+                nI += padding * cN;
                 doc.text(questionnaire.title, padding, nI);
-                nI += padding;
+                cN = questionnaire.title.split('\n').length; 
                 questionnaire.questions.map((question: any) => {
+                    nI += padding * cN;
                     doc.text(question.title, padding * 2, nI);
-                    nI += padding;
+                    cN = question.title.split('\n').length;
+                    nI += padding * cN;
                     doc.text(question.result == false ? "NO" : "YES", padding * 2, nI);
-                    nI += padding;
+                    cN = 1;
                     question.subQuestions.map((subquestion: any) => {
+                        nI += padding * cN;
                         doc.text(subquestion.title, padding * 3, nI);
-                        nI += padding;
                         if (nI > 280) {
                             nI = 10;
                             doc.addPage();
                         }
                     })
-                    
-                })            
+                })    
+                        
             })
-            console.log(doc.output('datauristring'))
-
             sendingPDF(makeJSON({
                 pdf: doc.output('datauristring').split('base64,')[1],
                 ref: appState.users.user.ref
