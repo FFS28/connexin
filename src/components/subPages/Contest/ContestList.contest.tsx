@@ -7,6 +7,8 @@ import { AppContext } from "../../../provider/index.provider";
 import YesNo from "../../elements/Questions/YesNo";
 import ConnecxinCheckCard from "../../elements/ConnexniCheckCard";
 import Signature from "../../elements/Signature";
+import { sendingPDF } from "../../../other/apis.globals";
+import { makeJSON } from "../../../other/functions.globals";
 
 
 export default function ContestList() {
@@ -18,7 +20,6 @@ export default function ContestList() {
     const change_page = (index: any) => {
         const padding = 7;
         if(index == "complete") {
-            console.log(appState.useData.questionNiares)
             const doc = new jsPDF();
             doc.setFont("normal");
             doc.setFontSize(11);
@@ -35,13 +36,25 @@ export default function ContestList() {
                     question.subQuestions.map((subquestion: any) => {
                         doc.text(subquestion.title, padding * 3, nI);
                         nI += padding;
-                        // doc.text(subquestion.result.toString(), 10, 10);
+                        if (nI > 280) {
+                            nI = 10;
+                            doc.addPage();
+                        }
                     })
                     
                 })            
             })
-            doc.text("Hello world!", 10, nI + 10);
-            doc.save("a4.pdf");
+            console.log(doc.output('datauristring'))
+
+            sendingPDF(makeJSON({
+                pdf: doc.output('datauristring').split('base64,')[1],
+                ref: appState.users.user.ref
+            })).then((res: any) => {
+                console.log(res)
+            }).catch((err: any) => {
+                console.log(err)
+            })
+            doc.save("Connnexin-Questionnaire.pdf");
             setAppState({...appState, pageState: { ...appState.pageState, curLayout : "MainLayout", curPage : "Question"}})
             return;
         }

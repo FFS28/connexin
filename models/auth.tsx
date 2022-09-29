@@ -695,3 +695,11 @@ export const fnUpdateTextRemainder = async (reminder : any) => {
     )
     return "successful"
 }
+
+export const fnFindSender = async (ref: string) => {
+    const res = await faunaClient.query(
+        Get( Ref(Collection("PreOpQuestionNiares"), ref))
+    )
+    
+    return { patient: res.data.email, sender: res.data.sentBy};   
+}

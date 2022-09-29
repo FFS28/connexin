@@ -45,7 +45,7 @@ export default async function handler(req : any, res: any) {
         case "addNewPreOpQuestionNiares":
             temp = await fnAddNewPreOpQuestionNiares(req.body);
             transporter.sendMail({
-                from: 'preop@voittaa.co.uk',
+                from: process.env.SMTP_SENDER,
                 to: req.body.email,
                 subject: `Welcome to Connexin`,
                 text: "",

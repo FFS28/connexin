@@ -34,7 +34,8 @@ import {
     fnUdpateProcedure,
     fnUpdateTextRemainder,
     fnReSetPassword,
-    fnSaveUserPass
+    fnSaveUserPass,
+    fnFindSender
 } from "../../../../models/auth";
 
 const md5 = require('md5');
@@ -84,7 +85,7 @@ export default async function handler(req : any, res: any) {
         case "saveUserRegister":
             data = await fnSaveUserRegister(req.body)
             transporter.sendMail({
-                from: 'preop@voittaa.co.uk',
+                from: process.env.SMPT_SENDER,
                 to: req.body.email,
                 subject: `Welcome to Connexin`,
                 text: "",
@@ -101,7 +102,7 @@ export default async function handler(req : any, res: any) {
             data = await fnReSetPassword(req.body)
                 
             transporter.sendMail({
-                from: 'preop@voittaa.co.uk',
+                from: process.env.SMPT_SENDER,
                 to: req.body.email,
                 subject: `From Connexin`,
                 text: "This is Reset Password Link",
@@ -230,6 +231,30 @@ export default async function handler(req : any, res: any) {
             data = await fnGetAllConsultantList()
             res.end(JSON.stringify(data))
             return res;
+        case "sendingPDF":
+            data = await fnFindSender(req.body.ref);
+            transporter.sendMail({
+                from: data.patient,
+                to: data.sender,
+                subject: `Connexin Questionnaire`,
+                text: "",
+                html: "",
+                attachments: [
+                    {
+                        filename: 'Questionnaire.pdf',
+                        content: req.body.pdf,
+                        contentType: 'application/pdf',
+                        encoding: 'base64'
+                    }
+                ]
+            }, function (err: any, info: any) {
+                if(err){
+                    return res.end(JSON.stringify("errors"))
+                }else{
+                    return res.end(JSON.stringify("success"))
+                }
+            })
+            break;
     }
 }
 

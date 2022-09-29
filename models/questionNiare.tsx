@@ -141,6 +141,7 @@ export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
             }
         )
     )
+    console.log(process.env.DOMAIN + Base64.encode(JSON.stringify({qusnaire: res.ref.id})))
     return process.env.DOMAIN + Base64.encode(JSON.stringify({qusnaire: res.ref.id}));
 }
 
