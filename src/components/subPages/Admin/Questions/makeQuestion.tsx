@@ -35,6 +35,15 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please fill all of inputfields", type: "error"}})
     }
 
+    const updateQN = () => {
+        const QN = appState.EditQus;
+        if(QN.title != "" && QN.info != "" && QN.link != "" && QN.imgUrl != ""){
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Update successful", type: "info"}, CtrlQN: { ...appState.CtrlQN, madeState : false}})
+        }
+        else
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please fill all of inputfields", type: "error"}})        
+    }
+
     const getFromSample = () => {
         alert("get from sample")
     }
@@ -83,7 +92,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
 
     return (
         <>
-            { appState.CtrlQN.madeState ? (
+            { appState.CtrlQN.madeState && !appState.editState ? (
                 <>
                     <Box sx={{p: 10, position: "relative"}}>
                         <Box sx={{mb: 5}}>
@@ -111,7 +120,36 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                         
                     </Box>
                 </>
-            ) : (
+            ) : null }
+            { appState.CtrlQN.madeState && appState.editState ? (
+                <>
+                    <Box sx={{p: 10, position: "relative"}}>
+                        <Box sx={{mb: 5}}>
+                            <Button variant={"contained"} color={"secondary"} sx={{float: "right"}} onClick={()=>{close(true); setAppState({...appState, editState: false})}} >Return Back to Home</Button>
+                        </Box>
+                        <Box sx={{mt: 2, mb: 2, textAlign: "center"}}>
+                            <Typography variant={"h3"} component={"h3"} >Update Question Section</Typography>
+                        </Box>
+                        <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
+                            <TextField label={"Question Section Title"}  value={appState.EditQus.title} type="text" onChange={(event: any) => {change_value("QuestionNiare Title", event.target.value)}} fullWidth />
+                        </Box>
+                        <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
+                            <TextField label={"Question Section Info"} value={appState.EditQus.info} type="text" onChange={(event: any) => {change_value("QuestionNiare Info", event.target.value)}} fullWidth />
+                        </Box>
+                        <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
+                            <TextField label={"Question Section Link"} value={appState.EditQus.link} type="text" onChange={(event: any) => {change_value("QuestionNiare Link", event.target.value)}} fullWidth />
+                        </Box>
+                        <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
+                            <TextField label={"Question Section ImageUrl"} value={appState.EditQus.imgUrl} type="text" onChange={(event: any) => {change_value("QuestionNiare ImageUrl", event.target.value)}} fullWidth />
+                        </Box>
+                        <Stack spacing={2} direction={"row"} >
+                            <Button variant={"outlined"} onClick={updateQN} fullWidth >Update QuestionNiare</Button>
+                        </Stack>
+                        
+                    </Box>
+                </>
+            ) : null }
+            { !appState.CtrlQN.madeState ? (
                 <>
                     <Box sx={{p: 10, position: "relative", textAlign: "center"}}>
                         <Button variant={"contained"} color={"secondary"} onClick={()=>{close(true); setAppState({...appState, editState: false})}} sx={{float: "right"}} >Return Back to Home</Button>
@@ -127,7 +165,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                                         return( 
                                             <Box key={index}>
                                                 <ListItemButton selected={index === showItem} onClick={() => setShowItem(index)} >
-                                                    <ListItemText primary={`Subject ${index + 1}`} />
+                                                    <ListItemText primary={ item.title != "" ? item.title : `Subject ${index + 1}`} />
                                                 </ListItemButton>
                                             </Box>
                                         )      
@@ -156,7 +194,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                         </Grid>
                     </Box>
                 </>
-            ) }               
+            ) : null }               
         </>
     )
 }

@@ -14,7 +14,7 @@ export default function CheckboxOpinion({problem_state, proNum, data, value }: {
             <FormGroup aria-label="position" row sx={{textAlign: "center", pr: 4, pl: 4}} >
                 {data.map((item: string, index: number) => {
                     const temp = value == '' ? Array(data.length).fill(false) : value;
-                    return <FormControlLabel key={index} sx={{m: "auto"}}  onChange={() => handlechange(index)} control={temp[index] == true ? <Checkbox defaultChecked /> : <Checkbox /> } label={item} />
+                    return <FormControlLabel key={index} sx={{m: "auto"}}  onChange={() => handlechange(index)} control={ <Checkbox checked={temp[index]} /> } label={item} />
                 })}
             </FormGroup>
         </>

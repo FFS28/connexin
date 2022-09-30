@@ -34,7 +34,6 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
                 setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
             })
         }else {
-            console.log(serviceSpecial)
             updateConsultant(makeJSON({
                 title: consultantName, 
                 serviceSpecial: serviceSpecial,

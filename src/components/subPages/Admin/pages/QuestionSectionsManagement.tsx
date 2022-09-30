@@ -43,8 +43,7 @@ export default function QuestionSectionsManagement(){
             ref: refs[item].ref,
         })).then((res: any)=> {
             res.json().then((data: any) => {
-                console.log(data)
-                setAppState({...appState, editState : true, EditQus : data, CtrlQN: {...appState.CtrlQN, madeState: false} })
+                setAppState({...appState, editState : true, EditQus : data, CtrlQN: {...appState.CtrlQN, madeState: true} })
             }).catch((rej: any) => {
                 console.log(rej)
             })

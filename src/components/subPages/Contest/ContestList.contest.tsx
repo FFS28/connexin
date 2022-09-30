@@ -57,7 +57,7 @@ export default function ContestList() {
             }).catch((err: any) => {
                 console.log(err)
             })
-            doc.save("Connnexin-Questionnaire.pdf");
+            // doc.save("Connnexin-Questionnaire.pdf");
             setAppState({...appState, pageState: { ...appState.pageState, curLayout : "MainLayout", curPage : "Question"}})
             return;
         }

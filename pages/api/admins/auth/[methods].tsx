@@ -236,7 +236,6 @@ export default async function handler(req : any, res: any) {
             return res;
         case "sendingPDF":
             data = await fnFindSender(req.body.ref);
-            console.log(data)
             transporter.sendMail({
                 from: process.env.SMTP_SENDER,
                 to: data.sender,

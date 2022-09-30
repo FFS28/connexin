@@ -219,7 +219,6 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
 
     useEffect(()=>{
         if(appState.editState && editData){
-            console.log("current state", editData)
             setNhsNumber(editData.nhsNumber)
             setService(editData.service)
             

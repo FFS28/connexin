@@ -11,7 +11,6 @@ export default function QuestionPanel() {
     const { appState, setAppState } = useContext(AppContext)
 
     useEffect(()=>{
-        console.log(appState.users.user)
         let check = true;
         appState.useData.questionNiares.map((item: QuestionNiare)=>{
             check = check && item.completed

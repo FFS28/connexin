@@ -39,7 +39,6 @@ export default function SetupUser({editData}: {editData : any}){
             resetField()
             setAppState({...appState, alert: {...appState.alert, open: true, message: res, type: "success"}})
         })
-        console.log("This is Sending Email Part")
     }
 
     const saveUser = ()=>{
