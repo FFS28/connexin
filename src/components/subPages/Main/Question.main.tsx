@@ -11,6 +11,7 @@ export default function QuestionPanel() {
     const { appState, setAppState } = useContext(AppContext)
 
     useEffect(()=>{
+        console.log(appState.users.user)
         let check = true;
         appState.useData.questionNiares.map((item: QuestionNiare)=>{
             check = check && item.completed
@@ -31,14 +32,14 @@ export default function QuestionPanel() {
                 </Box>
                 <Box sx={{mt: 2 }}>
                     <Typography variant="subtitle1" gutterBottom component="div">Date/time of procedure</Typography>
-                    <Typography variant="caption" gutterBottom component="div">12/11/2021 01:30pm</Typography>
+                    <Typography variant="caption" gutterBottom component="div">{appState.users.user.addmissionDate}</Typography>
                 </Box>
                 <Box sx={{mt: 2 }}>
                     <Typography variant="subtitle1" gutterBottom component="div">Planned procedure</Typography>
                     <Typography variant="caption" gutterBottom component="div">Heart surgery</Typography>
                 </Box>
                 <Box sx={{mt: 2 }}>
-                    <Typography variant="caption" gutterBottom component="div">Please complete the following questions and provide us with consent by 10/11/2021.</Typography>
+                    <Typography variant="caption" gutterBottom component="div">Please complete the following questions and provide us with consent by {appState.users.user.returnByDate}</Typography>
                 </Box>
                 <Divider sx={{mt: 2, mb: 2}} />
                 <Box sx={{pt: 2}}>

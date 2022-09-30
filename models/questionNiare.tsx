@@ -217,10 +217,16 @@ export const fnSaveEditQuestionNiare = async (qusInfo: any) => {
 }
 
 export const fnGetQuestionNiareByUser = async (userInfo: any) => {
+    console.log("======================")
     const res = await faunaClient.query(
         Get( Ref(Collection("PreOpQuestionNiares"), userInfo.qusRef))
     )
-    
+    console.log(res.data)
+    const procedure = await faunaClient.query(
+        Get( Ref( Collection("Procedure"), res.data.selProcedure ))
+    )
+
+    console.log(procedure)
     const temp = res.data.questionOrSection;
     for( let i = 0; i< temp.length; i++){
         const returnData = await faunaClient.query(
@@ -266,7 +272,13 @@ export const fnGetQuestionNiareByUser = async (userInfo: any) => {
         sections.questions = question_temp 
         temp[i] = sections
     }
-    return temp;
+    
+    return {
+        addmissionDate: res.data.personalAddmissionDate, 
+        returnByDate: res.data.returnBy, 
+        procedure: procedure.data.procedure,
+        qusData: temp
+    };
 }
 
 export const fnSelectedPreOpQuestionNiares = async (data: any) => {

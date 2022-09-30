@@ -281,7 +281,6 @@ export const findReport = (data: any) => {
     })
 }
 
-
 export const sendingPDF = (data: any) => {
     return new Promise((res, rej) => {
         fetch('/api/admins/auth/sendingPDF', data).then(res).catch(rej)

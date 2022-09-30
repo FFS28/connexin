@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
+
 import {Typography,Divider, Box } from "@mui/material"
 import ConnexinImgCarusal from "../../elements/ConnexinImgCarusal";
+import { AppContext } from "../../../provider/index.provider";
 
 export default function Advice() {
+    const {appState, setAppState} = useContext(AppContext);
     return (
         <>
             <Box sx={{pl : 0.5, pr: 0.5, position : "relative", pb : 2}}>
@@ -14,7 +17,7 @@ export default function Advice() {
                 </Box>
                 <Box sx={{mt: 2 }}>
                     <Typography variant="subtitle1" gutterBottom component="div">Date/time of procedure</Typography>
-                    <Typography variant="caption" gutterBottom component="div">12/11/2021 01:30pm</Typography>
+                    <Typography variant="caption" gutterBottom component="div">{appState.users.user.addmissionDate}</Typography>
                 </Box>
                 <Box sx={{mt: 2 }}>
                     <Typography variant="subtitle1" gutterBottom component="div">Planned procedure</Typography>

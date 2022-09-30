@@ -70,7 +70,10 @@ export const AppProvider = ({ children }: {children: any}) => {
                 level : 0,
                 hospital: "",
                 ref: "",
-                signature: ""
+                signature: "",
+                addmissionDate: "", 
+                returnByDate: "",
+                procedure: ""
             }
         },
         alert : {

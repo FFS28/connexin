@@ -40,13 +40,13 @@ export default function UnitText({problem_state, proNum, value, data }: {problem
             <Box sx={{mt: 2, pl: 3, pr: 2}}>
                 {realUnit == "ft" ? (
                     <Stack direction={"row"} sx={{justifyContent: "center"}} spacing={2} >
-                        <input value={real.split("&")[0]} onChange={(event) => change_content(event.target.value, 1)}  style={{width: "80px", height: "80px", fontSize: "50px", border: "none", textAlign: "center"}} /> 
+                        <input value={real.split("&")[0]} onChange={(event) => change_content(event.target.value, 1)}  style={{width: "40%", height: "80px", fontSize: "50px", border: "none", textAlign: "center"}} /> 
                         <Typography variant={"h5"} component={"label"} sx={{verticalAlign: "bottom", paddingTop: "30px"}} >ft</Typography> 
-                        <input value={real.split("&")[1] ? real.split("&")[1] : ""} onChange={(event) => change_content(event.target.value, 2)}  style={{width: "80px", height: "80px", fontSize: "50px", border: "none", textAlign: "center"}} /> 
+                        <input value={real.split("&")[1] ? real.split("&")[1] : ""} onChange={(event) => change_content(event.target.value, 2)}  style={{width: "40%", height: "80px", fontSize: "50px", border: "none", textAlign: "center"}} /> 
                         <Typography variant={"h5"} component={"label"} sx={{verticalAlign: "bottom", paddingTop: "30px"}}>in</Typography>     
                     </Stack>
                 ) : (
-                    <input value={real} onChange={(event) => change_content(event.target.value, 0)}  style={{width: "80px", height: "80px", fontSize: "50px", border: "none", textAlign: "center"}} />
+                    <input value={real} onChange={(event) => change_content(event.target.value, 0)}  style={{width: "100%", height: "80px", fontSize: "50px", border: "none", textAlign: "center"}} />
                 )}
                 <Divider sx={{mt: 1,mb: 1}} />
                 <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} sx={{justifyContent: "center"}} > 

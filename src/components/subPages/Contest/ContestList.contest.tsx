@@ -117,14 +117,14 @@ export default function ContestList() {
                             </Box>
                             <Box sx={{mt: 2 }}>
                                 <Typography variant="subtitle1" gutterBottom component="div">Date/time of procedure</Typography>
-                                <Typography variant="subtitle2" gutterBottom component="div">12/11/2021 01:30pm</Typography>
+                                <Typography variant="subtitle2" gutterBottom component="div">{appState.users.user.addmissionDate}</Typography>
                             </Box>
                             <Box sx={{mt: 2 }}>
                                 <Typography variant="subtitle1" gutterBottom component="div">Planned procedure</Typography>
-                                <Typography variant="subtitle2" gutterBottom component="div">Heart surgery</Typography>
+                                <Typography variant="subtitle2" gutterBottom component="div">{appState.users.user.procedure}</Typography>
                             </Box>
                             <Box sx={{mt: 2 }}>
-                                <Typography variant="subtitle1" gutterBottom component="div">Please complete the following questions and provide us with consent by 10/11/2021.</Typography>
+                                <Typography variant="subtitle1" gutterBottom component="div">Please complete the following questions and provide us with consent by {appState.users.user.returnByDate}.</Typography>
                             </Box>
                             <Box>
                                 {appState.useData.contestList.map((item: any, index: number) => {

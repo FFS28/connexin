@@ -36,6 +36,9 @@ export interface ProviderStore {
             hospital: string,
             ref : string,
             signature: string
+            addmissionDate: string, 
+            returnByDate: string,
+            procedure: string
         }
     },
     alert : {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -7,6 +7,7 @@ import { Box, Typography, Card, CardContent, IconButton } from "@mui/material"
 import { grey } from '@mui/material/colors';
 import ImageMark from '../../elements/ImageMark';
 import ConnnexinBtn from '../../elements/ConnexinBtn';
+import { AppContext } from '../../../provider/index.provider';
 
 const Img = styled('img')({
     margin: 'auto 2px',
@@ -17,6 +18,7 @@ const Img = styled('img')({
 });
 
 export default function Intro1({pageHandle}: {pageHandle: (param1: any)=>void}){
+    const {appState} = useContext(AppContext)
     return (
         <>
             <Box sx={{minHeight: "100vh"}}>
@@ -28,13 +30,13 @@ export default function Intro1({pageHandle}: {pageHandle: (param1: any)=>void}){
                         <Typography variant='h5' component="div" color={grey[50]} sx={{ textAlign : "left"}} >What to expect?</Typography>
                     </Box>
                     <Box sx={{mb: 1, mt: 1}}>
-                        <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >Thank you for resistering onto the Peri-operative and consent system in preparation of your [PLANNED PROCEDURE] of [HOSPITAL SITE].</Typography>
+                        <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >Thank you for resistering onto the Peri-operative and consent system in preparation of your {appState.users.user.procedure} of [HOSPITAL SITE].</Typography>
                     </Box>
                     <Box sx={{mb: 1, mt: 1}}>
                         <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >You are required to complete the medical questionniare before the hospital can arrange your admission date. You will not be able to submit the infomation unless all questions are answered.</Typography>
                     </Box>
                     <Box sx={{mb: 4, mt: 1}}>
-                        <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >Please note this needs to be completed by [DATE].</Typography>
+                        <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >Please note this needs to be completed by {appState.users.user.returnByDate}.</Typography>
                     </Box>
                     <Box>
                         <Card sx={{ display: 'flex', borderRadius: "15px", pl: 1, pr:1, position: "relative" }}> 

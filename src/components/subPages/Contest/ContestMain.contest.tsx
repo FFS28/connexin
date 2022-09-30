@@ -8,8 +8,7 @@ import AssessmentHistory from "../../elements/AssessmentHistory";
 import { AppContext } from "../../../provider/index.provider";
 import { Question, QuestionNiare } from "../../../dataType/provider.dt";
 
-
-export default function ContestMain({pageHandle}: {pageHandle: (param1:any)=>void}) {
+export default function ContestMain({pageHandle}: {pageHandle: (param1: any)=>void}) {
     const { appState } = useContext(AppContext)
 
     return (
@@ -22,7 +21,7 @@ export default function ContestMain({pageHandle}: {pageHandle: (param1:any)=>voi
                     <Typography variant="h6" gutterBottom component="div">Pre-op assessment</Typography>
                 </Box>
                 <Box sx={{pt: 2}}>
-                    <Typography variant="h6" gutterBottom component="div">Thank you for completing all of questionniares below. We will need your consent so we can get you ready for the procedure on 12/11/2021.</Typography>
+                    <Typography variant="h6" gutterBottom component="div">Thank you for completing all of questionniares below. We will need your consent so we can get you ready for the procedure on { appState.users.user.returnByDate}.</Typography>
                 </Box>
                 <Box sx={{pt: 2}}>
                     <ConnnexinBtn type="contained" value="Give contest" moveto={pageHandle} m_page="ContestList" />

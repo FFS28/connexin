@@ -26,7 +26,7 @@ export default function Welcome(){
             qusRef: appState.users.user.ref
         })).then((res: any)=>{
             res.json().then((data: any)=>{
-                setAppState({...appState, pageState: {...appState.pageState, curPage : "Detail"}, alert: {...appState.alert, open: false}, useData: {...appState.useData, questionNiares: data} })
+                setAppState({...appState, pageState: {...appState.pageState, curPage : "Detail"}, alert: {...appState.alert, open: false}, useData: {...appState.useData, questionNiares: data.qusData}, users: { ...appState.users, user: {...appState.users.user, addmissionDate: data.addmissionDate, returnByDate: data.returnByDate, procedure: data.procedure}}})
             })
         }).catch((res: any)=> {
             console.log(res)
