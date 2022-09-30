@@ -88,11 +88,11 @@ export default async function handler(req : any, res: any) {
         case "saveUserRegister":
             data = await fnSaveUserRegister(req.body)
             transporter.sendMail({
-                from: process.env.SMPT_SENDER,
+                from: process.env.SMTP_SENDER,
                 to: req.body.email,
-                subject: `Welcome to Connexin`,
+                subject: `Welcome`,
                 text: "",
-                html: `<div> Welcome to Connexin Health Pre-Op System <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
+                html: `<div> Welcome <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
             }, function (err: any, info: any) {
                 if(err){
                     return res.end(JSON.stringify("errors"))
@@ -105,9 +105,9 @@ export default async function handler(req : any, res: any) {
             data = await fnReSetPassword(req.body)
                 
             transporter.sendMail({
-                from: process.env.SMPT_SENDER,
+                from: process.env.SMTP_SENDER,
                 to: req.body.email,
-                subject: `From Connexin`,
+                subject: `From Admin`,
                 text: "This is Reset Password Link",
                 html: `<a href=${data}>Reset Password</a>`
             }, function (err: any, info: any) {

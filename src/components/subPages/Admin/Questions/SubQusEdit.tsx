@@ -33,39 +33,51 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
         temp[showItem].subQuestions[showSubItem].type = type;
         switch(type){
             case 1:
+                temp[showItem].subQuestions[showSubItem].data = "";
                 temp[showItem].subQuestions[showSubItem].result = null;
                 break;
             case 2:
+                temp[showItem].subQuestions[showSubItem].data = "";
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 3:
+                temp[showItem].subQuestions[showSubItem].data = "";
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 4:
-                temp[showItem].subQuestions[showSubItem].result = appState.EditQus.questions[showItem].subQuestions[showSubItem].data.map(()=> {
-                    return false;
-                })
+                // temp[showItem].subQuestions[showSubItem].result = appState.EditQus.questions[showItem].subQuestions[showSubItem].data.map(()=> {
+                //     return false;
+                // })
+                temp[showItem].subQuestions[showSubItem].data = [];
+                temp[showItem].subQuestions[showSubItem].result = []
                 break;
             case 5:
+                temp[showItem].subQuestions[showSubItem].data = "";
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 6:
+                temp[showItem].subQuestions[showSubItem].data = "";
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 7:
+                temp[showItem].subQuestions[showSubItem].data = [];
                 temp[showItem].subQuestions[showSubItem].result = [""];
                 break;
             case 8:
-                temp[showItem].subQuestions[showSubItem].result = []
+                temp[showItem].subQuestions[showSubItem].data = [];
+                temp[showItem].subQuestions[showSubItem].result = [];
                 break;
             case 9:
-                temp[showItem].subQuestions[showSubItem].result = ""
+                temp[showItem].subQuestions[showSubItem].data = "";
+                temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 10:
-                temp[showItem].subQuestions[showSubItem].result = ""
+                temp[showItem].subQuestions[showSubItem].data = "";
+                temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 11:
-                temp[showItem].subQuestions[showSubItem].result = ""
+                temp[showItem].subQuestions[showSubItem].data = "";
+                temp[showItem].subQuestions[showSubItem].result = "";
                 break;
         }
         setAppState({...appState, EditQus: {...appState.EditQus, questions: temp}})
@@ -89,10 +101,10 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
 
     useEffect(()=>{
         setOpinion(subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1]); 
-    })
+    }, [])
 
-    return (
-        
+    return ( 
+
         <Box sx={{mt: 1, mb: 1}}>
             <FormControl sx={{mt: 1, mb: 1}} fullWidth>
                 <InputLabel id="demo-simple-select-label">Quiz Type</InputLabel>
@@ -104,7 +116,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                 </Select>
                 
             </FormControl>
-            { opinion == "Yes/No Question" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Yes/No Question" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -114,7 +126,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "Single Textfield" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Single Textfield" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -124,7 +136,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "Select field" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Select field" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -137,7 +149,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "Tickbox" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Tickbox" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -150,7 +162,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "Radio Button" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Radio Button" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -163,7 +175,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "TextArea" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "TextArea" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -173,7 +185,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "MultiSelect" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "MultiSelect" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -186,7 +198,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "ListInputfield" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "ListInputfield" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -199,7 +211,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null }
-            { opinion == "Text" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Text" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -209,7 +221,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "Datefield" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "Datefield" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>
@@ -219,7 +231,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                     </Box>
                 </>
             ) : null}
-            { opinion == "UnitText" ? (
+            { subItemList[appState.EditQus.questions[showItem].subQuestions[showSubItem].type - 1] == "UnitText" ? (
                 <>
                     <Box sx={{mt: 1, mb: 1}}>
                         <Typography variant="h6" component="h6" sx={{textAlign: "left"}} >Type : {opinion}</Typography>

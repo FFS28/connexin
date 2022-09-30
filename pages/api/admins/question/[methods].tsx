@@ -20,13 +20,14 @@ const nodemailer = require('nodemailer');
 export default async function handler(req : any, res: any) {
     const url = req.url.split("/");
     const methods = url[url.length - 1];
+    const pwd = process.env.SMTP_KEY + "";
     let temp;
     const transporter = nodemailer.createTransport({
         port: process.env.SMTP_PORT,
         host: process.env.SMTP_HOST,
         auth: {
             user: process.env.SMTP_USER,
-            pass: process.env.SMTP_KEY,
+            pass: pwd.split('.')[0],
         },
         secure: true,
     });
@@ -54,7 +55,7 @@ export default async function handler(req : any, res: any) {
             transporter.sendMail({
                 from: process.env.SMTP_SENDER,
                 to: req.body.email,
-                subject: `Welcome to Connexin`,
+                subject: `Welcome`,
                 text: "",
                 html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
                 <a href="${temp}">${temp}</a></div>`

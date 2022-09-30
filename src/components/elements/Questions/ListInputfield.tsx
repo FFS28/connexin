@@ -25,7 +25,7 @@ export default function ListInputfield({problem_state, proNum = 0, data, value }
                                 <Typography variant={"subtitle1"} component={"div"} sx={{textAlign:"left"}} >{item.title}</Typography>
                             </Grid>
                             <Grid item xs={2}>
-                                <TextField variant={"outlined"} type={"number"} defaultValue={real[index] || 0} onChange={(event) => {change_value(event.target.value, index)}} sx={{width: "60px"}} />
+                                <TextField variant={"outlined"} type={"number"} value={real[index] || 0} onChange={(event) => {change_value(event.target.value, index)}} sx={{width: "60px"}} />
                             </Grid>
                             <Grid item xs={2}>
                                 <Typography variant={"subtitle1"} component={"div"}> = {item.value} {item.unit}</Typography>

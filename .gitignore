@@ -6,6 +6,7 @@
 .pnp.js
 *.zip
 *.env
+index.tsx
 
 # testing
 /coverage

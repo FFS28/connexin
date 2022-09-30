@@ -36,8 +36,8 @@ export default function ContestMain({pageHandle}: {pageHandle: (param1:any)=>voi
                     const link_text = subItems + "/" + item.questions.length + "completed";
                     return (<ConnexinImgCard key={index}  cardnum={index}  imgURL={item.imgUrl} title={item.title} info={item.info} link={link_text} completed={item.completed} />)
                 })}
-                <Divider sx={{mt: 2, mb: 2}} />
-                <AssessmentHistory />
+                {/* <Divider sx={{mt: 2, mb: 2}} /> */}
+                {/* <AssessmentHistory /> */}
             </Box>
         </>
     )

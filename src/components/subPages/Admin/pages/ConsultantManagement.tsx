@@ -21,13 +21,13 @@ export default function ConsultantManagement(){
             id: 'Consultant',
             numeric: true,
             disablePadding: true,
-            label: 'Consultant Title'
+            label: 'Consultant'
         },
         {
-            id: 'Service/Specialty',
+            id: 'Service-Specialty',
             numeric: true,
             disablePadding: false,
-            label: 'ServiceSpecial Title'
+            label: 'Service/Specialty'
         }
     ];
 
