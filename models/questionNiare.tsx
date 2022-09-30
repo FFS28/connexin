@@ -269,8 +269,8 @@ export const fnGetQuestionNiareByUser = async (userInfo: any) => {
         temp[i] = sections
     }
     return {
-        addmissionDate: res.data.personalAddmissionDate, 
-        returnByDate: res.data.returnBy, 
+        addmissionDate: res.data.personalAddmissionDate.split('-')[2] + "-" + res.data.personalAddmissionDate.split('-')[1] + "-" + res.data.personalAddmissionDate.split('-')[0], 
+        returnByDate: res.data.returnBy.split('-')[2] + "-" + res.data.returnBy.split('-')[1] + "-" + res.data.returnBy.split('-')[0], 
         procedure: procedure.data.procedure,
         qusData: temp
     };

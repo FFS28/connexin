@@ -77,7 +77,7 @@ export default function ResetPassword({path}: {path: string}){
                 setM_type(false)
                 setM_state(true)
                 // router.push(process.env.DOMAIN + 'admins')
-                router.push('https://preop.vercel.app/admins');
+                router.push('http://preop.voittaa.co.uk:8011/admins');
             }).catch(rej => {
                 setM_message("Please check your Url")
                 setM_type(false)
