@@ -38,7 +38,8 @@ export interface ProviderStore {
             signature: string
             addmissionDate: string, 
             returnByDate: string,
-            procedure: string
+            procedure: string,
+            hospitalSite: string
         }
     },
     alert : {

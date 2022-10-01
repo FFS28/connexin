@@ -192,16 +192,13 @@ export const fnDeleteUser = async (userInfo: any) => {
 export const fnSaveUserRegister = async (userInfo: any) => {
     const data = await faunaClient.query(
         Create(
-            Collection("TempRegister"),
+            Collection("Admins"),
             {
                 data: userInfo
             }
         )
     )
-    data.data.ref = data.ref.id
-    // This is sendlink part
-    const Link = process.env.DOMAIN + "resetpassword/" + Base64.encode(JSON.stringify(data.data))
-    return Link;
+    return data.ref.id;
 }
 
 export const fnReSetPassword = async (userInfo: any) => {

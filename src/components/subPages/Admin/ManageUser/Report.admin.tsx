@@ -1,15 +1,18 @@
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import FlipCameraAndroidIcon from '@mui/icons-material/FlipCameraAndroid';
-import React, { useContext, useEffect, useState } from "react";
-import { Autocomplete, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
 
-import { getAllProcedures, getAllServices, findReport } from "../../../../other/apis.globals";
+import { getAllProcedures, getAllServices } from "../../../../other/apis.globals";
 import { makeJSON } from "../../../../other/functions.globals";
-import { AppContext } from "../../../../provider/index.provider";
+
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function Report({filterHandle}: {filterHandle: any}){
     
-    const {appState, setAppState} = useContext(AppContext)
     const [questionNaireName, setQuestionNairename] = useState("")
     const [dateSent, setDateSent] = useState("")
     const [service, setService] = useState("")
@@ -38,7 +41,7 @@ export default function Report({filterHandle}: {filterHandle: any}){
                 setProcedureList(ref_temp)    
             }).catch((rej: any) => {console.log(rej)})
         })
-
+        filterReport()
     }, [])
 
     const resetField = () => {
@@ -66,7 +69,7 @@ export default function Report({filterHandle}: {filterHandle: any}){
     }
 
     return (
-        <>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={10} direction={"row"} >
                 <Stack component={"form"} noValidate spacing={2} sx={{ width: "50%"}} >
                     <TextField type={"text"} label={"Questionnaire Name"} value={questionNaireName} variant={"standard"} onChange={ event => setQuestionNairename(event.target.value) } />
@@ -86,13 +89,22 @@ export default function Report({filterHandle}: {filterHandle: any}){
                             })}
                         </Select>
                     </FormControl>
-                    <TextField type={"text"} label={"Sent Date"} placeholder="" value={dateSent} variant={"standard"} onChange={ event => setDateSent(event.target.value) } />
-                    
+                    <DatePicker label={"Sent Date"} value={ dateSent == "" ? null : dayjs(dateSent)}
+                        onChange={(newValue) => {
+                            setDateSent(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                        }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
                 </Stack>
                 <Stack spacing={2} sx={{width: "50%"}} >
                     <TextField type={"text"} label={"Sent By"} value={sentBy} variant={"standard"} onChange={ event => setSentBy(event.target.value) } />
-                    <TextField type={"text"} label={"Due Date"} value={dueDate} variant={"standard"} onChange={ event => setDueDate(event.target.value) } />
-                    <TextField type={"text"} label={"Complete Date"} value={completeDate} variant={"standard"} onChange={ event => setCompleteDate(event.target.value) } />
+                    <DatePicker label={"Due Date"} value={dueDate == "" ? null : dayjs(dueDate)}
+                        onChange={(newValue) => {
+                            setDueDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                        }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
+                    <DatePicker label={"Complete Date"} value={completeDate == "" ? null : dayjs(completeDate)}
+                        onChange={(newValue) => {
+                            setCompleteDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                        }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
+                    
                     <TextField type={"text"} label={"Over due"} value={overDue} variant={"standard"} onChange={ event => setOverDue(event.target.value) } />
                 </Stack>
             </Stack>
@@ -100,6 +112,6 @@ export default function Report({filterHandle}: {filterHandle: any}){
                 <Button variant={"outlined"} color={"primary"} onClick={filterReport} startIcon={<AddTaskIcon />} >Filter</Button>
                 <Button variant={"outlined"} color={"error"} onClick={resetField} startIcon={<FlipCameraAndroidIcon />} >Reset</Button>
             </Stack>
-        </>
+        </LocalizationProvider>
     )
 }

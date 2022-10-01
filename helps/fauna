@@ -128,6 +128,49 @@ CreateIndex({
 })
 
 CreateIndex({
+    name: "QuestionNairesByCompletedDate",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "completedDate"] },
+    ]
+})
+CreateIndex({
+    name: "QuestionNairesBydueDate",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "returnBy"] },
+    ]
+})
+CreateIndex({
+    name: "QuestionNairesBySentBy",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "sentBy"] },
+    ]
+})
+CreateIndex({
+    name: "QuestionNairesBySentDate",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "personalAddmissionDate"] },
+    ]
+})
+CreateIndex({
+    name: "QuestionNairesByService",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "service"] },
+    ]
+})
+CreateIndex({
+    name: "QuestionNairesByProcedure",
+    source: Collection("PreOpQuestionNiares"),
+    terms: [
+        { field: ["data", "selProcedure"] },
+    ]
+})
+
+CreateIndex({
     name: "AllService",
     source: Collection("Service"),
     terms: [

@@ -83,7 +83,7 @@ function EnhancedTableHead(props: any) {
                             </TableSortLabel>
                         </TableCell>
                     ))}
-                    <TableCell padding={"checkbox"} sx={{ width: "5%", textAlign : "center" }} >Edit</TableCell>
+                    {alertBody != "Report" ? <TableCell padding={"checkbox"} sx={{ width: "5%", textAlign : "center" }} >Edit</TableCell> : null }
                 </TableRow>
             </TableHead>
             {alertBody=="makeQuestion" ? ( 

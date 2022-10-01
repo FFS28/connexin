@@ -30,7 +30,7 @@ export default function Intro1({pageHandle}: {pageHandle: (param1: any)=>void}){
                         <Typography variant='h5' component="div" color={grey[50]} sx={{ textAlign : "left"}} >What to expect?</Typography>
                     </Box>
                     <Box sx={{mb: 1, mt: 1}}>
-                        <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >Thank you for resistering onto the Peri-operative and consent system in preparation of your {appState.users.user.procedure} of [HOSPITAL SITE].</Typography>
+                        <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >Thank you for resistering onto the Peri-operative and consent system in preparation of your {appState.users.user.procedure} of {appState.users.user.hospitalSite}.</Typography>
                     </Box>
                     <Box sx={{mb: 1, mt: 1}}>
                         <Typography variant='body2' component="div" color={grey[50]} sx={{ textAlign : "left"}} >You are required to complete the medical questionniare before the hospital can arrange your admission date. You will not be able to submit the infomation unless all questions are answered.</Typography>

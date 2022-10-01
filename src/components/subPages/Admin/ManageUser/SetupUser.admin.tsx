@@ -33,7 +33,8 @@ export default function SetupUser({editData}: {editData : any}){
 
     const SendMail = () => {
         const data = makeJSON({
-            ref : editData.ref
+            ref : editData.ref,
+            email : editData.email
         })
         setPassword(data).then((res: any) => { 
             resetField()
@@ -82,8 +83,13 @@ export default function SetupUser({editData}: {editData : any}){
 
             saveUserRegister(data).then((res: any) => { 
                 res.json().then((data: any) => {
-                    setAppState({...appState, editState : false, alert: {...appState.alert, open: true, message: data, type: "success"}})
-                    resetField()
+                    setPassword(makeJSON({
+                        ref : data,
+                        email : email
+                    })).then((response: any) => { 
+                        resetField()
+                        setAppState({...appState, alert: {...appState.alert, open: true, message: response, type: "success"}})
+                    })
                 })
                 
             }).catch((rej: any) => {
@@ -130,6 +136,7 @@ export default function SetupUser({editData}: {editData : any}){
     }
 
     const resetField = () => {
+        setAppState({...appState, editState : false})
         setName("")
         setEmail("")
         setAccess("")
@@ -162,6 +169,7 @@ export default function SetupUser({editData}: {editData : any}){
             setAccess(editData.level)
             setRole(editData.role)
             setActive(editData.active)
+            setEmail(editData.email)
         }
     }, [appState.editState] )
 
@@ -200,7 +208,7 @@ export default function SetupUser({editData}: {editData : any}){
                     
                     <TextField type={"text"} value={authBy} label={"Authorised By"} variant={"standard"} onChange={ event => setAuthBy(event.target.value) } disabled={appState.editState} />
                     <Box>
-                        { appState.editState && <><FormControlLabel onChange={event => setActive(!active)} control={<Switch checked = {active} />} label="Active" /><Button variant={"outlined"} color={"error"} onClick={handleOpen} startIcon={<AddTaskIcon />} >Reset Password</Button></> }
+                        { appState.editState && <><FormControlLabel onChange={() => setActive(!active)} control={<Switch checked = {active} />} label="Active" /><Button variant={"outlined"} color={"error"} onClick={handleOpen} startIcon={<AddTaskIcon />} >Reset Password</Button></> }
                     </Box>
                 </Stack>
             </Stack>

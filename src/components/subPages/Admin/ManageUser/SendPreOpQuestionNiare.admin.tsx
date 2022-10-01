@@ -8,6 +8,11 @@ import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
 import { validationCheckEmail, validationCheckText } from '../../../../other/validation.globals';
 
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 export default function SendPreOpQuestionNiare({editData, handle}: {editData: any, handle: any}){
     
     const {appState, setAppState} = useContext(AppContext)
@@ -242,7 +247,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
     }, [appState.editState])
 
     return (
-        <>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
             {/* <Typography variant={"h4"} component={"h4"} sx={{mt: 1, mb: 2, textAlign:"center"}}>Pre-Operative Questionniare</Typography> */}
             <Stack spacing={10} direction={"row"} >
                 <Stack component={"form"} noValidate spacing={2} sx={{ width: "50%"}} >
@@ -277,11 +282,17 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                     </FormControl>
                     <TextField type={"text"} label={"Email"} value={email} variant={"standard"} onChange={ event => setEmail(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Email"} value={ccemail} variant={"standard"} onChange={ event => setCcemail(event.target.value) } />
-                    <TextField type={"date"} label={"Admissions Date"} value={personalAddmissionDate} variant={"standard"} onChange={ event => setPersonalAddmissionDate(event.target.value) } InputLabelProps={{ shrink: true,}} />
+                    <DatePicker label={"Admissions Date"} value={ personalAddmissionDate == "" ? null : dayjs(personalAddmissionDate)}
+                        onChange={(newValue) => {
+                            setPersonalAddmissionDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                        }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
                     <TextField type={"text"} label={"Pre-Admissions Advice"} value={preAddmissionAdvice} variant={"standard"} onChange={ event => setPreAddmissionAdvice(event.target.value) } />
                 </Stack>
                 <Stack spacing={2} sx={{width: "50%"}} >
-                    <TextField type={"date"} label={"DOB"} value={dob} variant={"standard"} onChange={ event => setDob(event.target.value) }  InputLabelProps={{ shrink: true }} />
+                    <DatePicker label={"DOB"} value={ dob == "" ? null : dayjs(dob)}
+                        onChange={(newValue) => {
+                            setDob(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                        }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
                     <FormControl variant={"standard"}>
                         <InputLabel>Select Consultant</InputLabel>
                         <Select value={selConsultant} onChange={event => setSelConsultant(event.target.value)} sx={{textAlign: "left"}} >
@@ -292,7 +303,10 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                     </FormControl>
                     <TextField type={"text"} label={"Expected LOS"} value={expectedLos} variant={"standard"} onChange={ event => setExpectedLos(event.target.value) } />
                     <TextField type={"text"} label={"Sent By"} value={sentBy} variant={"standard"} onChange={ event => setSentBy(event.target.value) } />
-                    <TextField type={"date"} label={"Return By"} value={returnBy} variant={"standard"} onChange={ event => setReturnBy(event.target.value) } InputLabelProps={{ shrink: true,}} />
+                    <DatePicker label={"Return By"} value={ returnBy == "" ? null : dayjs(returnBy)}
+                        onChange={(newValue) => {
+                            setReturnBy(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                        }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
                     <TextField type={"text"} label={"Mobile Number"} value={mobileNumber} variant={"standard"} onChange={ event => setMobileNumber(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Mobile Number"} value={ccmobileNumber} variant={"standard"} onChange={ event => setCcmobileNumber(event.target.value) } />
                     <FormControl variant={"standard"}>
@@ -311,6 +325,6 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 <Button variant={"outlined"} color={"primary"} onClick={addNew} startIcon={<AddTaskIcon />} >Save</Button>
                 <Button variant={"outlined"} color={"error"} onClick={resetField} startIcon={<DeleteIcon />} >Cancel</Button>
             </Stack>
-        </>
+        </LocalizationProvider>
     )
 }

@@ -73,7 +73,8 @@ export const AppProvider = ({ children }: {children: any}) => {
                 signature: "",
                 addmissionDate: "", 
                 returnByDate: "",
-                procedure: ""
+                procedure: "",
+                hospitalSite: ""
             }
         },
         alert : {

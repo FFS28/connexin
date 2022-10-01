@@ -8,7 +8,7 @@ const faunaClient = new faunadb.Client({
     domain: 'db.fauna.com'
 })
 
-const { Let, Map, Paginate, Documents, Collection, Lambda, Get, Var, Ref, Select, Match, Index, Create, Update } = faunadb.query 
+const { Let, Map, Paginate, Documents, Collection, Lambda, Get, Var, Ref, Select, Match, Index, Create, Update, Union } = faunadb.query 
 
 export const fnSaveQuestionNiare = async (userInfo: any) => {
     userInfo.questions.map(async (item: any) => {
@@ -131,6 +131,7 @@ export const fnAddNewPreOpQuestionNiares = async (serviceData: any) => {
             )
         )
         serviceData.questionOrSection[i] = returnData.ref.id.toString()
+        serviceData.completedDate = ""
     }
     
     const res = await faunaClient.query(
@@ -223,6 +224,10 @@ export const fnGetQuestionNiareByUser = async (userInfo: any) => {
     const procedure = await faunaClient.query(
         Get( Ref( Collection("Procedure"), res.data.selProcedure ))
     )
+
+    const service = await faunaClient.query(
+        Get( Ref( Collection("Service"), res.data.service ))
+    )
     const temp = res.data.questionOrSection;
     for( let i = 0; i< temp.length; i++){
         const returnData = await faunaClient.query(
@@ -272,6 +277,7 @@ export const fnGetQuestionNiareByUser = async (userInfo: any) => {
         addmissionDate: res.data.personalAddmissionDate.split('-')[2] + "-" + res.data.personalAddmissionDate.split('-')[1] + "-" + res.data.personalAddmissionDate.split('-')[0], 
         returnByDate: res.data.returnBy.split('-')[2] + "-" + res.data.returnBy.split('-')[1] + "-" + res.data.returnBy.split('-')[0], 
         procedure: procedure.data.procedure,
+        hospitalSite: service.data.hospitalSite, 
         qusData: temp
     };
 }
@@ -397,54 +403,54 @@ export const fnGetSelectedQuestionSection = async (data : any) => {
 }
 
 export const fnGetReport = async (req: any) => {
-    // let resData = null
-    // try{
-    //     const { data } = await faunaClient.query(
-    //         Map(
-    //             Paginate(Documents(Collection('PreOpQuestionNiares')), {
-    //             }),
-    //             Lambda(
-    //                 'X',
-    //                 {
-    //                     selProcedure: Select(['data', 'selProcedure'], Get(Var('X'))),
-    //                     service: Select(['data', 'service'], Get(Var('X'))),
-    //                     sentDate: Select(['data', 'sentDate'], Get(Var('X'))),
-    //                     sentBy: Select(['data', 'sentBy'], Get(Var('X'))),
-    //                     dueDate: Select(['data', 'returnBy'], Get(Var('X'))),
-    //                     completedDate: Select(['data', 'completedDate'], Get(Var('X'))),
-    //                     overdue: Select(['data', 'overdue'], Get(Var('X'))),
-    //                 }
-    //             )
-    //         )
-    //     )
-    //     resData = data;
-    // }
-    // catch {
-    //     console.log('err')
-    // }
-
-    const {data} = await faunaClient.query(
+    if(req.completeDate == "" && req.dueDate == "" && req.sendBy == "" && req.sentDate && req.service && req.selProcedure)
+        return fnGetAllPreOpQuestionNiares();
+    const { data } = await faunaClient.query(
         Map(
             Paginate(
-                Match(
-                    Index("ReportsBy"),
-                    [req.selProcedure, req.service, req.sentDate, req.sentBy, req.dueDate, req.completedDate, req.overdue]
+                Union(
+                    Match(Index("QuestionNairesByCompletedDate"), req.completedDate),
+                    Match(Index("QuestionNairesBydueDate"), req.dueDate),
+                    Match(Index("QuestionNairesBySentBy"), req.sentBy),
+                    Match(Index("QuestionNairesBySentDate"), req.sentDate),
+                    Match(Index("QuestionNairesByService"), req.service),
+                    Match(Index("QuestionNairesByProcedure"), req.selProcedure)
                 )
             ),
-            Lambda('x', Get(Var('x')))
+            Lambda("questionNaire", Get(Var("questionNaire")))
         )
     )
-    const returnData = data.map((item: any) => {
-        item.data.ref = item.ref.id
-        return item.data
-    })
-    // // [req.name, req.selProcedure, req.service, req.sentDate, req.sentBy, req.dueDate, req.completedDate, req.overdue]
-    // if(resData == null)
-    //     return "error";
-    // let returnData = resData.filter((item: any, index: number) => {
-    //     return item.selProcedure == req.selProcedure && item.service == req.service && item.sentDate == req.sentDate && item.sentBy == req.sentBy && item.dueDate == req.dueDate && item.completedDate == req.completedDate && item.overvue == parseInt(req.overvue);
-    // })
-    return returnData;
+    const temp=[];
+    for(let i= 0; i< data.length; i++){
+        try{
+            const service = await faunaClient.query(
+                Let(
+                    {
+                        service : Get(Ref(Collection('Service'), data[i].data.service)),
+                        consultant : Get(Ref(Collection('Consultant'), data[i].data.selConsultant)),
+                        procedure : Get(Ref(Collection('Procedure'), data[i].data.selProcedure)),
+                    },
+                    {
+                        service: Select(['data', 'serviceSpecial'], Var('service')),
+                        consultant: Select(['data', 'title'], Var('consultant')),
+                        procedure: Select(['data', 'procedure'], Var('procedure')),
+                    }
+                  )
+            )
+            data[i].data.ref = data[i].ref.id;
+            data[i].data.service = service.service
+            data[i].data.selConsultant = service.consultant
+            data[i].data.selProcedure = service.procedure
+        }
+        catch(err){
+            data[i].data.ref = data[i].ref.id;
+            data[i].data.service = "Incorrect Value!";
+            data[i].data.selConsultant = "Incorrect Value!";
+            data[i].data.selProcedure = "Incorrect Value!";
+        }
+        temp.push(data[i].data)
+    }
+    return temp
 }
 
 export const fnGetFilterResult = async (req: any) => {
@@ -459,14 +465,14 @@ export const fnGetFilterResult = async (req: any) => {
     switch(req.filterOption) {
         case 0:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 28){
+                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 28){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -474,14 +480,14 @@ export const fnGetFilterResult = async (req: any) => {
             break;
         case 1:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 1){
+                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 1){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -489,14 +495,14 @@ export const fnGetFilterResult = async (req: any) => {
             break;
         case 2:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 7){
+                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 7){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -504,14 +510,14 @@ export const fnGetFilterResult = async (req: any) => {
             break;
         case 3:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 < 90){
+                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 90){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -525,7 +531,7 @@ export const fnGetFilterResult = async (req: any) => {
                 }else {
                     temp.completed ++;
                 }
-                if((new Date().getTime() - new Date(questionnaire.data.sentDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                     temp.overdue ++;
                 }  
             })

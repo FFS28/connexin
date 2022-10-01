@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Grid, TextField } from "@mui/material"
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function DateSelect({problem_state, proNum = 0, value="" }: {problem_state: any, proNum :number, value: any }){
 
     const [real, setReal] = useState("")
-
-    const change_content = (event: any) => {
-        problem_state(event.target.value, proNum)   
-    }
 
     useEffect(() => {
         setReal(value)
@@ -16,7 +16,13 @@ export default function DateSelect({problem_state, proNum = 0, value="" }: {prob
     return (
         <>
             <Grid container spacing={2} sx={{mt: 2, pl: 4, pr: 2}}>
-                <TextField id="outlined-basic" type={"date"} value={real} onChange={change_content} variant="outlined" fullWidth />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker value={ real == "" ? null : dayjs(real)}
+                    onChange={(newValue) => {
+                        problem_state(newValue != null ? newValue.format('YYYY-MM-DD') : "", proNum)
+                        setReal(newValue != null ? newValue.format('YYYY-MM-DD') : "")
+                    }} renderInput={(params) => <TextField {...params} variant={"outlined"} fullWidth />} />
+                </LocalizationProvider>
             </Grid>
         </>
     )

@@ -8,8 +8,8 @@ import { AppContext } from "../../../../provider/index.provider";
 import Report from "../ManageUser/Report.admin";
 
 
-function createData(id: number, Name: string, Email: string, Level: string, State: any) {
-    return { id, Name, Email, Level, State };
+function createData(id: number, procedure: string, service: string, sentdate: string, duedate: string, completedate: string, overdueby: string) {
+    return { id, procedure, service, sentdate, duedate, completedate, overdueby };
 }
 
 export default function ReportManagement(){
@@ -81,7 +81,14 @@ export default function ReportManagement(){
     const filterHandle = (data: any) => {
         findReport(data).then((res: any) => {
             res.json().then((data: any) => {
-                setRows(data)
+                const temp: {id: number, procedure: string, service: string, sentdate: string, duedate: string, completedate: string, overdueby: string}[] = []
+                const ref_temp: {ref: string}[] = []
+                data.map((item: any, index: number) => {
+                    ref_temp.push({ref : item.ref})
+                    temp.push(createData(index, item.selProcedure, item.service, item.personalAddmissionDate, item.returnBy, (item.completedDate == "" ? "-" : item.completedDate) , "-" ))  
+                })
+                setRows(temp)
+                setRefs(ref_temp)
             })
         })
     }

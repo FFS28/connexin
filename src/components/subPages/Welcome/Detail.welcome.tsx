@@ -27,7 +27,7 @@ export default function Detail({pageHandle}: {pageHandle : (param1: any)=>void})
                         <Typography variant='subtitle1' component="div" sx={{color: "white"}} >Please enter your detail</Typography>
                     </Box>
                     <ConnexinInput elementChange={change_value} label="NHS Number" type="number" />
-                    <ConnexinInput elementChange={change_value} label="Date of Birth" type="text" />
+                    <ConnexinInput elementChange={change_value} label="Date of Birth" type="date" />
                 </Box>
                 <Box sx={{minHeight: "20vh"}}>
                     <ConnnexinBtn type="contained" value="Submit" moveto={pageHandle} m_page = {"Intro1"}  />

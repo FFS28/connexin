@@ -87,29 +87,29 @@ export default async function handler(req : any, res: any) {
             return res;
         case "saveUserRegister":
             data = await fnSaveUserRegister(req.body)
-            transporter.sendMail({
-                from: process.env.SMTP_SENDER,
-                to: req.body.email,
-                subject: `Welcome`,
-                text: "",
-                html: `<div> Welcome <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
-            }, function (err: any, info: any) {
-                if(err){
-                    return res.end(JSON.stringify("errors"))
-                }else{
-                    return res.end(JSON.stringify("success"))
-                }
-            })
+            return res.send(data);
+            // transporter.sendMail({
+            //     from: process.env.SMTP_SENDER,
+            //     to: req.body.email,
+            //     subject: `Welcome`,
+            //     text: "",
+            //     html: `<div> Welcome <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
+            // }, function (err: any, info: any) {
+            //     if(err){
+            //         return res.end(JSON.stringify("errors"))
+            //     }else{
+            //         return res.end(JSON.stringify("success"))
+            //     }
+            // })
             break;
         case "setPassword": 
             data = await fnReSetPassword(req.body)
-                
             transporter.sendMail({
                 from: process.env.SMTP_SENDER,
                 to: req.body.email,
                 subject: `From Admin`,
-                text: "This is Reset Password Link",
-                html: `<a href=${data}>Reset Password</a>`
+                text: "This is set Password Link",
+                html: `<div> Welcome <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
             }, function (err: any, info: any) {
                 if(err){
                     return res.end("errors")
