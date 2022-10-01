@@ -41,7 +41,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 3:
-                temp[showItem].subQuestions[showSubItem].data = "";
+                temp[showItem].subQuestions[showSubItem].data = [];
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 4:
@@ -52,7 +52,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                 temp[showItem].subQuestions[showSubItem].result = []
                 break;
             case 5:
-                temp[showItem].subQuestions[showSubItem].data = "";
+                temp[showItem].subQuestions[showSubItem].data = [];
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 6:
@@ -76,7 +76,7 @@ export default function SubQusEdit({showItem, showSubItem}: {showItem: number, s
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
             case 11:
-                temp[showItem].subQuestions[showSubItem].data = "";
+                temp[showItem].subQuestions[showSubItem].data = [];
                 temp[showItem].subQuestions[showSubItem].result = "";
                 break;
         }
