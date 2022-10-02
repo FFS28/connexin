@@ -13,6 +13,9 @@ const useStyles: any = makeStyles( (theme: Theme) => ({
         borderBottom: "2px solid white",
         overflow: "hidden",
         color: "white",
+    },
+    adornedStart: {
+        color: "white"
     }
 }));
 
