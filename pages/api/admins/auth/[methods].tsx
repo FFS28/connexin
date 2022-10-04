@@ -112,9 +112,9 @@ export default async function handler(req : any, res: any) {
                 html: `<div> Welcome <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
             }, function (err: any, info: any) {
                 if(err){
-                    return res.end("errors")
+                    return res.end(JSON.stringify("errors"))
                 }else{
-                    return res.end("success")
+                    return res.end(JSON.stringify("success"))
                 }
             })
             break;

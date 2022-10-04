@@ -87,7 +87,9 @@ export default function SetupUser({editData}: {editData : any}){
                         ref : data.data,
                         email : email
                     })).then((response: any) => {
+                        console.log("=============")
                         response.json().then((msg: any) => {
+                            console.log(msg)
                             resetField()
                             setAppState({...appState, alert: {...appState.alert, open: true, message: msg, type: "success"}})
                         })                     
