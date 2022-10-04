@@ -84,7 +84,7 @@ export default function SetupUser({editData}: {editData : any}){
             saveUserRegister(data).then((res: any) => {
                 res.json().then((data: any) => {
                     setPassword(makeJSON({
-                        ref : data,
+                        ref : data.data,
                         email : email
                     })).then((response: any) => {
                         response.json().then((msg: any) => {

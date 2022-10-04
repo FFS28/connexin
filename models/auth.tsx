@@ -198,13 +198,14 @@ export const fnSaveUserRegister = async (userInfo: any) => {
             }
         )
     )
-    return data.ref.id;
+    return data.ref.id.toString();
 }
 
 export const fnReSetPassword = async (userInfo: any) => {
+    console.log(userInfo)
     const res = await faunaClient.query(
         Update(
-            Ref(Collection("Admins"), userInfo.ref),
+            Ref(Collection("Admins"), userInfo.ref.toString()),
             {
                 data: {
                     active : false

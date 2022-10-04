@@ -87,7 +87,7 @@ export default async function handler(req : any, res: any) {
             return res;
         case "saveUserRegister":
             data = await fnSaveUserRegister(req.body)
-            return res.send(data);
+            return res.send({data: data});
             // transporter.sendMail({
             //     from: process.env.SMTP_SENDER,
             //     to: req.body.email,
