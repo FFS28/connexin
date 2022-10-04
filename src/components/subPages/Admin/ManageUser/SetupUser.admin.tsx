@@ -81,14 +81,16 @@ export default function SetupUser({editData}: {editData : any}){
                 level: appState.users.admin.level
             })
 
-            saveUserRegister(data).then((res: any) => { 
+            saveUserRegister(data).then((res: any) => {
                 res.json().then((data: any) => {
                     setPassword(makeJSON({
                         ref : data,
                         email : email
-                    })).then((response: any) => { 
-                        resetField()
-                        setAppState({...appState, alert: {...appState.alert, open: true, message: response, type: "success"}})
+                    })).then((response: any) => {
+                        response.json().then((msg: any) => {
+                            resetField()
+                            setAppState({...appState, alert: {...appState.alert, open: true, message: msg, type: "success"}})
+                        })                     
                     })
                 })
                 
