@@ -26,10 +26,10 @@ export default function SetupServiceDirectory({editData } : {editData: any}){
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check your Service name!", type: "error"}})            
             return;
         }
-        if(!validationCheckText(subSpecial)){
-            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check your sub Service name!", type: "error"}})            
-            return;
-        }
+        // if(!validationCheckText(subSpecial)){
+        //     setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check your sub Service name!", type: "error"}})            
+        //     return;
+        // }
         if(!validationCheckText(where)){
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please check your Where field!", type: "error"}})            
             return;
@@ -66,7 +66,7 @@ export default function SetupServiceDirectory({editData } : {editData: any}){
                 serviceEmail: serviceEmail 
             })).then((res: any) => {
                 res.json().then((data: any)=> {
-                    setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                    setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: data, type: "success"}})
                 }).catch((rej: any) => {
                     console.log(rej)
                 })
@@ -85,7 +85,7 @@ export default function SetupServiceDirectory({editData } : {editData: any}){
                 ref : editData.ref
             })).then((res: any) => {
                 res.json().then((data: any)=> {
-                    setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                    setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: data, type: "success"}})
                 }).catch((rej: any) => {
                     console.log(rej)
                 })

@@ -137,10 +137,10 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input Mobile Number!", type: "error"}})
             return;
         }
-        if(!validationCheckText(ccmobileNumber)) {
-            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input CCMobile Number!", type: "error"}})
-            return;
-        }
+        // if(!validationCheckText(ccmobileNumber)) {
+        //     setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input CCMobile Number!", type: "error"}})
+        //     return;
+        // }
         if(!validationCheckText(selConsultant)) {
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Consultant!", type: "error"}})
             return;
@@ -283,6 +283,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                     <TextField type={"text"} label={"Email"} value={email} variant={"standard"} onChange={ event => setEmail(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Email"} value={ccemail} variant={"standard"} onChange={ event => setCcemail(event.target.value) } />
                     <DatePicker label={"Admissions Date"} value={ personalAddmissionDate == "" ? null : dayjs(personalAddmissionDate)}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             setPersonalAddmissionDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
@@ -290,6 +291,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 </Stack>
                 <Stack spacing={2} sx={{width: "50%"}} >
                     <DatePicker label={"DOB"} value={ dob == "" ? null : dayjs(dob)}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             setDob(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
@@ -304,6 +306,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                     <TextField type={"text"} label={"Expected LOS"} value={expectedLos} variant={"standard"} onChange={ event => setExpectedLos(event.target.value) } />
                     <TextField type={"text"} label={"Sent By"} value={sentBy} variant={"standard"} onChange={ event => setSentBy(event.target.value) } />
                     <DatePicker label={"Return By"} value={ returnBy == "" ? null : dayjs(returnBy)}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             setReturnBy(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />

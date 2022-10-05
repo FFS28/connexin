@@ -36,6 +36,7 @@ export default function ConnexinInput({ label, type, elementChange }: {label: st
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker label={label} value={ date == "" ? null : dayjs(date)}
                         InputProps={{ classes, disableUnderline: true }}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             elementChange( label, newValue != null ? newValue.format('YYYY-MM-DD') : "" )
                             setDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")

@@ -171,14 +171,13 @@ CreateIndex({
 })
 
 CreateIndex({
-    name: "AllService",
+    name: "GetServiceByServiceSpecial",
     source: Collection("Service"),
     terms: [
-        { field: ["data", "serviceSpecial"] },
-        { field: ["data", "subServiceSpecial"] },
-        { field: ["ref"] }
+        { field: ["data", "serviceSpecial"] }
     ]
 })
+
 CreateIndex({
     name: "resetPassword",
     source: Collection("TempRegister"),

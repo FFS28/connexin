@@ -18,6 +18,7 @@ export default function DateSelect({problem_state, proNum = 0, value="" }: {prob
             <Grid container spacing={2} sx={{mt: 2, pl: 4, pr: 2}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker value={ real == "" ? null : dayjs(real)}
+                    inputFormat={"DD/MM/YYYY"}
                     onChange={(newValue) => {
                         problem_state(newValue != null ? newValue.format('YYYY-MM-DD') : "", proNum)
                         setReal(newValue != null ? newValue.format('YYYY-MM-DD') : "")

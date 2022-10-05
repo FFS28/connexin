@@ -139,7 +139,7 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
                         </Select>
                     </FormControl>: null }
                     <TextField type={"text"} value={benifits} label={"Benefits"} variant={"standard"} onChange={ event => setBenifits(event.target.value) } />
-                    <TextField type={"text"} value={potentialComplications} label={"Protential Complications"} variant={"standard"} onChange={ event => setPotentialComplications(event.target.value) } />
+                    <TextField type={"text"} value={potentialComplications} label={"Potential Complication"} variant={"standard"} onChange={ event => setPotentialComplications(event.target.value) } />
                 </Stack>
             </Stack>
             <Stack component={"form"} noValidate spacing={4} direction="row" justifyContent={"right"} sx={{mt: 4}} >

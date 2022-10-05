@@ -114,7 +114,7 @@ export default function PreOpQusManagement(){
     return (
         <>
             <SendPreOpQuestionNiare editData={editData} handle={change_service} />
-            <ContentTable rows={rows.filter((row) => { return row.nhsNumber.toLowerCase().includes(searchword.toLowerCase()) || row.service.toLowerCase().includes(searchword.toLowerCase())})} search={SearchHandle} headCells={headCells} childrenTag={"PreOpQuestionNiares"} handle={ChangeHandle} />
+            {/* <ContentTable rows={rows.filter((row) => { return row.nhsNumber.toLowerCase().includes(searchword.toLowerCase()) || row.service.toLowerCase().includes(searchword.toLowerCase())})} search={SearchHandle} headCells={headCells} childrenTag={"PreOpQuestionNiares"} handle={ChangeHandle} /> */}
         </>
     )
 }

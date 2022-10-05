@@ -89,11 +89,11 @@ const AdminListArray = [
             Icon : <WifiTetheringIcon fontSize='small' />,
         },
         {
-            Label : "Setup Consultant",
+            Label : "Set Up Consultant",
             Icon : <StreamIcon fontSize='small' />,
         },
         {
-            Label : "Set up Procedure",
+            Label : "Set Up Procedure",
             Icon : <AccountTreeIcon fontSize='small' />,
         },
         {

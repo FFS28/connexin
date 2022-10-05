@@ -90,6 +90,7 @@ export default function Report({filterHandle}: {filterHandle: any}){
                         </Select>
                     </FormControl>
                     <DatePicker label={"Sent Date"} value={ dateSent == "" ? null : dayjs(dateSent)}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             setDateSent(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
@@ -97,10 +98,12 @@ export default function Report({filterHandle}: {filterHandle: any}){
                 <Stack spacing={2} sx={{width: "50%"}} >
                     <TextField type={"text"} label={"Sent By"} value={sentBy} variant={"standard"} onChange={ event => setSentBy(event.target.value) } />
                     <DatePicker label={"Due Date"} value={dueDate == "" ? null : dayjs(dueDate)}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             setDueDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
                     <DatePicker label={"Complete Date"} value={completeDate == "" ? null : dayjs(completeDate)}
+                        inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
                             setCompleteDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />

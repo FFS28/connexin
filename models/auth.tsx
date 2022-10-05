@@ -344,6 +344,20 @@ export const fnSaveAllAccess = async (userInfo: any) => {
 
 export const fnAddNewService = async (serviceData: any) => {
     
+    const is_exist = await faunaClient.query(
+        Map(
+            Paginate(
+                Match(Index("GetServiceByServiceSpecial"), serviceData.serviceSpecial)
+            ),
+            Lambda(
+                "person",
+                Get(Var("person"))
+            )
+        )
+    )
+    if(is_exist.data.length > 0)
+        return "error";
+
     await faunaClient.query(
         Create(
             Collection("Service"),
@@ -377,6 +391,19 @@ export const fnGetSelectedService = async (serviceInfo: any) => {
 }
 
 export const fnUpdateService = async (serviceData: any) => {
+    const is_exist = await faunaClient.query(
+        Map(
+            Paginate(
+                Match(Index("GetServiceByServiceSpecial"), serviceData.serviceSpecial)
+            ),
+            Lambda(
+                "person",
+                Get(Var("person"))
+            )
+        )
+    )
+    if(is_exist.data.length > 0)
+        return "error";
     try{
         await faunaClient.query(
             Update( 
