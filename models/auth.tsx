@@ -190,6 +190,19 @@ export const fnDeleteUser = async (userInfo: any) => {
 }
 
 export const fnSaveUserRegister = async (userInfo: any) => {
+    const is_exist = await faunaClient.query(
+        Map(
+            Paginate(
+                Match(Index("MyAdminByEmail"), userInfo.email)
+            ),
+            Lambda(
+                "person",
+                Get(Var("person"))
+            )
+        )
+    )
+    if(is_exist.data.length > 0)
+        return null;
     const data = await faunaClient.query(
         Create(
             Collection("Admins"),

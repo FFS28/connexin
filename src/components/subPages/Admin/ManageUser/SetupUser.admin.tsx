@@ -83,11 +83,14 @@ export default function SetupUser({editData}: {editData : any}){
 
             saveUserRegister(data).then((res: any) => {
                 res.json().then((data: any) => {
+                    if(data.data == null){
+                        setAppState({...appState, alert: {...appState.alert, open: true, message: "Use another email!", type: "warning"}})
+                        return;
+                    }
                     setPassword(makeJSON({
                         ref : data.data,
                         email : email
                     })).then((response: any) => {
-                        console.log("=============")
                         response.json().then((msg: any) => {
                             console.log(msg)
                             resetField()
@@ -96,8 +99,7 @@ export default function SetupUser({editData}: {editData : any}){
                     })
                 })
                 
-            }).catch((rej: any) => {
-                console.log(rej)
+            }).catch(() => {
                 setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
             })
             
