@@ -11,7 +11,6 @@ import { getQuestionNiare } from "../../other/apis.globals"
 import { makeJSON } from "../../other/functions.globals"
 import { useRouter } from "next/router"
 
-
 export default function Welcome(){
     
     const {appState, setAppState} = useContext(AppContext)
@@ -23,6 +22,7 @@ export default function Welcome(){
         else
             setAppState({...appState, pageState : {...appState.pageState, curPage : pageName}})
     }
+
     useEffect(()=>{
         getQuestionNiare(makeJSON({
             qusRef: appState.users.user.ref

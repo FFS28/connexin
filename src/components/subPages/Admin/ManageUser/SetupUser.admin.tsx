@@ -15,7 +15,7 @@ export default function SetupUser({editData}: {editData : any}){
     const [email, setEmail] = useState("")
     const [access, setAccess] = useState("")
     const [role, setRole] = useState("")
-    const [service, setService] = useState("0")
+    const [service, setService] = useState("all")
     const [authBy, setAuthBy] = useState("")
     const [active, setActive] = useState(false)
     const [roleList, setRoleList] = useState([])
@@ -158,7 +158,7 @@ export default function SetupUser({editData}: {editData : any}){
         getAllServices().then((res: any) => {
             res.json().then((data: any)=>{
                 const temp: any = []
-                temp.push({ref: "0", servicetitle: "All Services"})
+                temp.push({ref: "all", servicetitle: "All Services"})
                 data.map((item: any) => {
                     temp.push({ref: item.ref, servicetitle: item.serviceSpecial})  
                 })
