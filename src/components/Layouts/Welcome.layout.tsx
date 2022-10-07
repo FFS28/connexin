@@ -9,11 +9,13 @@ import Intro1 from "../subPages/Welcome/Intro1.welcome"
 import Intro2 from "../subPages/Welcome/Intro2.welcome"
 import { getQuestionNiare } from "../../other/apis.globals"
 import { makeJSON } from "../../other/functions.globals"
+import { useRouter } from "next/router"
 
 
 export default function Welcome(){
     
     const {appState, setAppState} = useContext(AppContext)
+    const route = useRouter();
     const changePage = (pageName : string) => {
         if(pageName == "MainLayout"){
             setAppState({...appState, pageState : {...appState.pageState, curLayout : pageName, curPage : "Question"}})
@@ -22,12 +24,15 @@ export default function Welcome(){
             setAppState({...appState, pageState : {...appState.pageState, curPage : pageName}})
     }
     useEffect(()=>{
-        console.log(appState.users.user.ref)
         getQuestionNiare(makeJSON({
             qusRef: appState.users.user.ref
         })).then((res: any)=>{
             res.json().then((data: any)=>{
-                setAppState({...appState, pageState: {...appState.pageState, curPage : "Detail"}, alert: {...appState.alert, open: false}, useData: {...appState.useData, questionNiares: data.qusData}, users: { ...appState.users, user: {...appState.users.user, addmissionDate: data.addmissionDate, returnByDate: data.returnByDate, procedure: data.procedure, hospitalSite: data.hospitalSite}}})
+                if(data?.error){
+                    route.push('/');
+                }else{
+                    setAppState({...appState, pageState: {...appState.pageState, curPage : "Detail"}, alert: {...appState.alert, open: false}, useData: {...appState.useData, questionNiares: data.qusData}, users: { ...appState.users, user: {...appState.users.user, addmissionDate: data.addmissionDate, returnByDate: data.returnByDate, procedure: data.procedure, hospitalSite: data.hospitalSite}}})
+                }                
             })
         }).catch((res: any)=> {
             console.log(res)
