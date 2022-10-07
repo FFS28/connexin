@@ -13,11 +13,16 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
-import { Button, Dialog, DialogContent, Grid, IconButton, Pagination, Stack } from "@mui/material";
+import { Button, Dialog, DialogContent, Grid, IconButton, Pagination, Stack, styled } from "@mui/material";
 import { DialogProps } from '@mui/material/Dialog';
 
 import MakeQuestion from "../subPages/Admin/Questions/makeQuestion";
 import { AppContext } from "../../provider/index.provider";
+
+const CustomCell = styled(TableCell)({
+    maxWidth: "300px",
+    overflowWrap: "break-word"
+})
 
 function descendingComparator(a: any, b: any, orderBy: any) {
     if (b[orderBy] < a[orderBy]) { return -1; }
@@ -68,22 +73,22 @@ function EnhancedTableHead(props: any) {
         <>
             <TableHead>
                 <TableRow>
-                    <TableCell colSpan={headCells.length + 1} >
+                    <CustomCell colSpan={headCells.length + 1} >
                         <Stack direction={"row"} sx={{display: "inline"}} spacing={2}>
                             <SearchInput search={search} />
                             { alertBody=="makeQuestion" ? (<Button style={{float: "left"}} variant={"outlined"} color={"primary"} onClick={handleClickOpen('paper')} startIcon={<AddTaskIcon />} >Create</Button>) : null}
                         </Stack>                
-                    </TableCell>
+                    </CustomCell>
                 </TableRow>
                 <TableRow >
                     {headCells.map((headCell: any) => (
-                        <TableCell key={headCell.id} sortDirection={orderBy === headCell.id ? order : false} >
+                        <CustomCell key={headCell.id} sortDirection={orderBy === headCell.id ? order : false} >
                             <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)} >
                                 {headCell.label}
                             </TableSortLabel>
-                        </TableCell>
+                        </CustomCell>
                     ))}
-                    {alertBody != "Report" ? <TableCell padding={"checkbox"} sx={{ width: "5%", textAlign : "center" }} >Edit</TableCell> : null }
+                    {alertBody != "Report" ? <CustomCell padding={"checkbox"} sx={{ width: "5%", textAlign : "center" }} >Edit</CustomCell> : null }
                 </TableRow>
             </TableHead>
             {alertBody=="makeQuestion" ? ( 
@@ -187,26 +192,26 @@ export default function ContentTable({rows, headCells, childrenTag, search, hand
                                         {Object.values(row).map((cell: any, rowIndex: number) => {
                                             if(rowIndex > 0)
                                                 return rowIndex == 1 ? (
-                                                    <TableCell key={rowIndex} id={labelId}> {cell} </TableCell> ):(
-                                                    <TableCell key={rowIndex} >{cell}</TableCell>
+                                                    <CustomCell key={rowIndex} id={labelId}> {cell} </CustomCell> ):(
+                                                    <CustomCell key={rowIndex} >{cell}</CustomCell>
                                                 );
                                         })}
-                                        {childrenTag != "Report" ? <TableCell>
+                                        {childrenTag != "Report" ? <CustomCell>
                                             <IconButton color="primary" component="label" onClick = {() => handleChange(index)} >
                                                 <AppRegistrationOutlinedIcon />
                                             </IconButton>
-                                        </TableCell> : null} 
+                                        </CustomCell> : null} 
                                     </TableRow>
                                 );
                             })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }} >
-                                    <TableCell colSpan={headCells.length} />
+                                    <CustomCell colSpan={headCells.length} />
                                 </TableRow>
                             )}
                             {rows.length == 0? (
                                 <TableRow >
-                                    <TableCell colSpan={childrenTag == "Report" ? headCells.length + 1 : headCells.length + 2} sx={{textAlign: "center"}} > No Result </TableCell>
+                                    <CustomCell colSpan={childrenTag == "Report" ? headCells.length + 1 : headCells.length + 2} sx={{textAlign: "center"}} > No Result </CustomCell>
                                 </TableRow>
                             ) : null}
                         </TableBody>

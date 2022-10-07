@@ -39,7 +39,6 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
     const [serviceList, setServiceList] = useState([])
     const [questionniaresList, setQuestionniaresList] = useState([])
     const [admissionTypeList, setAddmissionTypeList] = useState<any>([])
-    const [returnToList] = useState([])
     const [consultantList, setConsultantList] = useState([])
     const [procedureList, setProcedureList] = useState([])
     
@@ -83,6 +82,14 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
         })
         handle(appState.users.admin.service)
     }, [])
+
+    useEffect(()=>{
+        serviceList.map((item: any) => {
+            if(item.ref == service){
+                setReturnto(item.serviceEmail)
+            }
+        })
+    }, [service])
 
     const addNew = () => {
         if(!validationCheckText(nhsNumber)) {
@@ -260,7 +267,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                             })}
                         </Select>
                     </FormControl> : null}
-                    <Autocomplete multiple id="tags-standard" options={questionniaresList} defaultValue={["This is First Questionaire"]} getOptionLabel={(option: any) => option.title} onChange={(event: any, value: any) => setQuestionOrSection(value)} renderInput={(params: any) => (
+                    <Autocomplete multiple id="tags-standard" options={questionniaresList} defaultValue={[]} getOptionLabel={(option: any) => option.title} onChange={(event: any, value: any) => setQuestionOrSection(value)} renderInput={(params: any) => (
                         <TextField {...params} variant="standard" label="Select Question/Sections" placeholder="Select Question" />
                         )} />
                     <FormControl variant={"standard"}>
@@ -271,15 +278,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                             })}
                         </Select>
                     </FormControl>
-                    <FormControl variant={"standard"}>
-                        <InputLabel>Return to</InputLabel>
-                        <Select value={returnto} onChange={event => setReturnto(event.target.value)} sx={{textAlign: "left"}} >
-                            <MenuItem value={"matt@connexin.com"}>matt@connexin.com</MenuItem>
-                            {returnToList.map((item: any, index: number) => {
-                                return <MenuItem key={index} value={item.ref}>{item.title}</MenuItem>
-                            })}
-                        </Select>
-                    </FormControl>
+                    <TextField type={"text"} label={"Return to"} value={returnto} variant={"standard"} onChange={event => setReturnto(event.target.value)} />
                     <TextField type={"text"} label={"Email"} value={email} variant={"standard"} onChange={ event => setEmail(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Email"} value={ccemail} variant={"standard"} onChange={ event => setCcemail(event.target.value) } />
                     <DatePicker label={"Admissions Date"} value={ personalAddmissionDate == "" ? null : dayjs(personalAddmissionDate)}
@@ -325,7 +324,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 </Stack>
             </Stack>
             <Stack component={"form"} noValidate spacing={4} direction="row" justifyContent={"right"} sx={{mt: 4}} >
-                <Button variant={"outlined"} color={"primary"} onClick={addNew} startIcon={<AddTaskIcon />} >Save</Button>
+                <Button variant={"outlined"} color={"primary"} onClick={addNew} startIcon={<AddTaskIcon />} >Save to Send</Button>
                 <Button variant={"outlined"} color={"error"} onClick={resetField} startIcon={<DeleteIcon />} >Cancel</Button>
             </Stack>
         </LocalizationProvider>

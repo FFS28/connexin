@@ -8,8 +8,8 @@ import { AppContext } from "../../../../provider/index.provider";
 import Report from "../ManageUser/Report.admin";
 
 
-function createData(id: number, procedure: string, service: string, sentdate: string, duedate: string, completedate: string, overdueby: string) {
-    return { id, procedure, service, sentdate, duedate, completedate, overdueby };
+function createData(id: number, nhsnumber: string, senderemail: string, procedure: string, service: string, sentdate: string, duedate: string, completedate: string, overdueby: string) {
+    return { id, nhsnumber, senderemail, procedure, service, sentdate, duedate, completedate, overdueby };
 }
 
 export default function ReportManagement(){
@@ -20,6 +20,18 @@ export default function ReportManagement(){
     const [editData, setEditData] = useState(null)
 
     const headCells = [
+        {
+            id: 'nhsnumber',
+            numeric: true,
+            disablePadding: true,
+            label: 'NHS number'
+        },
+        {
+            id: 'senderemail',
+            numeric: true,
+            disablePadding: true,
+            label: 'Sender Email Address'
+        },
         {
             id: 'procedure',
             numeric: true,
@@ -85,7 +97,7 @@ export default function ReportManagement(){
                 const ref_temp: {ref: string}[] = []
                 data.map((item: any, index: number) => {
                     ref_temp.push({ref : item.ref})
-                    temp.push(createData(index, item.selProcedure, item.service, item.personalAddmissionDate, item.returnBy, (item.completedDate == "" ? "-" : item.completedDate) , "-" ))  
+                    temp.push(createData(index, item.nhsNumber, item.sentBy, item.selProcedure, item.service, item.personalAddmissionDate, item.returnBy, (item.completedDate == "" ? "-" : item.completedDate) , "-" ))  
                 })
                 setRows(temp)
                 setRefs(ref_temp)
