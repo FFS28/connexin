@@ -13,13 +13,18 @@ export const makeJSON = (data: any) => {
 export const checkDataType = (data: any) => {
     // validationcheck
     return new Promise((res, rej) => {
-        data = JSON.parse(decode(data))
-        if(data)
-            if(typeof(data) == "object")
-                res(data)
+        try{
+            data = JSON.parse(decode(data))
+            if(data)
+                if(typeof(data) == "object")
+                    res(data)
+                else
+                    rej("Please check page Url!")    
             else
-                rej("Please check page Url!")    
-        else
+                rej("Please check page Url!")
+        }
+        catch {
             rej("Please check page Url!")
+        }
     })
 }

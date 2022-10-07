@@ -22,6 +22,7 @@ export default function Welcome(){
             setAppState({...appState, pageState : {...appState.pageState, curPage : pageName}})
     }
     useEffect(()=>{
+        console.log(appState.users.user.ref)
         getQuestionNiare(makeJSON({
             qusRef: appState.users.user.ref
         })).then((res: any)=>{

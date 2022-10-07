@@ -33,7 +33,7 @@ export default function ProcedureManagement(){
             id: 'timetoken',
             numeric: true,
             disablePadding: false,
-            label: 'Time Token'
+            label: 'Time Taken'
         },
         {
             id: 'benifits',

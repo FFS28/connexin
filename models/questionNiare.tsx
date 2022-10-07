@@ -218,68 +218,73 @@ export const fnSaveEditQuestionNiare = async (qusInfo: any) => {
 }
 
 export const fnGetQuestionNiareByUser = async (userInfo: any) => {
-    const res = await faunaClient.query(
-        Get( Ref(Collection("PreOpQuestionNiares"), userInfo.qusRef))
-    )
-    const procedure = await faunaClient.query(
-        Get( Ref( Collection("Procedure"), res.data.selProcedure ))
-    )
-
-    const service = await faunaClient.query(
-        Get( Ref( Collection("Service"), res.data.service ))
-    )
-    const temp = res.data.questionOrSection;
-    for( let i = 0; i< temp.length; i++){
-        const returnData = await faunaClient.query(
-            Let(
-                {
-                    Section: Get(Ref(Collection('EditSections'), temp[i])),
-                },
-                {
-                    ref: Select(['ref', 'id'], Var('Section')),
-                    content: Select(['data', 'content'], Var('Section')),
-                }
-            )
+    try{
+        const res = await faunaClient.query(
+            Get( Ref(Collection("PreOpQuestionNiares"), userInfo.qusRef))
         )
-        returnData.content = JSON.parse(returnData.content);
+        const procedure = await faunaClient.query(
+            Get( Ref( Collection("Procedure"), res.data.selProcedure ))
+        )
 
-        const sections = {
-            ref: returnData.ref,
-            title: JSON.parse(Base64.decode(returnData.content.title)),
-            info: JSON.parse(Base64.decode(returnData.content.info)),
-            link: JSON.parse(Base64.decode(returnData.content.link)),
-            imgUrl: JSON.parse(Base64.decode(returnData.content.imgUrl)),
-            completed: JSON.parse(Base64.decode(returnData.content.completed)),
-            questions: JSON.parse(Base64.decode(returnData.content.questions))        ,
-        }
-        
-        const question_temp = sections.questions;
-        
-        for(let j = 0; j< question_temp.length; j++){
-            question_temp[j].title = JSON.parse(Base64.decode(question_temp[j].title))
-            question_temp[j].type = JSON.parse(Base64.decode(question_temp[j].type))
-            question_temp[j].result = JSON.parse(Base64.decode(question_temp[j].result))
-            question_temp[j].completed = JSON.parse(Base64.decode(question_temp[j].completed))
-            question_temp[j].subQuestions = JSON.parse(Base64.decode(question_temp[j].subQuestions))
-            const subquestions_temp = question_temp[j].subQuestions;    
-            for(let  k=0; k< subquestions_temp.length; k++){
-                subquestions_temp[k].title = JSON.parse(Base64.decode(subquestions_temp[k].title))
-                subquestions_temp[k].type = JSON.parse(Base64.decode(subquestions_temp[k].type))
-                subquestions_temp[k].data = JSON.parse(Base64.decode(subquestions_temp[k].data))
-                subquestions_temp[k].result = JSON.parse(Base64.decode(subquestions_temp[k].result))
+        const service = await faunaClient.query(
+            Get( Ref( Collection("Service"), res.data.service ))
+        )
+        const temp = res.data.questionOrSection;
+        for( let i = 0; i< temp.length; i++){
+            const returnData = await faunaClient.query(
+                Let(
+                    {
+                        Section: Get(Ref(Collection('EditSections'), temp[i])),
+                    },
+                    {
+                        ref: Select(['ref', 'id'], Var('Section')),
+                        content: Select(['data', 'content'], Var('Section')),
+                    }
+                )
+            )
+            returnData.content = JSON.parse(returnData.content);
+
+            const sections = {
+                ref: returnData.ref,
+                title: JSON.parse(Base64.decode(returnData.content.title)),
+                info: JSON.parse(Base64.decode(returnData.content.info)),
+                link: JSON.parse(Base64.decode(returnData.content.link)),
+                imgUrl: JSON.parse(Base64.decode(returnData.content.imgUrl)),
+                completed: JSON.parse(Base64.decode(returnData.content.completed)),
+                questions: JSON.parse(Base64.decode(returnData.content.questions))        ,
             }
-            question_temp[j].subQuestions = subquestions_temp;
+            
+            const question_temp = sections.questions;
+            
+            for(let j = 0; j< question_temp.length; j++){
+                question_temp[j].title = JSON.parse(Base64.decode(question_temp[j].title))
+                question_temp[j].type = JSON.parse(Base64.decode(question_temp[j].type))
+                question_temp[j].result = JSON.parse(Base64.decode(question_temp[j].result))
+                question_temp[j].completed = JSON.parse(Base64.decode(question_temp[j].completed))
+                question_temp[j].subQuestions = JSON.parse(Base64.decode(question_temp[j].subQuestions))
+                const subquestions_temp = question_temp[j].subQuestions;    
+                for(let  k=0; k< subquestions_temp.length; k++){
+                    subquestions_temp[k].title = JSON.parse(Base64.decode(subquestions_temp[k].title))
+                    subquestions_temp[k].type = JSON.parse(Base64.decode(subquestions_temp[k].type))
+                    subquestions_temp[k].data = JSON.parse(Base64.decode(subquestions_temp[k].data))
+                    subquestions_temp[k].result = JSON.parse(Base64.decode(subquestions_temp[k].result))
+                }
+                question_temp[j].subQuestions = subquestions_temp;
+            }
+            sections.questions = question_temp 
+            temp[i] = sections
         }
-        sections.questions = question_temp 
-        temp[i] = sections
+        return {
+            addmissionDate: res.data.personalAddmissionDate.split('-')[2] + "-" + res.data.personalAddmissionDate.split('-')[1] + "-" + res.data.personalAddmissionDate.split('-')[0], 
+            returnByDate: res.data.returnBy.split('-')[2] + "-" + res.data.returnBy.split('-')[1] + "-" + res.data.returnBy.split('-')[0], 
+            procedure: procedure.data.procedure,
+            hospitalSite: service.data.hospitalSite, 
+            qusData: temp
+        };
     }
-    return {
-        addmissionDate: res.data.personalAddmissionDate.split('-')[2] + "-" + res.data.personalAddmissionDate.split('-')[1] + "-" + res.data.personalAddmissionDate.split('-')[0], 
-        returnByDate: res.data.returnBy.split('-')[2] + "-" + res.data.returnBy.split('-')[1] + "-" + res.data.returnBy.split('-')[0], 
-        procedure: procedure.data.procedure,
-        hospitalSite: service.data.hospitalSite, 
-        qusData: temp
-    };
+    catch {
+        return {error: true}
+    }
 }
 
 export const fnSelectedPreOpQuestionNiares = async (data: any) => {

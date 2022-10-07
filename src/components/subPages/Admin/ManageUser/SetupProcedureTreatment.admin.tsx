@@ -104,7 +104,6 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
     }
 
     const change_service = (event: any) => {
-        handle(event.target.value)
         setServiceSpecialty(event.target.value)
     }
 
