@@ -16,10 +16,13 @@ export const checkDataType = (data: any) => {
         try{
             data = JSON.parse(decode(data))
             if(data)
-                if(typeof(data) == "object")
+                if(typeof(data) == "object"){
+                    if(data.error)
+                        rej("Please check url!")
                     res(data)
-                else
+                } else{
                     rej("Please check page Url!")    
+                }
             else
                 rej("Please check page Url!")
         }
