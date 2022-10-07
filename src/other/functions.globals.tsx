@@ -19,7 +19,8 @@ export const checkDataType = (data: any) => {
                 if(typeof(data) == "object"){
                     if(data.error)
                         rej("Please check url!")
-                    res(data)
+                    else 
+                        res(data)
                 } else{
                     rej("Please check page Url!")    
                 }
