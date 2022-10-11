@@ -66,7 +66,8 @@ export default function SetupServiceDirectory({editData } : {editData: any}){
                 serviceEmail: serviceEmail 
             })).then((res: any) => {
                 res.json().then((data: any)=> {
-                    setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: data, type: "success"}})
+                    setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: data, type: "success"}})
+                    resetField();
                 }).catch((rej: any) => {
                     console.log(rej)
                 })
@@ -86,6 +87,7 @@ export default function SetupServiceDirectory({editData } : {editData: any}){
             })).then((res: any) => {
                 res.json().then((data: any)=> {
                     setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: data, type: "success"}})
+                    resetField();
                 }).catch((rej: any) => {
                     console.log(rej)
                 })

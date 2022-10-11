@@ -74,7 +74,8 @@ export const AppProvider = ({ children }: {children: any}) => {
                 addmissionDate: "", 
                 returnByDate: "",
                 procedure: "",
-                hospitalSite: ""
+                hospitalSite: "",
+                nhsnumber: ""
             }
         },
         alert : {

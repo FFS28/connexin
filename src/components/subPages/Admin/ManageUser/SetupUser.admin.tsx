@@ -132,6 +132,7 @@ export default function SetupUser({editData}: {editData : any}){
             updateUserInfo(data).then((res: any) => { 
                 res.json().then((data: string)=>{
                     setAppState({...appState, editState : false, alert: {...appState.alert, open: true, message: data, type: "success"}})
+                    resetField();
                 }).catch((rej: any) => {
                     setAppState({...appState, alert: {...appState.alert, open: true, message: "Please try again!", type: "warning"}})
                 })

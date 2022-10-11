@@ -6,7 +6,7 @@ import { findReport, getAllUserInfo, getSelectedUserInfo } from "../../../../oth
 import { makeJSON } from "../../../../other/functions.globals";
 import { AppContext } from "../../../../provider/index.provider";
 import Report from "../ManageUser/Report.admin";
-
+import dayjs from 'dayjs';
 
 function createData(id: number, nhsnumber: string, senderemail: string, procedure: string, service: string, sentdate: string, duedate: string, completedate: string, overdueby: string) {
     return { id, nhsnumber, senderemail, procedure, service, sentdate, duedate, completedate, overdueby };
@@ -73,6 +73,7 @@ export default function ReportManagement(){
     const {appState, setAppState} = useContext(AppContext)
 
     const ChangeHandle = ( item: number ) => {
+        setAppState({...appState, editState : false})
         getSelectedUserInfo(makeJSON({
             ref: refs[item].ref,
             level: appState.users.admin.level-1
@@ -97,7 +98,7 @@ export default function ReportManagement(){
                 const ref_temp: {ref: string}[] = []
                 data.map((item: any, index: number) => {
                     ref_temp.push({ref : item.ref})
-                    temp.push(createData(index, item.nhsNumber, item.sentBy, item.selProcedure, item.service, item.personalAddmissionDate, item.returnBy, (item.completedDate == "" ? "-" : item.completedDate) , "-" ))  
+                    temp.push(createData(index, item.nhsNumber, item.sentBy, item.selProcedure, item.service, dayjs(item.personalAddmissionDate).format('DD/MM/YYYY'), dayjs(item.returnBy).format('DD/MM/YYYY'), (item.completedDate == "" ? "-" : dayjs(item.completedDate).format('DD/MM/YYYY')) , "-" ))  
                 })
                 setRows(temp)
                 setRefs(ref_temp)

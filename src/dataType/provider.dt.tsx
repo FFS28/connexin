@@ -39,7 +39,8 @@ export interface ProviderStore {
             addmissionDate: string, 
             returnByDate: string,
             procedure: string,
-            hospitalSite: string
+            hospitalSite: string,
+            nhsnumber: string
         }
     },
     alert : {
@@ -53,7 +54,7 @@ export interface ProviderStore {
         uploadState : boolean
     },
     SysInfo : {
-        adminRoles :  any
+        adminRoles :  any,
     },
     changeState: boolean,
     editState: boolean

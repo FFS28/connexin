@@ -70,6 +70,7 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
             })).then((res: any) => {
                 res.json().then((data: any)=>{
                     setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                    resetField();
                 })
             }).catch(rej => {
                 console.log(rej)
@@ -86,6 +87,7 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
             })).then((res: any) => {
                 res.json().then((data: any)=>{
                     setAppState({...appState, editState: false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                    resetField();
                 })
                 resetField()
             })

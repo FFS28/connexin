@@ -36,11 +36,23 @@ export default function ContestList() {
                     doc.text(question.title, padding * 2, nI);
                     cN = question.title.split('\n').length;
                     nI += padding * cN;
-                    doc.text(question.result == false ? "NO" : "YES", padding * 2, nI);
+                    if(question.result)
+                        doc.text("YES", padding * 2, nI)
+                    else 
+                        return;
                     cN = 1;
                     question.subQuestions.map((subquestion: any) => {
                         nI += padding * cN;
                         doc.text(subquestion.title, padding * 3, nI);
+                        if (nI > 280) {
+                            nI = 10;
+                            doc.addPage();
+                        }
+                        nI += padding * cN;
+                        if(typeof(subquestion.result) == "string")
+                            doc.text(subquestion.result, padding * 3, nI);
+                        else 
+                            doc.text(subquestion.result.join(","), padding * 3, nI);
                         if (nI > 280) {
                             nI = 10;
                             doc.addPage();

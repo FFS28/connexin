@@ -172,7 +172,8 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 selProcedure : selProcedure,
                 sendDate: dayjs().format('YYYY-MM-DD')
             })).then((res: any)=>{
-                setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                resetField();
             }).catch((rej: any)=>{
                 console.log("error")
             })    

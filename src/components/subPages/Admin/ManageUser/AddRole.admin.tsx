@@ -26,7 +26,8 @@ export default function AddRole({editData}: {editData : any}){
             }
             addRole(makeJSON({role: role, author: authBy})).then((res: any) =>{
                 res.json().then((data: any) => {
-                    setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                    setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                    resetField();
                 })    
             })
         }else {

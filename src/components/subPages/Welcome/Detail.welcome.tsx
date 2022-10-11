@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Box, Typography } from "@mui/material"
 import ImageMark from '../../elements/ImageMark';
 import TextMark from '../../elements/TextMark';
 import ConnexinInput from '../../elements/ConnexinInput';
 import ConnnexinBtn from '../../elements/ConnexinBtn';
+import { AppContext } from '../../../provider/index.provider';
 
 
 export default function Detail({pageHandle}: {pageHandle : (param1: any)=>void}){
 
+    const {appState, setAppState} = useContext(AppContext)
+
     const change_value = (label: string, value: string) => {
         console.log(label, value)
+        if(label == "NHS Number")
+            setAppState({...appState, users: {...appState.users, user: {...appState.users.user, nhsnumber: value}}});
     }
 
     return (

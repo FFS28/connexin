@@ -31,7 +31,8 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
                 title: consultantName, 
                 serviceSpecial: serviceSpecial
             })).then((res: any) => {
-                setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                setAppState({...appState, editState : false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
+                resetField();
             })
         }else {
             updateConsultant(makeJSON({
@@ -52,8 +53,6 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
     }
 
     const changeService = (event: any) => {
-        if(!appState.editState)
-            handle(event.target.value)
         setServiceSpecial(event.target.value)
     }
 
@@ -86,7 +85,7 @@ export default function SetupConsultant({editData, handle} : {editData: any, han
                     <TextField type={"text"} value={consultantName} label={"Name"} variant={"standard"} onChange={ event => setConsultantName(event.target.value) } />
                 </Stack>
                 <Stack spacing={2} width={"50%"}>
-                    {appState.users.admin.service == 0 ? <FormControl variant={"standard"}>
+                    {appState.users.admin.service == "all" ? <FormControl variant={"standard"}>
                         <InputLabel>Service/Specialty</InputLabel>
                         <Select value={serviceSpecial} onChange={ changeService } sx={{textAlign: "left"}} >
                             {serviceList.map((item: any, index: number)=>{
