@@ -470,14 +470,14 @@ export const fnGetFilterResult = async (req: any) => {
     switch(req.filterOption) {
         case 0:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 28){
+                if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 < 28){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -485,14 +485,15 @@ export const fnGetFilterResult = async (req: any) => {
             break;
         case 1:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 1){
+                if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 < 1){
+                    console.log((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000)
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -500,14 +501,14 @@ export const fnGetFilterResult = async (req: any) => {
             break;
         case 2:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 7){
+                if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 < 7){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -515,14 +516,14 @@ export const fnGetFilterResult = async (req: any) => {
             break;
         case 3:
             data.map((questionnaire: any) => {
-                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 < 90){
+                if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 < 90){
                     temp.sent ++;
                     if(questionnaire.data.completedDate == ""){
                         temp.await ++;
                     }else {
                         temp.completed ++;
                     }
-                    if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                    if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                         temp.overdue ++;
                     }  
                 }
@@ -536,7 +537,7 @@ export const fnGetFilterResult = async (req: any) => {
                 }else {
                     temp.completed ++;
                 }
-                if((new Date().getTime() - new Date(questionnaire.data.personalAddmissionDate).getTime()) / 86400000 > questionnaire.data.dueDate){
+                if((new Date().getTime() - new Date(questionnaire.data.sendDate).getTime()) / 86400000 > questionnaire.data.dueDate){
                     temp.overdue ++;
                 }  
             })

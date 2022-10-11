@@ -59,10 +59,24 @@ export default async function handler(req : any, res: any) {
                 text: "",
                 html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
                 <a href="${temp}">${temp}</a></div>`
-            }, function (err: any) {
+            }, async function (err: any) {
                 if(err){
-                    return res.end(JSON.stringify("errors"))
-                }else{
+                    temp = await fnAddNewPreOpQuestionNiares(req.body);
+                    transporter.sendMail({
+                        from: process.env.SMTP_SENDER,
+                        to: req.body.ccemail,
+                        subject: `Welcome`,
+                        text: "",
+                        html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
+                        <a href="${temp}">${temp}</a></div>`
+                    }, function (error: any) {
+                        if(error)
+                            return res.end(JSON.stringify("errors"))
+                        else 
+                            return res.end(JSON.stringify("errors"))                
+                    });
+                }
+                else{
                     return res.end(JSON.stringify("success"))
                 }
             })

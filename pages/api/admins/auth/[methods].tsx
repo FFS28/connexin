@@ -76,7 +76,6 @@ export default async function handler(req : any, res: any) {
             data = await fnGetSelectedUser(req.body)
             res.end(JSON.stringify(data))
             return res;
-            
         case "updateUser":
             await fnUpdateUser(req.body)
             res.end(JSON.stringify("Successful Updated!"))

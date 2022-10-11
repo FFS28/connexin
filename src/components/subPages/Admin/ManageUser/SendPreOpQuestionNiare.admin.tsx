@@ -34,7 +34,6 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
     const [ccmobileNumber, setCcmobileNumber] = useState("")
     const [selProcedure, setSelProcedure] = useState("")
     const [completedDate, setCompletedDate] = useState("")
-    const [sentDate, setSentDate] = useState("")
 
     const [serviceList, setServiceList] = useState([])
     const [questionniaresList, setQuestionniaresList] = useState([])
@@ -170,7 +169,8 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 returnBy : returnBy,
                 mobileNumber : mobileNumber,
                 ccmobileNumber : ccmobileNumber,
-                selProcedure : selProcedure
+                selProcedure : selProcedure,
+                sendDate: dayjs().format('YYYY-MM-DD')
             })).then((res: any)=>{
                 setAppState({...appState, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
             }).catch((rej: any)=>{
@@ -196,7 +196,6 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 ccmobileNumber : ccmobileNumber,
                 selProcedure : selProcedure,
                 completedDate : completedDate,
-                sentDate: sentDate,
                 ref : editData.ref
             })).then((res: any)=>{
                 setAppState({...appState, editState: false, changeState: !appState.changeState, alert: {...appState.alert, open: true, message: "Successful!", type: "success"}})
@@ -249,7 +248,6 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             setCcmobileNumber(editData.ccmobileNumber)
             setSelProcedure(editData.selProcedure)            
             setCompletedDate(editData.completeDate)
-            setSentDate(editData.sentDate)
         }
     }, [appState.editState])
 
