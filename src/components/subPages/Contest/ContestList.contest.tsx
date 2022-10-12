@@ -26,6 +26,9 @@ export default function ContestList() {
             
             let nI = 0;
             let cN = 1;
+            doc.text(`NHS Number: ${appState.users.user.nhsnumber}`, null, 20, { align: 'right'} );
+            nI += padding * cN;
+                
             appState.useData.questionNiares.map((questionnaire: any) => {
                 cN = 1;
                 nI += padding * cN;
