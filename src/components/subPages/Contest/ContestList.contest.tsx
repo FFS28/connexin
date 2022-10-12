@@ -64,14 +64,14 @@ export default function ContestList() {
                 })    
                         
             })
-            // sendingPDF(makeJSON({
-            //     pdf: doc.output('datauristring').split('base64,')[1],
-            //     ref: appState.users.user.ref
-            // })).then((res: any) => {
-            //     console.log(res)
-            // }).catch((err: any) => {
-            //     console.log(err)
-            // })
+            sendingPDF(makeJSON({
+                pdf: doc.output('datauristring').split('base64,')[1],
+                ref: appState.users.user.ref
+            })).then((res: any) => {
+                console.log(res)
+            }).catch((err: any) => {
+                console.log(err)
+            })
             // doc.save("Connnexin-Questionnaire.pdf");
             setAppState({...appState, pageState: { ...appState.pageState, curLayout : "MainLayout", curPage : "Question"}})
             return;
