@@ -258,7 +258,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             <Stack spacing={10} direction={"row"} >
                 <Stack component={"form"} noValidate spacing={2} sx={{ width: "50%"}} >
                     <TextField type={"text"} label={"NHS Number"} value={nhsNumber} variant={"standard"} onChange={ event => setNhsNumber(event.target.value) } />
-                    {appState.users.admin.service == 0 ? <FormControl variant={"standard"}>
+                    {appState.users.admin.service == "all" ? <FormControl variant={"standard"}>
                         <InputLabel>Select Service</InputLabel>
                         <Select value={service} onChange={(event) => setService(event.target.value)} sx={{textAlign: "left"}} >
                             {serviceList.map((item: any, index: number) => {
@@ -323,7 +323,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 </Stack>
             </Stack>
             <Stack component={"form"} noValidate spacing={4} direction="row" justifyContent={"right"} sx={{mt: 4}} >
-                <Button variant={"outlined"} color={"primary"} onClick={addNew} startIcon={<AddTaskIcon />} >Save to Send</Button>
+                <Button variant={"outlined"} color={"primary"} onClick={addNew} startIcon={<AddTaskIcon />} >Send</Button>
                 <Button variant={"outlined"} color={"error"} onClick={resetField} startIcon={<DeleteIcon />} >Cancel</Button>
             </Stack>
         </LocalizationProvider>
