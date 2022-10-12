@@ -28,7 +28,6 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
         }).catch((rej: any) => {
             console.log(rej)
         })
-        handle(appState.users.admin.service)
     }, [])
 
     const addNew = () => {
@@ -130,7 +129,7 @@ export default function SetupProcedureTreatment({editData, handle}: {editData: a
                     <TextField type={"text"} value={timeToken} label="Approx time taken" variant={"standard"} onChange={ event => setTimeToken(event.target.value) } />    
                 </Stack>
                 <Stack spacing={2} width={"50%"}>
-                    {appState.users.admin.service == 0 ? <FormControl variant={"standard"}>
+                    {appState.users.admin.service == "all" ? <FormControl variant={"standard"}>
                         <InputLabel>Service/Specialty</InputLabel>
                         <Select value={serviceSpecialty} onChange={ change_service } sx={{textAlign: "left"}} >
                             <MenuItem value={"0"}>All Items</MenuItem>

@@ -96,7 +96,7 @@ export default function ProcedureManagement(){
         
     }, [])
     useEffect( () => {
-        if(appState.users.admin.service == "0")
+        if(appState.users.admin.service == "all")
             getAllProcedures().then((res: any) => {
                 res.json().then((data: any)=>{
                     const temp: {id: number, procedure: string, service: string, timetoken: string, benifits: string, risk: string, potentialComplications: string}[] = []

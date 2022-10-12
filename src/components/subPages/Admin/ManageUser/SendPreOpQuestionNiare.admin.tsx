@@ -74,14 +74,20 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             res.json().then((data: any)=>{
                 const ref_temp: any = []
                 data.map((item: any) => {
-                    ref_temp.push({ref : item.ref, title: item.procedure})
+                    ref_temp.push({ref : item.ref, title: item.procedure, service: item.serviceSpecialty})
                 })
-                setProcedureList(ref_temp)    
+                setProcedureList(ref_temp)
             }).catch((rej: any) => {console.log(rej)})
         })
-        handle(appState.users.admin.service)
     }, [])
 
+    useEffect(() => {
+        procedureList.map((item: any) => {
+            if(item.ref == selProcedure)
+                setService(item.service)
+        })
+    }, [selProcedure])
+    
     useEffect(()=>{
         serviceList.map((item: any) => {
             if(item.ref == service){
@@ -95,8 +101,8 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             setAppState({...appState, alert: {...appState.alert, open: true, message: "Please input NHS number!", type: "error"}})
             return;
         }
-        if(!validationCheckText(service)) {
-            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Service!", type: "error"}})
+        if(!validationCheckText(selProcedure)) {
+            setAppState({...appState, alert: {...appState.alert, open: true, message: "Please select Procedure!", type: "error"}})
             return;
         }
         if(questionOrSection.length == 0) {
@@ -212,7 +218,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
         setAppState({...appState, editState : false});
         setNhsNumber("")
         setDob("")
-        setService(appState.users.admin.service == 0 ? "" : appState.users.admin.service)
+        setService(appState.users.admin.service)
         setQuestionOrSection([])
         setAddmission("")
         setReturnto("")
@@ -258,14 +264,22 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
             <Stack spacing={10} direction={"row"} >
                 <Stack component={"form"} noValidate spacing={2} sx={{ width: "50%"}} >
                     <TextField type={"text"} label={"NHS Number"} value={nhsNumber} variant={"standard"} onChange={ event => setNhsNumber(event.target.value) } />
-                    {appState.users.admin.service == "all" ? <FormControl variant={"standard"}>
+                    <FormControl variant={"standard"}>
+                        <InputLabel>Select Procedure</InputLabel>
+                        <Select value={selProcedure} onChange={event => setSelProcedure(event.target.value)} sx={{textAlign: "left"}} >
+                            {procedureList.map((item: any, index: number) => {
+                                return <MenuItem key={index} value={item.ref}>{item.title}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                    {/* {appState.users.admin.service == "all" ? <FormControl variant={"standard"}>
                         <InputLabel>Select Service</InputLabel>
                         <Select value={service} onChange={(event) => setService(event.target.value)} sx={{textAlign: "left"}} >
                             {serviceList.map((item: any, index: number) => {
                                 return <MenuItem key={index} value={item.ref}>{item.serviceSpecial}</MenuItem>
                             })}
                         </Select>
-                    </FormControl> : null}
+                    </FormControl> : null} */}
                     <Autocomplete multiple id="tags-standard" options={questionniaresList} defaultValue={[]} getOptionLabel={(option: any) => option.title} onChange={(event: any, value: any) => setQuestionOrSection(value)} renderInput={(params: any) => (
                         <TextField {...params} variant="standard" label="Select Question/Sections" placeholder="Select Question" />
                         )} />
@@ -285,9 +299,10 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                         onChange={(newValue) => {
                             setPersonalAddmissionDate(newValue != null ? newValue.format('YYYY-MM-DD') : "")
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
-                    <TextField type={"text"} label={"Pre-Admissions Advice"} value={preAddmissionAdvice} variant={"standard"} onChange={ event => setPreAddmissionAdvice(event.target.value) } />
+                    
                 </Stack>
                 <Stack spacing={2} sx={{width: "50%"}} >
+                    <TextField type={"text"} label={"Pre-Admissions Advice"} value={preAddmissionAdvice} variant={"standard"} onChange={ event => setPreAddmissionAdvice(event.target.value) } />
                     <DatePicker label={"DOB"} value={ dob == "" ? null : dayjs(dob)}
                         inputFormat={"DD/MM/YYYY"}
                         onChange={(newValue) => {
@@ -310,14 +325,7 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                         }} renderInput={(params) => <TextField {...params} variant={"standard"} />} />
                     <TextField type={"text"} label={"Mobile Number"} value={mobileNumber} variant={"standard"} onChange={ event => setMobileNumber(event.target.value) } />
                     <TextField type={"text"} label={"c.c.Mobile Number"} value={ccmobileNumber} variant={"standard"} onChange={ event => setCcmobileNumber(event.target.value) } />
-                    <FormControl variant={"standard"}>
-                        <InputLabel>Select Procedure</InputLabel>
-                        <Select value={selProcedure} onChange={event => setSelProcedure(event.target.value)} sx={{textAlign: "left"}} >
-                            {procedureList.map((item: any, index: number) => {
-                                return <MenuItem key={index} value={item.ref}>{item.title}</MenuItem>
-                            })}
-                        </Select>
-                    </FormControl>
+                    
                     
                     {/* <Button variant={"contained"}  >Submit</Button> */}
                 </Stack>

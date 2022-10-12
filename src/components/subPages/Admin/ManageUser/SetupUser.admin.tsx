@@ -193,7 +193,7 @@ export default function SetupUser({editData}: {editData : any}){
                             <MenuItem value={"3"}>Level 3</MenuItem>
                         </Select>
                     </FormControl>   
-                    {appState.users.admin.service == 0 ? <FormControl variant={"standard"}>
+                    {appState.users.admin.service == "all" ? <FormControl variant={"standard"}>
                         <InputLabel>Restrict to service</InputLabel>
                         <Select value={service} onChange={ event => setService(event.target.value) } sx={{textAlign: "left"}} >
                             {serviceList.map((item: any, index: number)=>{

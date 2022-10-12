@@ -96,7 +96,7 @@ export default function PreOpQusManagement(){
     }, [])
 
     useEffect( () => {
-        if(appState.users.admin.service == "0")
+        if(appState.users.admin.service == "all")
             getAllPreOpQuestionNiares().then((res: any) => {
                 res.json().then((data: any)=>{
                     const temp: any = []
