@@ -21,12 +21,15 @@
     "js-base64": "^3.7.2",
     "jspdf": "^2.5.1",
     "md5": "^2.3.0",
+    "multer": "^1.4.5-lts.1",
     "next": "12.1.6",
+    "next-connect": "^0.13.0",
     "nodemailer": "^6.7.8",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/multer": "^1.4.7",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",

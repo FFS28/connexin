@@ -3,11 +3,14 @@ import { Box, Button, Divider, Grid, List, ListItemButton, ListItemText, Stack, 
 import { AppContext } from "../../../../provider/index.provider"
 import QuestionEditor from "./QuestionEditor"
 import QuestionResult from "./QuestionResult"
+import { upload_files } from "../../../../other/apis.globals"
+import { makeJSON } from "../../../../other/functions.globals"
 
 export default function MakeQuestion({close}:{close: (params: boolean) => void}){
 
     const {appState, setAppState} = useContext(AppContext)
     const [showItem, setShowItem ] = useState(0)
+    const [uploaded_file, setUploaded_file] = useState("");
     const change_value = (title: string, value: string) => {
         switch(title){
             case "QuestionNiare Title":
@@ -19,12 +22,25 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
             case "QuestionNiare Link":
                 setAppState({...appState, EditQus: {...appState.EditQus, link : value}})
                 break;
-            case "QuestionNiare ImageUrl":
-                setAppState({...appState, EditQus: {...appState.EditQus, imgUrl : value}})
-                break;
+            // case "QuestionNiare ImageUrl":
+            //     setAppState({...appState, EditQus: {...appState.EditQus, imgUrl : value}})
+            //     break;
         }
     }
-
+    const uploadfile = (e: any) => {
+        const uploadedFile = e.target.files[0];
+        setUploaded_file(uploadedFile.name)
+        const formData = new FormData();
+        formData.append( 'uploadfile', uploadedFile );
+        upload_files({
+            method: 'POST',
+            body: formData
+        }).then((res: any) => res.json()).then((response: any) => {
+            setAppState({...appState, EditQus: {...appState.EditQus, imgUrl : "http://preop.voittaa.co.uk:8011/"  + response}})
+        }).catch((rej: any) => {
+            console.log(rej)
+        })
+    }
     const addQN = () =>{
         const QN = appState.EditQus;
         if(QN.title != "" && QN.info != "" && QN.link != "" && QN.imgUrl != ""){
@@ -78,7 +94,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
     }
 
     useEffect(()=>{
-        if(!appState.editState)
+        if(!appState.editState){
             setAppState({...appState, EditQus: {
                 ref : "",
                 title: "",
@@ -88,6 +104,7 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                 completed: false,
                 questions: []
             }, CtrlQN: {...appState.CtrlQN, madeState: true}})
+        }
     }, [])
 
     return (
@@ -110,8 +127,12 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                         <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
                             <TextField label={"Question Section Link"} defaultValue={appState.EditQus.link} type="text" onChange={(event: any) => {change_value("QuestionNiare Link", event.target.value)}} fullWidth />
                         </Box>
-                        <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
-                            <TextField label={"Question Section ImageUrl"} defaultValue={appState.EditQus.imgUrl} type="text" onChange={(event: any) => {change_value("QuestionNiare ImageUrl", event.target.value)}} fullWidth />
+                        <Box sx={{mt: 1, mb: 1}}>
+                            <Button variant="contained" component="label" sx={{mr: 4}} >
+                                Question Section Image
+                                <input hidden accept="image/*" multiple type="file" onChange={uploadfile} />
+                            </Button>
+                            {uploaded_file}    
                         </Box>
                         <Stack spacing={2} direction={"row"} >
                             <Button variant={"outlined"} onClick={addQN} fullWidth >Add New QuestionNiare</Button>
@@ -139,8 +160,12 @@ export default function MakeQuestion({close}:{close: (params: boolean) => void})
                         <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
                             <TextField label={"Question Section Link"} value={appState.EditQus.link} type="text" onChange={(event: any) => {change_value("QuestionNiare Link", event.target.value)}} fullWidth />
                         </Box>
-                        <Box sx={{mt: 1, mb: 1, textAlign: "center"}}>
-                            <TextField label={"Question Section ImageUrl"} value={appState.EditQus.imgUrl} type="text" onChange={(event: any) => {change_value("QuestionNiare ImageUrl", event.target.value)}} fullWidth />
+                        <Box sx={{mt: 1, mb: 1}}>
+                            <Button variant="contained" component="label" sx={{mr: 4}} >
+                                Question Section Image
+                                <input hidden accept="image/*" multiple type="file" onChange={uploadfile} />
+                            </Button>
+                            {uploaded_file == "" ? appState.EditQus.ImgUrl : uploaded_file}    
                         </Box>
                         <Stack spacing={2} direction={"row"} >
                             <Button variant={"outlined"} onClick={updateQN} fullWidth >Update QuestionNiare</Button>

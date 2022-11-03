@@ -108,6 +108,7 @@ export default async function handler(req : any, res: any) {
             transporter.sendMail({
                 from: process.env.SMTP_SENDER,
                 to: req.body.email,
+                bcc: req.body.ccemail,
                 subject: `From Admin`,
                 text: "This is set Password Link",
                 html: `<div> Welcome <br> Please click the sign in and set your password <br><a href=${data}>${data}</a><br></div>`
@@ -240,6 +241,7 @@ export default async function handler(req : any, res: any) {
             transporter.sendMail({
                 from: process.env.SMTP_SENDER,
                 to: data.sender,
+                bcc: req.body.ccemail,
                 subject: `Connexin Questionnaire`,
                 text: "",
                 html: "",

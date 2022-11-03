@@ -131,7 +131,6 @@ export default function SetupServiceDirectory({editData } : {editData: any}){
                     <TextField type={"text"} value={address} label={"Address"} variant={"standard"} onChange={ event => setAddress(event.target.value) } />
                 </Stack>
                 <Stack spacing={2} width={"50%"}>
-                    <TextField type={"text"} value={subSpecial} label={"Sub-Specialty"} variant={"standard"} onChange={ event => setSubSpecial(event.target.value) } />
                     <TextField type={"text"} value={postCode} label={"Post Code"} variant={"standard"} onChange={ event => setPostCode(event.target.value) } />
                     <TextField type={"text"} value={addressForRedirection} label={"URL address for direction"} variant={"standard"} onChange={ event => setAddressForRedirection(event.target.value) } />
                     <TextField type={"text"} value={serviceEmail} label={"Service Email Address"} variant={"standard"} onChange={ event => setServiceEmail(event.target.value) } />

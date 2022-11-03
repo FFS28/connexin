@@ -12,10 +12,14 @@ import {
     fnUpdatePreOpQuestionNiares,
     fnGetReport,
     fnGetFilterResult,
-    fnSaveEditQuestionNiare
+    fnSaveEditQuestionNiare,
+    fnGetSelectedReportInfo
 } from "../../../../models/questionNiare";
+import multer from 'multer';
 
 const nodemailer = require('nodemailer');
+const {Base64} = require('js-base64');
+
 
 export default async function handler(req : any, res: any) {
     const url = req.url.split("/");
@@ -55,26 +59,14 @@ export default async function handler(req : any, res: any) {
             transporter.sendMail({
                 from: process.env.SMTP_SENDER,
                 to: req.body.email,
+                bcc: req.body.ccemail,
                 subject: `Welcome`,
                 text: "",
                 html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
                 <a href="${temp}">${temp}</a></div>`
             }, async function (err: any) {
                 if(err){
-                    temp = await fnAddNewPreOpQuestionNiares(req.body);
-                    transporter.sendMail({
-                        from: process.env.SMTP_SENDER,
-                        to: req.body.ccemail,
-                        subject: `Welcome`,
-                        text: "",
-                        html: `<div> Please click the link below to complete and return the questionnaire to us <br> 
-                        <a href="${temp}">${temp}</a></div>`
-                    }, function (error: any) {
-                        if(error)
-                            return res.end(JSON.stringify("errors"))
-                        else 
-                            return res.end(JSON.stringify("errors"))                
-                    });
+                    return res.end(JSON.stringify("errors"))                
                 }
                 else{
                     return res.end(JSON.stringify("success"))
@@ -117,6 +109,46 @@ export default async function handler(req : any, res: any) {
             temp = await fnGetFilterResult(req.body)
             res.end(JSON.stringify(temp))
             return res;
+        case "getSelectedReportInfo":
+            temp = await fnGetSelectedReportInfo(req.body)
+            res.send(JSON.stringify(temp))
+            return res;
+        case "sendNotification":
+            temp = await fnGetSelectedReportInfo(req.body)
+            
+            transporter.sendMail({
+                from: process.env.SMTP_SENDER,
+                to: temp.email,
+                bcc: temp.ccemail,
+                subject: `REMINDER`,
+                text: "",
+                html: `<div><p>
+                    Please complete the pre-op and consent questionnaire, which is due on ${temp.returnBy}.
+                    </p><p>
+                    Failure to complete the questionnaire may delay your treatment.
+                    </p><p>
+                    ${process.env.DOMAIN + Base64.encode(JSON.stringify({qusnaire: temp.ref}))}
+                    </p><p>
+                    Kind regards
+                    </p><p>
+                    Hospital Administration Team</p></div>`
+            }, async function (err: any) {
+                if(err){
+                    return res.end(JSON.stringify("errors"))                
+                }
+                else{
+                    return res.end(JSON.stringify("success"))
+                }
+            })
+
+            return res;
+            
+        case 'upload_files':
+            console.log("=====================")
+            console.log(req.data)
+            res.send(JSON.stringify("success"));
+            return res;
+
         default :
             return res;
     }

@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Button, Dialog, DialogContent, Grid, IconButton, Pagination, Stack, styled } from "@mui/material";
 import { DialogProps } from '@mui/material/Dialog';
 
@@ -88,7 +89,7 @@ function EnhancedTableHead(props: any) {
                             </TableSortLabel>
                         </CustomCell>
                     ))}
-                    {alertBody != "Report" ? <CustomCell padding={"checkbox"} sx={{ width: "5%", textAlign : "center" }} >Edit</CustomCell> : null }
+                    <CustomCell padding={"checkbox"} sx={{ width: "5%", textAlign : "center" }} >{alertBody != "Report" ? "Edit" : "Alert"}</CustomCell>
                 </TableRow>
             </TableHead>
             {alertBody=="makeQuestion" ? ( 
@@ -196,11 +197,11 @@ export default function ContentTable({rows, headCells, childrenTag, search, hand
                                                     <CustomCell key={rowIndex} >{cell}</CustomCell>
                                                 );
                                         })}
-                                        {childrenTag != "Report" ? <CustomCell>
+                                        <CustomCell>
                                             <IconButton color="primary" component="label" onClick = {() => handleChange(index)} >
-                                                <AppRegistrationOutlinedIcon />
+                                            {childrenTag != "Report" ?  <AppRegistrationOutlinedIcon /> : <NotificationsActiveIcon />} 
                                             </IconButton>
-                                        </CustomCell> : null} 
+                                        </CustomCell> 
                                     </TableRow>
                                 );
                             })}
@@ -211,7 +212,7 @@ export default function ContentTable({rows, headCells, childrenTag, search, hand
                             )}
                             {rows.length == 0? (
                                 <TableRow >
-                                    <CustomCell colSpan={childrenTag == "Report" ? headCells.length + 1 : headCells.length + 2} sx={{textAlign: "center"}} > No Result </CustomCell>
+                                    <CustomCell colSpan={headCells.length + 2} sx={{textAlign: "center"}} > No Result </CustomCell>
                                 </TableRow>
                             ) : null}
                         </TableBody>

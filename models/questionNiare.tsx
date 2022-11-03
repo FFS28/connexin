@@ -407,6 +407,11 @@ export const fnGetSelectedQuestionSection = async (data : any) => {
     return sections;
 }
 
+export const fnGetSelectedReportInfo = async (data: any) => {
+    console.log(data);
+    return await fnSelectedPreOpQuestionNiares({ref: data.id})
+}
+
 export const fnGetReport = async (req: any) => {
     if(req.completeDate == "" && req.dueDate == "" && req.sendBy == "" && req.sentDate && req.service && req.selProcedure)
         return fnGetAllPreOpQuestionNiares();

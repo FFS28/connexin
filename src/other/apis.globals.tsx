@@ -286,3 +286,21 @@ export const sendingPDF = (data: any) => {
         fetch('/api/admins/auth/sendingPDF', data).then(res).catch(rej)
     })
 }
+
+export const getSelectedReportInfo = (data: any) => {
+    return new Promise((res, rej) => {
+        fetch('/api/admins/question/getSelectedReportInfo', data).then(res).catch(rej)
+    })
+}
+
+export const sendNotification = (data: any) => {
+    return new Promise((res, rej) => {
+        fetch('/api/admins/question/sendNotification', data).then(res).catch(rej)
+    })
+}
+
+export const upload_files = (data: any) => {
+    return new Promise((res, rej) => {
+        fetch('/api/upload', data).then(res).catch(rej)
+    })
+}

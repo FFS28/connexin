@@ -22,16 +22,16 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
     const [questionOrSection, setQuestionOrSection] = useState([])
     const [addmission, setAddmission] = useState("")
     const [returnto, setReturnto] = useState("")
-    const [email, setEmail] = useState("")
-    const [ccemail, setCcemail] = useState("")
+    const [email, setEmail] = useState(localStorage.getItem('email') || "")
+    const [ccemail, setCcemail] = useState(localStorage.getItem('ccemail') || "")
     const [personalAddmissionDate, setPersonalAddmissionDate] = useState("")
     const [preAddmissionAdvice, setPreAddmissionAdvice] = useState("")
     const [selConsultant, setSelConsultant] = useState("")
     const [expectedLos, setExpectedLos] = useState("")
     const [sentBy, setSentBy] = useState("")
     const [returnBy, setReturnBy] = useState("")
-    const [mobileNumber, setMobileNumber] = useState("")
-    const [ccmobileNumber, setCcmobileNumber] = useState("")
+    const [mobileNumber, setMobileNumber] = useState(localStorage.getItem('mobile') || "")
+    const [ccmobileNumber, setCcmobileNumber] = useState(localStorage.getItem('ccmobile') || "")
     const [selProcedure, setSelProcedure] = useState("")
     const [completedDate, setCompletedDate] = useState("")
 
@@ -211,6 +211,11 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
                 console.log("error")
             })
         }
+
+        localStorage.setItem('ccemail', ccemail);
+        localStorage.setItem('email', email);
+        localStorage.setItem('mobile', mobileNumber);
+        localStorage.setItem('ccmobile', ccmobileNumber);
         
     }
 
@@ -222,16 +227,16 @@ export default function SendPreOpQuestionNiare({editData, handle}: {editData: an
         setQuestionOrSection([])
         setAddmission("")
         setReturnto("")
-        setEmail("")
-        setCcemail("")
+        setEmail(localStorage.getItem('email') || "")
+        setCcemail(localStorage.getItem('ccemail') || "")
         setPersonalAddmissionDate("")
         setPreAddmissionAdvice("")
         setSelConsultant("")
         setExpectedLos("")
         setSentBy("")
         setReturnBy("")
-        setMobileNumber("")
-        setCcmobileNumber("")
+        setMobileNumber(localStorage.getItem('mobile') || "")
+        setCcmobileNumber(localStorage.getItem('ccmobile') || "")
         setSelProcedure("")
     }
 
