@@ -16,7 +16,7 @@ export default function QuestionEditor({showItem}: {showItem: number}){
 
     const change_type = (value: any, index: number) => {
         const temp = appState.EditQus.questions;
-        temp[showItem].type = value == "Default" ? true : false;
+        temp[showItem].type = value == "Text/Info only" ? true : false;
         setAppState({...appState, EditQus: { ...appState.EditQus, questions: temp }})
     }
 
@@ -38,7 +38,7 @@ export default function QuestionEditor({showItem}: {showItem: number}){
                     <TextField label="Question Title" multiline maxRows={4} value={appState.EditQus.questions[showItem].title} onChange={change_title} type="text" fullWidth />
                 </Box>
                 <Box sx={{mt: 1, mb: 1 }}>
-                    <RadiobtnOpinion problem_state={change_type} proNum={0} data={["Default", "YesNo"]} value={ appState.EditQus.questions[showItem].type ? "Default" : "YesNo"} />    
+                    <RadiobtnOpinion problem_state={change_type} proNum={0} data={["Text/Info only", "YesNo"]} value={ appState.EditQus.questions[showItem].type ? "Default" : "YesNo"} />    
                 </Box>
                 <Divider sx={{mt: 1, mb: 1}} />
                 {appState.EditQus.questions[showItem].subQuestions.map((item: any, index : number) => {

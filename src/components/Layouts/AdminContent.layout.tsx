@@ -66,7 +66,7 @@ const AdminTitle = [
         {title : "Set Up Consultant", icons : <StreamIcon fontSize='large' /> },
         {title : "Set Up Procedure", icons : <AccountTreeIcon fontSize='large' /> },
         {title : "Send Pre-Op Questionnaire", icons : <SendIcon fontSize='large' /> },
-        {title : "Set Up Text Reminder", icons : <MessageIcon fontSize='large' /> },
+        // {title : "Set Up Text Reminder", icons : <MessageIcon fontSize='large' /> },
         {title : "Add, Amend Questions", icons : <DynamicFormIcon fontSize='large' /> },
         {title : "Report", icons : <DescriptionIcon fontSize='large' />}
     ]
@@ -92,9 +92,9 @@ const ShowContent = [
         <ConsultantManagement key={6} />, 
         <ProcedureManagement key={7} />, 
         <PreOpQusManagement key={8} />, 
-        <TextRemainderManagement key={9} />, 
-        <QuestionSectionsManagement key={10} />, 
-        <ReportManagement key={11} />
+        // <TextRemainderManagement key={9} />, 
+        <QuestionSectionsManagement key={9} />, 
+        <ReportManagement key={10} />
     ]
 ]
 
