@@ -100,10 +100,10 @@ const AdminListArray = [
             Label : "Send Pre-Op Questionnaire",
             Icon : <SendIcon fontSize='small' />,
         },
-        {
-            Label : "Set Up Text Reminder",
-            Icon : <MessageIcon fontSize='small' />,
-        },
+        // {
+        //     Label : "Set Up Text Reminder",
+        //     Icon : <MessageIcon fontSize='small' />,
+        // },
         {
             Label : "Add, Amend Questions",
             Icon : <DynamicFormIcon fontSize='small' />,
