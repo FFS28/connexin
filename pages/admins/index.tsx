@@ -1,13 +1,17 @@
-import React from "react"
-import Admin from "../../src/components/Admin"
-import { AppProvider } from "../../src/provider/index.provider"
+import type { NextPage } from "next";
 
-export default function Manager(){
-    return (
-        <>
-            <AppProvider>
-                <Admin />
-            </AppProvider>  
-        </>
-    )
-}
+import CustomTheme from "../../utils/providers/theme";
+import { AppProvider } from "../../utils/providers/context";
+import Admin from "../../components/pages/admins";
+
+const Home: NextPage = () => {
+  return (
+    <CustomTheme>
+      <AppProvider>
+        <Admin />
+      </AppProvider>
+    </CustomTheme>
+  );
+};
+
+export default Home;
