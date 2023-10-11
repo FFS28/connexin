@@ -45,23 +45,28 @@ export default function SignIn(){
             setAppState({...appState, alert: {...appState.alert, open: true, messages: "Please check your Password!", type: "error"}})
             return;
         }
-        
-        CallPostAPI('/api/admins/signin', makeJSON({
-            email: email,
-            pwd: password
-        })).then(res => {
-            const data = res as User;
-            setAppState({...appState, alert: {
-                    ...appState.alert, open: true, message: INFO_WELCOME, type: ALERT_TYPE_SUCCESS
-                }, user: {
-                    ...appState.user, type: "admin", name: data.name, email: data.email, service: data.service, level: data.level, ref: data.ref                    
-                }, page: {
-                    ...appState.page, curLayout: "adminLayout", curPage : pageSlug
-                }
-            })
-        }).catch(rej => {
-            setAppState({...appState, alert: {...appState.alert, open: true, messages: rej, type: ALERT_TYPE_ERROR}})
+
+        setAppState({...appState, page: {
+                ...appState.page, curLayout: "adminLayout", curPage : pageSlug
+            }
         })
+    
+        // CallPostAPI('/api/admins/signin', makeJSON({
+        //     email: email,
+        //     pwd: password
+        // })).then(res => {
+        //     const data = res as User;
+        //     setAppState({...appState, alert: {
+        //             ...appState.alert, open: true, message: INFO_WELCOME, type: ALERT_TYPE_SUCCESS
+        //         }, user: {
+        //             ...appState.user, type: "admin", name: data.name, email: data.email, service: data.service, level: data.level, ref: data.ref                    
+        //         }, page: {
+        //             ...appState.page, curLayout: "adminLayout", curPage : pageSlug
+        //         }
+        //     })
+        // }).catch(rej => {
+        //     setAppState({...appState, alert: {...appState.alert, open: true, messages: rej, type: ALERT_TYPE_ERROR}})
+        // })
     }
 
     return (
